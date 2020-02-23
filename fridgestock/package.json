@@ -9,7 +9,12 @@
     "axios": "^0.19.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+<<<<<<< HEAD
     "react-scripts": "3.4.0"
+=======
+    "react-scripts": "3.4.0",
+    "styled-components": "^5.0.1"
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,26 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
+=======
+import styled from "styled-components";
+
+const Container = styled.div`
+  background-color: ${props => props.color};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 2vw;
+  width: 90%;
+  height: ${props => (props.clicked ? "auto" : "20vh")};
+  max-width: 400px;
+  margin: 2%;
+  overflow: hidden;
+  transition: all 0.5s;
+  &:hover {
+    background: purple;
+  }
+`;
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
 
 class Recipe extends Component {
   constructor(props) {
@@ -75,10 +97,18 @@ class Recipe extends Component {
     }
 
     return (
+<<<<<<< HEAD
       <div
         className={`fridgestock-recipe`}
         id={id}
         style={recipeStyle}
+=======
+      <Container
+        color={backColor}
+        className={`fridgestock-recipe`}
+        clicked={this.state.clicked}
+        id={id}
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
         onMouseEnter={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
@@ -119,7 +149,11 @@ class Recipe extends Component {
             </div>
           </div>
         )}
+<<<<<<< HEAD
       </div>
+=======
+      </Container>
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
     );
   }
 }

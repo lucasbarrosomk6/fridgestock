@@ -1,8 +1,16 @@
 import React, { Component } from "react";
+<<<<<<< HEAD
 import Axios from "axios";
 import "../../../App.css";
 
 import Recipe from "../../recipe-card";
+=======
+import axios from "axios";
+import "../../../App.css";
+
+import Recipe from "../../recipe-card";
+import IngredientBox from "../../IngredientBox";
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
 
 const key = "4f32aacd87mshd80a3d9bf2c94e4p119367jsn16e0dabdd012";
 
@@ -15,6 +23,7 @@ class Fridgestock extends Component {
     soClose: [],
     isHovering: false
   };
+<<<<<<< HEAD
   handleHover = () => this.setState({ isHovering: !this.state.isHovering });
 
   handleChange = e => {
@@ -38,6 +47,11 @@ class Fridgestock extends Component {
       console.log(error);
     }
   };
+=======
+
+  handleHover = () => this.setState({ isHovering: !this.state.isHovering });
+
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
   fetchRecipes = async () => {
     //   make "ignore pantry" dynamic once you can make it work without it
     try {
@@ -55,7 +69,11 @@ class Fridgestock extends Component {
           }
         }
       };
+<<<<<<< HEAD
       const { data } = await Axios({
+=======
+      const { data } = await axios({
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
         url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`,
         method: "get",
         headers: {
@@ -83,6 +101,7 @@ class Fridgestock extends Component {
       console.log(error);
     }
   };
+<<<<<<< HEAD
   render() {
     return (
       <div className="fridgestock">
@@ -172,6 +191,19 @@ class Fridgestock extends Component {
             )}
           </div>
         </div>
+=======
+
+  setIngredients = ingredient => {
+    this.setState({ ingredients: [...this.state.ingredients, ingredient] });
+  };
+  render() {
+    return (
+      <div className="fridgestock">
+        <IngredientBox
+          setIngredients={this.setIngredients}
+          ingredients={this.state.ingredients}
+        />
+>>>>>>> 26ff73c5255c3ddd70632f38b39d7a9525e8e057
         <div className="fridgestock-container">
           <div className="fridgestock-container-h1">
             <h1>Search for Recipes</h1>
