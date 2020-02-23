@@ -1,4 +1,23 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  background-color: ${props => props.color};
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 2vw;
+  width: 90%;
+  height: ${props => (props.clicked ? "auto" : "20vh")};
+  max-width: 400px;
+  margin: 2%;
+  overflow: hidden;
+  transition: all 0.5s;
+  &:hover {
+    background: purple;
+  }
+`;
 
 class Recipe extends Component {
   constructor(props) {
@@ -75,10 +94,11 @@ class Recipe extends Component {
     }
 
     return (
-      <div
+      <Container
+        color={backColor}
         className={`fridgestock-recipe`}
+        clicked={this.state.clicked}
         id={id}
-        style={recipeStyle}
         onMouseEnter={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
@@ -119,7 +139,7 @@ class Recipe extends Component {
             </div>
           </div>
         )}
-      </div>
+      </Container>
     );
   }
 }

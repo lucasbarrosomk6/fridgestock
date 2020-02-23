@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import axios from "axios";
 import "../../../App.css";
 
 import Recipe from "../../recipe-card";
+import IngredientBox from "../../IngredientBox";
 
 const key = "4f32aacd87mshd80a3d9bf2c94e4p119367jsn16e0dabdd012";
 
@@ -15,29 +16,9 @@ class Fridgestock extends Component {
     soClose: [],
     isHovering: false
   };
+
   handleHover = () => this.setState({ isHovering: !this.state.isHovering });
 
-  handleChange = e => {
-    this.setState({ searchField: e.target.value });
-    this.state.searchField.length > 2 && this.autocomplete();
-  };
-  autocomplete = async () => {
-    try {
-      this.setState({ error: false });
-      const { data } = await Axios({
-        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=4&query=${this.state.searchField}`,
-        method: "get",
-        headers: {
-          "X-RapidAPI-Host":
-            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "X-RapidAPI-Key": `${key}`
-        }
-      });
-      this.setState({ ingredientAutocomplete: data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   fetchRecipes = async () => {
     //   make "ignore pantry" dynamic once you can make it work without it
     try {
@@ -55,7 +36,7 @@ class Fridgestock extends Component {
           }
         }
       };
-      const { data } = await Axios({
+      const { data } = await axios({
         url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`,
         method: "get",
         headers: {
@@ -83,95 +64,17 @@ class Fridgestock extends Component {
       console.log(error);
     }
   };
+
+  setIngredients = ingredient => {
+    this.setState({ ingredients: [...this.state.ingredients, ingredient] });
+  };
   render() {
     return (
       <div className="fridgestock">
-        <div className="fridgestock-container">
-          {/* want to make this its own Component */}
-          <div className="fridgestock-container-h1">
-            <h1>Enter ingredients</h1>
-          </div>
-          <input
-            className="fridgestock-search"
-            onChange={this.handleChange}
-            value={this.state.searchField}
-            onKeyDown={e =>
-              e.key === "Enter" &&
-              this.setState({
-                ingredients: [...this.state.ingredients, this.state.searchField]
-              })
-            }
-          ></input>
-          <div className="autocomplete">
-            {this.state.ingredientAutocomplete.length ? (
-              this.state.ingredientAutocomplete.map((ingredient, index) => (
-                <div
-                  className="autocomplete-ingredient"
-                  key={index}
-                  onClick={() => {
-                    if (
-                      this.state.ingredients.find(
-                        existingIngredient =>
-                          existingIngredient.name === ingredient.name
-                      )
-                    ) {
-                      //eliminate repeats
-                      this.setState({
-                        searchfield: "",
-                        ingredientAutocomplete: []
-                      });
-                    } else {
-                      this.setState({
-                        ingredients: [
-                          ...this.state.ingredients,
-                          ingredient.name
-                        ],
-                        searchField: "",
-                        ingredientAutocomplete: []
-                      });
-                    }
-                  }}
-                >
-                  {ingredient.name}
-                </div>
-              ))
-            ) : (
-              <div className="autocomplete-ingredient">
-                Add the contents of your fridge to the list!
-              </div>
-            )}
-          </div>
-          <div className="ingredients">
-            {this.state.ingredients.length ? (
-              this.state.ingredients.map((ingredient, index) => (
-                <div
-                  className="ingredient"
-                  key={index}
-                  onMouseEnter={this.handleHover}
-                  onMouseLeave={this.handleHover}
-                >
-                  {/* <img src={ingredient.image} alt={ingredient.name} /> */}
-                  <h4>{ingredient}</h4>
-                  <button
-                    className="remove-ingredient"
-                    onClick={() => {
-                      const ingredientsLess = this.state.ingredients.filter(
-                        x => x !== ingredient
-                      );
-                      this.setState({ ingredients: ingredientsLess });
-                    }}
-                  >
-                    remove
-                  </button>
-                </div>
-              ))
-            ) : (
-              <div className="ingredient">
-                <h4>ingredients that you search for will apear here!</h4>
-              </div>
-            )}
-          </div>
-        </div>
+        <IngredientBox
+          setIngredients={this.setIngredients}
+          ingredients={this.state.ingredients}
+        />
         <div className="fridgestock-container">
           <div className="fridgestock-container-h1">
             <h1>Search for Recipes</h1>
