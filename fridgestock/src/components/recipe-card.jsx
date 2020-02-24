@@ -19,6 +19,11 @@ const Container = styled.div`
   }
 `;
 
+const colors = ['red', 'blue', 'green'];
+function getColor(index) {
+  return colors[index % colors.length];
+}
+
 class Recipe extends Component {
   constructor(props) {
     super(props);

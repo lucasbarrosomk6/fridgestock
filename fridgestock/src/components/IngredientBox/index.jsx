@@ -58,7 +58,8 @@ export default class extends React.Component {
     }
   };
 
-  render() {
+    render() {
+        const { ingredients } = this.props;
     return (
       <div className="fridgestock-container">
         {/* want to make this its own Component */}
