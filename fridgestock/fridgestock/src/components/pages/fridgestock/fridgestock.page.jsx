@@ -68,9 +68,8 @@ class Fridgestock extends Component {
   setIngredients = ingredient => {
     this.setState({ ingredients: [...this.state.ingredients, ingredient] });
   };
-  
+
   render() {
-    
     return (
       <div className="fridgestock">
         <IngredientBox
