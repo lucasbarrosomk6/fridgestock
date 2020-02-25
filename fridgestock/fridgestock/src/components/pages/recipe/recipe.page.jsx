@@ -23,14 +23,9 @@ export default class Recipe extends Component {
           "X-RapidAPI-Key": `${key}`
         }
       });
-      console.log("information in const data:", data.analyzedInstructions[0]);
       this.setState({ recipe: data });
-      console.log(
-        "information in state:",
-        this.state.recipe.analyzedInstructions[0]
-      );
       this.setState({ instructions: data.analyzedInstructions[0].steps });
-      console.log(this.state.instructions);
+      console.log("fetch completed")
     } catch (error) {
       this.setState({ loading: false, error: true });
       console.log("there was an error", error);
@@ -38,16 +33,25 @@ export default class Recipe extends Component {
   };
   componentDidMount() {
     console.log("componentDidMount started");
-
     this.fetchRecipe();
-    console.log("componentDidMount started");
+    console.log("componentDidMount finished");
   }
   render() {
     const { recipe, loading } = this.state;
-    console.log(
-      "information in state within render:",
-      this.state.recipe.analyzedInstructions[0]
-    );
+
+    //this will log the analyzed instructions
+    // !loading&&console.log(
+    //   "information in state within render:",
+    //   recipe.analyzedInstructions
+    // ); 
+    
+    //this will cause an error
+    // !loading&&console.log(
+    //     "information in recipe within render:",
+    //     recipe.analyzedInstructions[0].steps
+    //   ); 
+    //why does this cause an error?
+      
     return (
       <div className="recipe-container">
         <h1>hello! this is a recipe container</h1>

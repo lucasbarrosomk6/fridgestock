@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../../../App.css";
 
-import Recipe from "../../recipe-card";
+import Recipe from "../../recipe-card/recipe-card";
 import IngredientBox from "../../IngredientBox";
 
 const key = "4f32aacd87mshd80a3d9bf2c94e4p119367jsn16e0dabdd012";
@@ -98,11 +98,7 @@ class Fridgestock extends Component {
               {this.state.recipes.map(recipe => (
                 <Recipe
                   key={recipe.id}
-                  id={recipe.id}
-                  title={recipe.title}
-                  image={recipe.image}
-                  missed={recipe.missedIngredients}
-                  used={recipe.usedIngredients}
+                  recipe={recipe}
                   history={this.props.history}
                   match={this.props.match}
                 />
@@ -121,11 +117,7 @@ class Fridgestock extends Component {
               {this.state.soClose.map(recipe => (
                 <Recipe
                   key={recipe.id}
-                  id={recipe.id}
-                  title={recipe.title}
-                  image={recipe.image}
-                  missed={recipe.missedIngredients}
-                  used={recipe.usedIngredients}
+                  recipe={recipe}
                   history={this.props.history}
                   match={this.props.match}
                 />

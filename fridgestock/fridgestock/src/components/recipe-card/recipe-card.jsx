@@ -71,7 +71,8 @@ class Recipe extends Component {
   handleClick = () => this.setState({ clicked: !this.state.clicked });
   fetchInstructions;
   render() {
-    const { title, image, id, missed, used, match, history } = this.props;
+    const { recipe,match, history, id } = this.props;
+    const {image, title, missedIngredients, usedIngredients} = recipe;
     console.log(match)
     const backColor = this.assignColor(id);
     let recipeStyle = {
@@ -122,8 +123,8 @@ class Recipe extends Component {
             <div className="ingredients-missed">
               <h5>missing</h5>
               <ul>
-                {missed.length
-                  ? missed.map(ingredient => (
+                {missedIngredients.length
+                  ? missedIngredients.map(ingredient => (
                       <li key={ingredient.id}>{ingredient.name}</li>
                     ))
                   : null}
@@ -132,8 +133,8 @@ class Recipe extends Component {
             <div className="ingredients-used">
               <h5>used</h5>
               <ul>
-                {used.length
-                  ? used.map(ingredient => (
+                {usedIngredients.length
+                  ? usedIngredients.map(ingredient => (
                       <li key={ingredient.id}>{ingredient.name}</li>
                     ))
                   : null}
