@@ -13,6 +13,7 @@ export default class Recipe extends Component {
   fetchRecipe = async () => {
     try {
       this.setState({ loading: false });
+      console.log("fetch started");
       const { data } = await axios({
         url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${this.state.recipeId}/information`,
         method: "get",
@@ -22,29 +23,40 @@ export default class Recipe extends Component {
           "X-RapidAPI-Key": `${key}`
         }
       });
-      console.log(data);
+      console.log("information in const data:", data.analyzedInstructions[0]);
       this.setState({ recipe: data });
+      console.log(
+        "information in state:",
+        this.state.recipe.analyzedInstructions[0]
+      );
+      this.setState({ instructions: data.analyzedInstructions[0].steps });
+      console.log(this.state.instructions);
     } catch (error) {
       this.setState({ loading: false, error: true });
       console.log("there was an error", error);
     }
   };
   componentDidMount() {
-    console.log("component mounted");
+    console.log("componentDidMount started");
 
     this.fetchRecipe();
+    console.log("componentDidMount started");
   }
   render() {
-    const { recipe } = this.state;
-    console.log(typeof recipe.title);
+    const { recipe, loading } = this.state;
+    console.log(
+      "information in state within render:",
+      this.state.recipe.analyzedInstructions[0]
+    );
     return (
       <div className="recipe-container">
         <h1>hello! this is a recipe container</h1>
         <p>{recipe.title}</p>
         <ul>
-          {recipe.analyzedInstructions.steps.map(instruction => (
-            <li>{instruction}</li>
-          ))}
+          {/* {loading &&
+            recipe.analyzedInstructions[0].steps.map(instruction => (
+              <li>{instruction}</li>
+            ))} */}
         </ul>
       </div>
     );
