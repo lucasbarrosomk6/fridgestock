@@ -1,24 +1,50 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+import Search from "../../search/search.component";
+import { FlexShowcase } from "components/flex-showcase/flex-showcase.component";
 import axios from "axios";
-import "../../../App.css";
 
-import Recipe from "../../recipe-card/recipe-card";
-import IngredientBox from "../../IngredientBox";
-
-const key = "4f32aacd87mshd80a3d9bf2c94e4p119367jsn16e0dabdd012";
+const FridgestockContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 100vw;
+`;
 
 class Fridgestock extends Component {
   state = {
-    searchField: "",
-    ingredientAutocomplete: [],
     ingredients: [],
     recipes: [],
-    soClose: [],
-    isHovering: false
+    soClose: []
   };
-
-  handleHover = () => this.setState({ isHovering: !this.state.isHovering });
-
+  setIngredients = ingredient => {
+    const noSpaceIngredient = ingredient.trim();
+    if (noSpaceIngredient) {
+      if (
+        this.state.ingredients.find(
+          existingIngredient =>
+            existingIngredient.toLowerCase() === ingredient.toLowerCase()
+        )
+      ) {
+        console.log("REJECTED: duplicate");
+      } else {
+        this.setState({
+          ingredients: [...this.state.ingredients, ingredient.trim()]
+        });
+      }
+    } else {
+      console.log("REJECTED: no ingredient found");
+      this.setState({ ingredients: this.state.ingredients });
+    }
+  };
+  removeIngredient = removeIngredient => {
+    console.log("removeIngredient has activated");
+    const newIngredients = this.state.ingredients.filter(
+      x => x !== removeIngredient
+    );
+    this.setState({ ingredients: newIngredients });
+  };
   fetchRecipes = async () => {
     //   make "ignore pantry" dynamic once you can make it work without it
     try {
@@ -42,7 +68,7 @@ class Fridgestock extends Component {
         headers: {
           "X-RapidAPI-Host":
             "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "X-RapidAPI-Key": `${key}`
+          "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
         }
       });
       if (
@@ -64,68 +90,20 @@ class Fridgestock extends Component {
       console.log(error);
     }
   };
-
-  setIngredients = ingredient => {
-    this.setState({ ingredients: [...this.state.ingredients, ingredient] });
-  };
-
   render() {
     return (
-      <div className="fridgestock">
-        <IngredientBox
+      <FridgestockContainer>
+        <Search
           setIngredients={this.setIngredients}
           ingredients={this.state.ingredients}
+          fetchRecipes={this.fetchRecipes}
         />
-        <div className="fridgestock-container">
-          <div className="fridgestock-container-h1">
-            <h1>Search for Recipes</h1>
-          </div>
-
-          <button className="fetch-button" onClick={this.fetchRecipes}>
-            Search
-          </button>
-          {this.state.recipes.length ? (
-            <div
-              style={{
-                width: "95%",
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center"
-              }}
-            >
-              <h2 style={{ marginBottom: "5%" }}>Make it now!</h2>
-              {this.state.recipes.map(recipe => (
-                <Recipe
-                  key={recipe.id}
-                  recipe={recipe}
-                  history={this.props.history}
-                  match={this.props.match}
-                />
-              ))}
-            </div>
-          ) : (
-            <h1>cant make something outa nothin, pal</h1>
-          )}
-        </div>
-        <div className="fridgestock-container">
-          <div className="fridgestock-container-h1">
-            <h1>So Close...</h1>
-          </div>
-          {this.state.soClose.length ? (
-            <div className="so-close-inner">
-              {this.state.soClose.map(recipe => (
-                <Recipe
-                  key={recipe.id}
-                  recipe={recipe}
-                  history={this.props.history}
-                  match={this.props.match}
-                />
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
+        <FlexShowcase
+          title="Ingredients"
+          ingredients={this.state.ingredients}
+          remove={this.removeIngredient}
+        />
+      </FridgestockContainer>
     );
   }
 }

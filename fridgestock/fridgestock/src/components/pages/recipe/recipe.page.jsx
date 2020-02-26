@@ -25,7 +25,7 @@ export default class Recipe extends Component {
       });
       this.setState({ recipe: data });
       this.setState({ instructions: data.analyzedInstructions[0].steps });
-      console.log("fetch completed")
+      console.log("fetch completed");
     } catch (error) {
       this.setState({ loading: false, error: true });
       console.log("there was an error", error);
@@ -40,18 +40,19 @@ export default class Recipe extends Component {
     const { recipe, loading } = this.state;
 
     //this will log the analyzed instructions
-    // !loading&&console.log(
-    //   "information in state within render:",
-    //   recipe.analyzedInstructions
-    // ); 
-    
+    !loading &&
+      console.log(
+        "information in state within render:",
+        recipe.analyzedInstructions
+      );
+
     //this will cause an error
     // !loading&&console.log(
     //     "information in recipe within render:",
     //     recipe.analyzedInstructions[0].steps
-    //   ); 
+    //   );
     //why does this cause an error?
-      
+
     return (
       <div className="recipe-container">
         <h1>hello! this is a recipe container</h1>

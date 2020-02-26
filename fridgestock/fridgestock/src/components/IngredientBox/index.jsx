@@ -14,23 +14,6 @@ export default class extends React.Component {
     this.setState({ searchField: e.target.value });
     this.state.searchField.length > 2 && this.autocomplete();
   };
-  autocomplete = async () => {
-    try {
-      this.setState({ error: false });
-      const { data } = await axios({
-        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=4&query=${this.state.searchField}`,
-        method: "get",
-        headers: {
-          "X-RapidAPI-Host":
-            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-        }
-      });
-      this.setState({ ingredientAutocomplete: data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   handleSubmit = e => {
     e.preventDefault();

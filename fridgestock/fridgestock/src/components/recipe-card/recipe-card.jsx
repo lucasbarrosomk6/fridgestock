@@ -2,23 +2,27 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  background-color: ${props => props.color};
+  background-color: ${props => props.backColor};
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   border-radius: 2vw;
   width: 90%;
-  height: ${props => (props.clicked ? "auto" : "20vh")};
+  height: ${props => (props.clicked ? "40vh" : "20vh")};
   max-width: 400px;
   margin: 2%;
   overflow: hidden;
   transition: all 0.5s;
   &:hover {
-    background: purple;
+    box-shadow: 2px 2px 2px black;
   }
 `;
-
+const Ingredients = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 class Recipe extends Component {
   constructor(props) {
     super(props);
@@ -28,83 +32,22 @@ class Recipe extends Component {
       clicked: false
     };
   }
-  assignColor = id => {
-    let num = parseFloat(id.toString().slice(-1));
-    let color;
-    switch (num) {
-      case 1:
-        color = "#861657";
-        break;
-      case 2:
-        color = "#A64253";
-        break;
-      case 3:
-        color = "#D56AA0";
-        break;
-      case 4:
-        color = "#B7B5E4";
-        break;
-      case 5:
-        color = "#861657";
-        break;
-      case 6:
-        color = "#A64253";
-        break;
-      case 7:
-        color = "#D56AA0";
-        break;
-      case 8:
-        color = "#D3D0CB";
-        break;
-      case 9:
-        color = "#FCF0CC";
-        break;
-      default:
-        color = "#1F2041";
-        break;
-    }
-    return color;
-  };
-  handleHover = () => {
-    this.setState({ hover: !this.state.hover });
-  };
   handleClick = () => this.setState({ clicked: !this.state.clicked });
   fetchInstructions;
   render() {
-    const { recipe,match, history, id } = this.props;
-    const {image, title, missedIngredients, usedIngredients} = recipe;
-    console.log(match)
-    const backColor = this.assignColor(id);
-    let recipeStyle = {
-      backgroundColor: backColor,
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      flexDirection: "column",
-      borderRadius: "2vw",
-      width: "90%",
-      height: "20vh",
-      maxWidth: "400px",
-      margin: "2%",
-      overflow: "hidden",
-      transition: "all .5s"
-    };
-    
-    if (this.state.hover) recipeStyle.boxShadow = "2px 2px 2px black";
-    if (this.state.clicked) {
-      recipeStyle.height = "50vh";
-      console.log(title, "was clicked");
-    }
+    const { recipe, match, history, id } = this.props;
+    const { image, title, missedIngredients, usedIngredients } = recipe;
+    let colors = ["#861657", "#A64253", "#D56AA0", "#FCF0CC"];
 
     return (
       <Container
-        color={backColor}
         className={`fridgestock-recipe`}
         clicked={this.state.clicked}
         id={id}
         onMouseEnter={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
+        backColor={colors[Math.floor(Math.random() * colors.length)]}
       >
         <img
           src={image}
@@ -119,30 +62,34 @@ class Recipe extends Component {
         <h4>{title}</h4>
         {this.state.clicked && (
           <div className="recipe-expanded">
-            <h3>ingredients</h3>
-            <div className="ingredients-missed">
-              <h5>missing</h5>
-              <ul>
-                {missedIngredients.length
-                  ? missedIngredients.map(ingredient => (
-                      <li key={ingredient.id}>{ingredient.name}</li>
-                    ))
-                  : null}
-              </ul>
-            </div>
-            <div className="ingredients-used">
-              <h5>used</h5>
-              <ul>
-                {usedIngredients.length
-                  ? usedIngredients.map(ingredient => (
-                      <li key={ingredient.id}>{ingredient.name}</li>
-                    ))
-                  : null}
-              </ul>
-            </div>
-            <button onClick={()=>history.push(`${match.url}recipe/${id}`)}>BUTTON</button>
-          </div>
+            <Ingredients>
+              <h3>ingredients</h3>
+              <div className="ingredients-missed">
+                <h5>missing</h5>
+                <ul>
+                  {missedIngredients.length
+                    ? missedIngredients.map(ingredient => (
+                        <li key={ingredient.id}>{ingredient.name}</li>
+                      ))
+                    : null}
+                </ul>
+              </div>
+              <div className="ingredients-used">
+                <h5>used</h5>
+                <ul>
+                  {usedIngredients.length
+                    ? usedIngredients.map(ingredient => (
+                        <li key={ingredient.id}>{ingredient.name}</li>
+                      ))
+                    : null}
+                </ul>
+              </div>
+            </Ingredients>
 
+            <div onClick={() => history.push(`${match.url}recipe/${id}`)}>
+              View Full recipe
+            </div>
+          </div>
         )}
       </Container>
     );
