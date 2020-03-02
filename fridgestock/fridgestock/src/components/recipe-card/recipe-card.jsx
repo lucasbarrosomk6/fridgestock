@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
+  position: relative;
   background-color: ${props => props.backColor};
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   border-radius: 2vw;
@@ -21,7 +23,28 @@ const Container = styled.div`
 const Ingredients = styled.div`
   display: flex;
   justify-content: center;
+  text-align: center;
+  width: 90%;
+`;
+const IngredientShowcase = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  width: 50%;
+  padding: 3%;
+  text-align: center;
+  border-right: ${props => props.missedIngredients && "1px solid black"};
+`;
+const FullRecipe = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  height: 3vh;
+  border-top: 2px solid black;
+  background-color: lightblue;
+  padding: 1vh;
 `;
 class Recipe extends Component {
   constructor(props) {
@@ -29,16 +52,17 @@ class Recipe extends Component {
 
     this.state = {
       hover: false,
-      clicked: false
+      clicked: false,
+      missedIngredients: [this.props.recipe.missedIngredients]
     };
   }
   handleClick = () => this.setState({ clicked: !this.state.clicked });
-  fetchInstructions;
-  render() {
-    const { recipe, match, history, id } = this.props;
-    const { image, title, missedIngredients, usedIngredients } = recipe;
-    let colors = ["#861657", "#A64253", "#D56AA0", "#FCF0CC"];
 
+  render() {
+    const { recipe, match, history } = this.props;
+    const { image, title, missedIngredients, usedIngredients, id } = recipe;
+    let colors = ["#861657", "#A64253", "#D56AA0", "#FCF0CC"];
+    console.log("recipe has rendered");
     return (
       <Container
         className={`fridgestock-recipe`}
@@ -59,41 +83,40 @@ class Recipe extends Component {
             borderRadius: "50vh"
           }}
         />
-        <h4>{title}</h4>
+        <h4 style={{ margin: ".5em 0" }}>{title}</h4>
         {this.state.clicked && (
           <div className="recipe-expanded">
+            <h3>ingredients</h3>
             <Ingredients>
-              <h3>ingredients</h3>
-              <div className="ingredients-missed">
-                <h5>missing</h5>
-                <ul>
-                  {missedIngredients.length
-                    ? missedIngredients.map(ingredient => (
-                        <li key={ingredient.id}>{ingredient.name}</li>
-                      ))
-                    : null}
-                </ul>
-              </div>
-              <div className="ingredients-used">
-                <h5>used</h5>
-                <ul>
-                  {usedIngredients.length
-                    ? usedIngredients.map(ingredient => (
-                        <li key={ingredient.id}>{ingredient.name}</li>
-                      ))
-                    : null}
-                </ul>
-              </div>
+              {missedIngredients.length ? (
+                <IngredientShowcase
+                  className="ingredients-missed"
+                  missedIngredients={this.state.missedIngredients}
+                >
+                  <h5>missing</h5>
+                  {missedIngredients.map(ingredient => (
+                    <p key={ingredient.id}>{ingredient.name}</p>
+                  ))}
+                </IngredientShowcase>
+              ) : null}
+              {usedIngredients.length ? (
+                <IngredientShowcase className="ingredients-used">
+                  <h5>used</h5>
+                  {usedIngredients.map(ingredient => (
+                    <p key={ingredient.id}>{ingredient.name}</p>
+                  ))}
+                </IngredientShowcase>
+              ) : null}
             </Ingredients>
-
-            <div onClick={() => history.push(`${match.url}recipe/${id}`)}>
-              View Full recipe
-            </div>
           </div>
         )}
+
+        <FullRecipe onClick={() => history.push(`${match.url}recipe/${id}`)}>
+          View Full recipe
+        </FullRecipe>
       </Container>
     );
   }
 }
 
-export default Recipe;
+export default withRouter(Recipe);

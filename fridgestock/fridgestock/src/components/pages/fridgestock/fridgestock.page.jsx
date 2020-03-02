@@ -19,6 +19,7 @@ class Fridgestock extends Component {
     soClose: []
   };
   setIngredients = ingredient => {
+    console.log("setIngredient's argument", ingredient);
     const noSpaceIngredient = ingredient.trim();
     if (noSpaceIngredient) {
       if (
@@ -103,6 +104,8 @@ class Fridgestock extends Component {
           ingredients={this.state.ingredients}
           remove={this.removeIngredient}
         />
+        <FlexShowcase title="Make it now" recipes={this.state.recipes} />
+        <FlexShowcase title="So close..." soClose={this.state.soClose} />
       </FridgestockContainer>
     );
   }

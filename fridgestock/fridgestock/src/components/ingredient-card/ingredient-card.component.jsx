@@ -17,14 +17,15 @@ class IngredientCard extends Component {
       text-align: center;
       width: 95%;
       margin: 1% 2.5%;
-      padding: 1%;
-      padding: 1% 0.7%;
+      padding: 1% 4%;
       font-size: 150%;
       border: grey solid 1px;
-      border-radius: 2vw;
+      border-radius: 1vw;
       background-color: rgb(211, 211, 211);
       cursor: pointer;
       transition: all 0.5s;
+      background-image: url("https://storage.needpix.com/rsynced_images/metal-316803_1280.jpg");
+      box-shadow: 1px 2px 2px black;
     `;
     const IngredientRemove = styled.div`
       display: flex;
@@ -34,9 +35,10 @@ class IngredientCard extends Component {
       min-width: 100px;
       height: 3vh;
       border: grey solid 1px;
-      border-radius: 2vw;
-      background-color: rgb(211, 211, 211);
-      font-size: 100%;
+      border-radius: 1vw;
+      background-color: rgb(211, 211, 211, 0.5);
+      font-size: 70%;
+      box-shadow: 1px 2px 2px black;
     `;
     const { name } = this.props;
     return (

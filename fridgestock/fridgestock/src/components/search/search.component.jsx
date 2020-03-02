@@ -8,7 +8,9 @@ const Container = styled.div`
   flex-direction: column;
   width: 90vw;
   height: 15vh;
-  background-color: lightgrey;
+  background-image: url("https://storage.needpix.com/rsynced_images/metal-316803_1280.jpg");
+  background-size: cover;
+  box-shadow: 2px 2px 3px black;
 `;
 const SearchBarForm = styled.form`
   display: flex;
@@ -16,7 +18,6 @@ const SearchBarForm = styled.form`
   align-items: center;
   width: 90%;
   height: 20%;
-  background-color: blue;
 `;
 const SearchBar = styled.input`
   display: flex;
@@ -24,23 +25,37 @@ const SearchBar = styled.input`
   height: 100%;
   text-align: center;
   font-size: 150%;
-  background-color: red;
+  background-color: rgb(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 1vh;
+  box-shadow: 1px 1px 4px black;
+  &:focus {
+    outline: none;
+  }
 `;
 const AutoComplete = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   width: 90%;
-  height: 30%;
-  background-color: pink;
+  height: fit-content;
+  min-height: 5vh;
+  max-height: 10vh;
 `;
 const AutoCompleteItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  padding: 0.5%;
-  flex: 1;
+  width: fit-content;
+  min-width: 100px;
+  max-width: 150px;
+  height: 3vh;
+  border: grey solid 1px;
+  border-radius: 1vw;
+  background-color: rgb(211, 211, 211, 0.5);
+  box-shadow: 1px 2px 2px black;
+  padding: 0 3px;
+  font-size: 1.7vw;
   cursor: pointer;
 `;
 const SearchButton = styled.div`
@@ -50,7 +65,11 @@ const SearchButton = styled.div`
   width: 90%;
   max-width: 300px;
   height: 20%;
-  background-color: green;
+  background-image: url("https://p0.pxfuel.com/preview/764/285/247/texture-brushed-steel-background.jpg");
+  background-size: 400px;
+  background-repeat: no-repeat;
+  border-radius: 15vh;
+  box-shadow: 1px 1px 4px black;
   cursor: pointer;
 `;
 class Search extends Component {
@@ -81,7 +100,8 @@ class Search extends Component {
     try {
       this.setState({ error: false });
       const { data } = await axios({
-        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autoComplete?number=10&query=${this.state.searchField}`,
+        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=8&query=${this.state.searchField}`,
+
         method: "get",
         headers: {
           "X-RapidAPI-Host":
@@ -89,7 +109,9 @@ class Search extends Component {
           "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
         }
       });
+      console.log(data);
       this.setState({ autoComplete: data });
+      console.log(this.state.autoComplete);
     } catch (error) {
       this.setState({
         error: true,
@@ -104,18 +126,23 @@ class Search extends Component {
     return (
       <Container>
         <SearchBarForm onSubmit={this.handlesubmit}>
-          <SearchBar onChange={this.handleChange} value={searchField} />
+          <SearchBar
+            onChange={this.handleChange}
+            value={searchField}
+            placeholder="Search for Ingredients here"
+          />
         </SearchBarForm>
         <AutoComplete>
-          {autoComplete &&
-            autoComplete.map((ingredient, index) => (
-              <AutoCompleteItem
-                key={index}
-                onClick={() => this.handleAutocompleteSelect(ingredient)}
-              >
-                {ingredient}
-              </AutoCompleteItem>
-            ))}
+          {autoComplete
+            ? autoComplete.map((ingredient, index) => (
+                <AutoCompleteItem
+                  key={index}
+                  onClick={() => this.handleAutocompleteSelect(ingredient.name)}
+                >
+                  {ingredient.name}
+                </AutoCompleteItem>
+              ))
+            : null}
         </AutoComplete>
         <SearchButton onClick={this.handleClick}>Search Recipes</SearchButton>
       </Container>
