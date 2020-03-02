@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-import Search from "../../search/search.component";
-import { FlexShowcase } from "components/flex-showcase/flex-showcase.component";
 import axios from "axios";
-
-const FridgestockContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  width: 100vw;
-`;
+import Search from "../../components/search/search.component";
+import { FlexShowcase } from "../../components/Showcase";
+import IngredientCard from "../../components/ingredient-card/ingredient-card.component";
+import { FridgestockContainer } from "./styles";
+import Recipe from "../../components/recipe-card/recipe-card";
 
 class Fridgestock extends Component {
   state = {
@@ -99,13 +93,26 @@ class Fridgestock extends Component {
           ingredients={this.state.ingredients}
           fetchRecipes={this.fetchRecipes}
         />
-        <FlexShowcase
-          title="Ingredients"
-          ingredients={this.state.ingredients}
-          remove={this.removeIngredient}
-        />
-        <FlexShowcase title="Make it now" recipes={this.state.recipes} />
-        <FlexShowcase title="So close..." soClose={this.state.soClose} />
+        <FlexShowcase title="Ingredients">
+          {this.state.ingredients.map((ingredient, index) => (
+            <IngredientCard
+              column
+              key={index}
+              name={ingredient}
+              remove={this.removeIngredient}
+            />
+          ))}
+        </FlexShowcase>
+        <FlexShowcase title="Make it now">
+          {this.state.recipes.map((recipe, index) => (
+            <Recipe key={index} recipe={recipe} />
+          ))}
+        </FlexShowcase>
+        <FlexShowcase title="So close...">
+          {this.state.soClose.map((recipe, index) => (
+            <Recipe key={index} recipe={recipe} />
+          ))}
+        </FlexShowcase>
       </FridgestockContainer>
     );
   }
