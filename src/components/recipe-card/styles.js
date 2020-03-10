@@ -1,0 +1,61 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: fit-content;
+  margin: 1vh 0;
+  transition: all 0.5s;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  color: black;
+  background-color: white;
+  min-height: 80px;
+  &:hover {
+    background-color: lightgray;
+  }
+  cursor: pointer;
+`;
+
+export const RecipeImage = styled.img`
+  height: auto;
+  width: 25%;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  font-size: 0.8rem;
+`;
+
+export const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: fit-content;
+  border-bottom: 1px solid black;
+  width: 100%;
+`;
+
+export const IngredientsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+  width: 90%;
+  height: 60%;
+`;
+
+export const Ingredients = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  height: 100%;
+`;
