@@ -6,6 +6,7 @@ export const NavBarContainer = styled.div`
   align-items: center;
   width: 90vw;
   border-bottom: 1px solid black;
+  position: relative;
 `;
 export const Title = styled.div`
   display: flex;

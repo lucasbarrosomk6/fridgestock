@@ -19,19 +19,22 @@ class Recipe extends Component {
     const { image, title, missedIngredients, usedIngredients, id } = recipe;
 
     return (
-      <Link to={`${match.url}recipe/${id}`}>
+      <Link
+        to={`${match.url}recipe/${id}`}
+        style={{ width: "100%", height: "fit-content" }}
+      >
         <Container
           className="recipe"
           onClick={() =>
             localStorage.setItem(
-              "missingIngredients",
+              "missedIngredients",
               JSON.stringify(missedIngredients)
             )
           }
           onMouseEnter={this.toggleHover}
           onMouseLeave={this.toggleHover}
         >
-          <RecipeImage className="recipe-image" src={image} alt="title" />
+          <RecipeImage className="recipe-image" image={image} alt="title" />
           <InfoContainer className="info-container">
             <Title className="recipe-title">{title}</Title>
             <IngredientsContainer className="ingredient-container">

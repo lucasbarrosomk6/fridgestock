@@ -4,8 +4,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
-  height: fit-content;
+  min-width: 100%;
   margin: 1vh 0;
   transition: all 0.5s;
   border-top: 1px solid black;
@@ -19,8 +18,14 @@ export const Container = styled.div`
   cursor: pointer;
 `;
 
-export const RecipeImage = styled.img`
-  height: auto;
+export const RecipeImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(${props => props.image});
+  background-size: cover;
+  height: 100%;
+  min-height: 80px;
   width: 25%;
 `;
 
@@ -30,7 +35,7 @@ export const InfoContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  flex: 1;
+  width: 75%;
   font-size: 0.8rem;
 `;
 

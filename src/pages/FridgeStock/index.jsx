@@ -22,14 +22,15 @@ class Fridgestock extends Component {
     error: false
   };
   componentDidMount() {
-    const savedIngredients = localStorage.getItem("ingredients").split(",");
-    JSON.stringify(localStorage.getItem("ingredients").length) &&
-      this.setState({ ingredients: savedIngredients });
-
-    localStorage.setItem("missingIngredients", "");
+    if (localStorage.getItem("ingredients")) {
+      const savedIngredients = localStorage.getItem("ingredients").split(",");
+      JSON.stringify(localStorage.getItem("ingredients").length) &&
+        this.setState({ ingredients: savedIngredients });
+    }
+    localStorage.setItem("missedIngredients", "");
   }
-  setMissingIngredients = missingIngredients => {
-    localStorage.setItem("missingIngredients", missingIngredients);
+  setMissedIngredients = missedIngredients => {
+    localStorage.setItem("missedIngredients", missedIngredients);
   };
   setIngredients = ingredient => {
     //removes whitespace, denies duplicates and denies blank searches
@@ -142,7 +143,7 @@ class Fridgestock extends Component {
           />
         </InputContainer>
         {this.state.loaded && this.state.recipes && this.state.soClose ? (
-          <RecipeContainer>
+          <RecipeContainer className="recipe-container">
             <MakeItNowContainer
               recipesFetched={this.state.recipes.length}
               className="Make-it-now-container"

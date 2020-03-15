@@ -5,6 +5,7 @@ import { deviceSizes as device } from "../../diviceSizes";
 //all media quieries will be for any size greater than mobile
 
 export const FridgestockContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: 90vw;

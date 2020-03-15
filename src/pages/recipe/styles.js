@@ -26,13 +26,17 @@ export const Title = styled.div`
     justify-content: center;
   }
 `;
+export const HoverMessage = styled.h1`
+  color: transparent;
+  transition: color 0.5s;
+`;
 export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${props => (props.clicked ? "59.4vw" : "20vh")};
+  height: ${props => (props.clicked ? "370px" : "200px")};
   /* height changes to show the whole photo assuming a standard pic size of  556px x 370 */
-  width: 100%;
+  width: 556px;
   overflow: hidden;
   background-image: url(${props => props.image});
   background-size: cover;
@@ -40,6 +44,11 @@ export const ImageContainer = styled.div`
   transition: all 0.5s;
   cursor: pointer;
   border-bottom: 1px solid black;
+  &:hover {
+    ${HoverMessage} {
+      color: black;
+    }
+  }
 `;
 
 export const Image = styled.img`
@@ -48,45 +57,11 @@ export const Image = styled.img`
   align-items: center;
   width: 100%;
 `;
-export const HoverMessage = styled.h1`
-  color: ${props => (props.hover ? "black" : "transparent")};
-  transition: color 0.5s;
-`;
+
 export const TagContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   border-bottom: black 1px solid;
-`;
-export const Tag = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: 30px;
-  flex-wrap: wrap;
-  padding: 2px;
-  border: 1px black solid;
-  border-radius: 5px;
-  margin: 1vw;
-`;
-export const WarningDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  border-top: red 1px solid;
-  border-bottom: red 1px solid;
-  height: fit-content;
-  overflow: hidden;
-`;
-export const WarningIngredients = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: fit-content;
-  flex-wrap: wrap;
 `;

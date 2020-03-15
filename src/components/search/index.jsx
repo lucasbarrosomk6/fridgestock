@@ -32,7 +32,7 @@ class Search extends Component {
   }
   handlesubmit = e => {
     e.preventDefault();
-    controller.abort();
+    if (this.state.isSearching) return;
     this.props.setIngredients(this.state.searchField);
     this.setState({
       autoComplete: [],
@@ -62,7 +62,7 @@ class Search extends Component {
   };
   fetchAutoComplete = debounce(async () => {
     console.log("autocomplete triggered");
-
+    this.setState({ isSearching: true });
     const { data } = await axios({
       url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=5&query=${this.state.searchField}`,
       method: "get",
@@ -73,7 +73,7 @@ class Search extends Component {
         "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
       }
     });
-    this.setState({ autoComplete: data });
+    this.setState({ autoComplete: data, isSearching: false });
   }, 700);
   render() {
     return (
