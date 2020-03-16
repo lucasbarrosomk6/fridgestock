@@ -9,6 +9,15 @@ import {
   UnitToggle
 } from "./styles";
 
+const Toggle = props => (
+  <UnitToggle
+    onClick={() => props.handleUnitChange(props.unit)}
+    selected={props.selected}
+  >
+    {props.unit}
+  </UnitToggle>
+);
+
 const IngredientDisplay = ({ ingredients, setIngredients }) => {
   const [unit, handleUnitChange] = useState("metric");
   const [clicked, toggleClicked] = useState(false);
@@ -16,18 +25,16 @@ const IngredientDisplay = ({ ingredients, setIngredients }) => {
   return (
     <IngredientDisplayContainer>
       <RadioContainer>
-        <UnitToggle
-          onClick={() => handleUnitChange("metric")}
-          selected={unit === "metric" ? true : false}
-        >
-          Metric
-        </UnitToggle>
-        <UnitToggle
-          onClick={() => handleUnitChange("imperial")}
-          selected={unit === "imperial" ? true : false}
-        >
-          Imperial
-        </UnitToggle>
+        <Toggle
+          selected={unit === "metric"}
+          handleUnitChange={handleUnitChange}
+          unit={"metric"}
+        />
+        <Toggle
+          selected={unit === "imperial"}
+          handleUnitChange={handleUnitChange}
+          unit={"imperial"}
+        />
       </RadioContainer>
 
       <IngredientContainer>
@@ -38,12 +45,12 @@ const IngredientDisplay = ({ ingredients, setIngredients }) => {
       <ButtonContainer onClick={() => toggleClicked(!clicked)}>
         Change Ingredients
       </ButtonContainer>
-      {clicked && (
-        <Popup
-          onClick={() => toggleClicked(!clicked)}
-          setIngredients={setIngredients}
-        ></Popup>
-      )}
+
+      <Popup
+        onClick={toggleClicked}
+        clicked={clicked}
+        setIngredients={setIngredients}
+      ></Popup>
     </IngredientDisplayContainer>
   );
 };

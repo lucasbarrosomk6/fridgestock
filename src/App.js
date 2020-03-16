@@ -14,7 +14,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={FridgeStock} />
             <Route exact path="/recipe/:recipeId" component={Recipe} /> 
-            {//the :recipeId key is how I determine which individual recipe is fetched}
+            {/*the :recipeId key is how I determine which individual recipe is fetched*/}
           </Switch>
         </Router>
       </div>

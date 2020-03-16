@@ -1,9 +1,13 @@
 import React from "react";
 import { PopUpContainer, Display } from "./styles";
 
-const PopUp = ({ toggle, unit, amount, name }) => {
+const PopUp = ({ onClick, unit, amount, name, clicked }) => {
+  if (!clicked) return false;
   return (
-    <PopUpContainer className="PopUpContainer" onClick={() => toggle()}>
+    <PopUpContainer
+      className="PopUpContainer"
+      onClick={() => onClick(!clicked)}
+    >
       <Display className="popup">
         <h1>
           {name} {amount} {unit}
