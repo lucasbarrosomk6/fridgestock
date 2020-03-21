@@ -6,14 +6,14 @@ import { useCallback } from "react";
 
 Modal.setAppElement("#root");
 
-const PopUp = ({ showModal, toggleModal, ingredient, quantity, unit }) => {
+const PopUp = ({ showModal, closeModal, ingredient, quantity, unit }) => {
   const [value, setValue] = useState(quantity);
   return (
     <Modal
       isOpen={showModal}
       contentLabel="ingredient-popup"
       onRequestClose={() => {
-        toggleModal(false);
+        closeModal();
         console.log("closed from popup");
       }}
       shouldCloseOnOverlayClick={true}
@@ -38,7 +38,7 @@ const PopUp = ({ showModal, toggleModal, ingredient, quantity, unit }) => {
           height: "30%",
           maxHeight: "300px",
           padding: "0",
-          zIndex: "-1"
+          zIndex: "5"
         }
       }}
     >

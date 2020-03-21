@@ -40,7 +40,9 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
   const [similarIngredients, setSimilarIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, toggleModal] = useState(false);
-
+  const handleModalClose = useCallback(() => toggleModal(false), []);
+  const handleModalOpen = useCallback(() => toggleModal(true), []);
+  console.log(showModal);
   const parsed = queryString.parse(location.search);
 
   const fetchSimilarIngredients = async ingredient => {
@@ -77,11 +79,6 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
     history.push(`${match.url}?${stringified}`);
   };
 
-  const handleModalChange = showModal => {
-    toggleModal(!showModal);
-    console.log("modal has changed, it is now: ", !showModal);
-  };
-
   const us = ingredient.measures.us;
   const metric = ingredient.measures.metric;
   const metricQuantity = amountRounder(metric.amount, metric.unitShort);
@@ -98,12 +95,8 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
   } else {
     dynamicUnit = us.unitShort;
   }
-
   return (
-    <IngredientContainer
-      className="Ingredient"
-      onClick={() => handleModalChange(showModal)}
-    >
+    <IngredientContainer className="Ingredient" onClick={handleModalOpen}>
       <QuantityContainer>
         {dynamicQuantity}
         {dynamicUnit}
@@ -112,7 +105,7 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
 
       <Popup
         showModal={showModal}
-        toggleModal={handleModalChange}
+        closeModal={handleModalClose}
         ingredient={ingredient}
         unit={dynamicUnit}
         quantity={dynamicQuantity}

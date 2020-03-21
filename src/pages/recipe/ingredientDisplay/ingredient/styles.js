@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const IngredientContainer = styled.div`
   position: relative;
-  z-index: 5;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
