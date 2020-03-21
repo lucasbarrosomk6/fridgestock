@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const IngredientDisplayContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;

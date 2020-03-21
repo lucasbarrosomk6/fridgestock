@@ -1,29 +1,32 @@
 import styled from "styled-components";
 
 export const PopUpContainer = styled.div`
-  position: absolute;
-  top: 0;
+  position: relative;
+  z-index: 8;
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 90vw;
-  height: 100vh;
-  z-index: 8;
-  margin: 0 auto;
+  max-width: 500px;
+  height: 30%;
+  max-height: 300px;
+  background-color: grey;
 `;
-export const Display = styled.div`
+
+export const Title = styled.h1`
+  border-bottom: 1px solid #ccc;
+`;
+
+export const OptionContainer = styled.div`
   position: relative;
+  z-index: 8;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  width: 90%;
-  max-width: 500px;
-  height: 50%;
-  max-height: 700px;
-  z-index: 12;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid black;
-  color: black;
+  width: 50%;
+  height: 80%;
+  text-align: center;
+  padding: 0 5%;
+`;
+export const InputContainer = styled.h1`
+  display: flex;
 `;

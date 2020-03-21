@@ -168,7 +168,7 @@ class Fridgestock extends Component {
             </SoCloseContainer>
           </RecipeContainer>
         ) : (
-          <RecipeContainer style={{ margin: "1vh 13.3px" }}>
+          <RecipeContainer className="recipe-container">
             <Title>Available Recipes will apear here</Title>
           </RecipeContainer>
         )}

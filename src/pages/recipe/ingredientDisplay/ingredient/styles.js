@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const IngredientContainer = styled.div`
+  position: relative;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,25 +36,4 @@ export const NameContainer = styled.div`
   align-items: center;
   height: fit-content;
   margin-left: 10px;
-`;
-export const OptionButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90%;
-  width: ${props => (props.clicked ? "10%" : "0")};
-  min-width: ${props => (props.clicked ? "100px" : "0")};
-  border: ${props => (props.clicked ? "1px solid black" : "2px dashed black")};
-  overflow: hidden;
-  transition: all 0.5s;
-  font-size: 0.7rem;
-  margin-right: 1%;
-`;
-export const OptionButtonLabel = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  height: fit-content;
-  min-width: 100px;
 `;

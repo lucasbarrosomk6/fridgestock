@@ -48,7 +48,7 @@ export const RecipeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-items: space-around;
+
   height: fit-content;
   width: 90vw;
   margin: 1vh 0;
@@ -60,6 +60,7 @@ export const RecipeContainer = styled.div`
     flex: 1;
     height: fit-content;
     min-width: 350px;
+    margin: 1vh 13.3px;
   }
 `;
 
@@ -67,14 +68,10 @@ export const MakeItNowContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: ${props =>
-    props.recipesFetched ? `${props.recipesFetched * 14}vh` : "0px"};
+
   width: 90%;
-  overflow: hidden;
   @media ${device.desktop} {
     align-items: center;
-    height: ${props =>
-      props.recipesFetched ? `${props.recipesFetched * 13}vh` : "0px"};
     width: 25vw;
     min-width: 350px;
   }
@@ -84,14 +81,10 @@ export const SoCloseContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: ${props =>
-    props.recipesFetched ? `${props.soCloseFetched * 14}vh` : "0px"};
+
   width: 90%;
-  overflow: hidden;
   @media ${device.desktop} {
     align-items: center;
-    height: ${props =>
-      props.soCloseFetched ? `${props.soCloseFetched * 13}vh` : "0px"};
     width: 25vw;
     min-width: 350px;
   }
@@ -101,7 +94,7 @@ export const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150%;
+  width: 90%;
   background-color: lightgray;
   border-bottom: 1px solid black;
 `;

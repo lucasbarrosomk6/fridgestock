@@ -7,7 +7,7 @@ const TagBanner = ({ text, data, warning }) => {
     <TagBannerContainer className="TagBannerContainer" color={color}>
       {text ? <InfoContainer>{text}</InfoContainer> : null}
       {data.length ? (
-        <InfoContainer>
+        <InfoContainer className="info-container">
           {data.map(item => (
             <DataDisplay key={item.name ? item.name : item}>
               {item.name ? item.name : item}

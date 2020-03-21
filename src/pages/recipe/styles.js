@@ -5,11 +5,13 @@ import { deviceSizes as device } from "../../diviceSizes";
 //all media quieries will be for any size greater than mobile
 
 export const RecipePageContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 90vw;
   background-color: lightgrey;
+  z-index: 0;
   @media ${device.desktop} {
     justify-content: space-between;
   }

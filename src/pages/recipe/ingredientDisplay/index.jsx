@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import Ingredient from "./ingredient";
-import Popup from "../../../components/popUp";
 import {
   IngredientDisplayContainer,
   IngredientContainer,
-  ButtonContainer,
   RadioContainer,
   UnitToggle
 } from "./styles";
@@ -42,15 +40,6 @@ const IngredientDisplay = ({ ingredients, setIngredients }) => {
           <Ingredient key={ingredient.id} ingredient={ingredient} unit={unit} />
         ))}
       </IngredientContainer>
-      <ButtonContainer onClick={() => toggleClicked(!clicked)}>
-        Change Ingredients
-      </ButtonContainer>
-
-      <Popup
-        onClick={toggleClicked}
-        clicked={clicked}
-        setIngredients={setIngredients}
-      ></Popup>
     </IngredientDisplayContainer>
   );
 };

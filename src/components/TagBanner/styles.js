@@ -14,8 +14,9 @@ export const TagBannerContainer = styled.div`
 export const InfoContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: fit-content;
   text-align: center;
 `;
