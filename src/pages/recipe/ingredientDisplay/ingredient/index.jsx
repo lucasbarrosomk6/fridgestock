@@ -3,12 +3,15 @@ import Select from "react-select";
 import axios from "axios";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
-import Popup from "../../../../components/popUp";
+import IngredientOptions from "../../../../components/IngredientOptions";
+
 import {
   IngredientContainer,
   NameContainer,
-  QuantityContainer
+  QuantityContainer,
+  StyledPopup
 } from "./styles";
+import Popup from "reactjs-popup";
 
 const unitShortener = unitInput => {
   let unit = unitInput;
@@ -39,10 +42,8 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
   const [clicked, handleClicked] = useState(false);
   const [similarIngredients, setSimilarIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showModal, toggleModal] = useState(false);
-  const handleModalClose = useCallback(() => toggleModal(false), []);
-  const handleModalOpen = useCallback(() => toggleModal(true), []);
-  console.log(showModal);
+  const [popupOpen, setPopupOpen] = useState(false);
+
   const parsed = queryString.parse(location.search);
 
   const fetchSimilarIngredients = async ingredient => {
@@ -96,20 +97,21 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
     dynamicUnit = us.unitShort;
   }
   return (
-    <IngredientContainer className="Ingredient" onClick={handleModalOpen}>
-      <QuantityContainer>
-        {dynamicQuantity}
-        {dynamicUnit}
-      </QuantityContainer>
-      <NameContainer>{ingredient.name}</NameContainer>
-
+    <IngredientContainer className="Ingredient">
       <Popup
-        showModal={showModal}
-        closeModal={handleModalClose}
-        ingredient={ingredient}
-        unit={dynamicUnit}
-        quantity={dynamicQuantity}
-      />
+        trigger={
+          <QuantityContainer>
+            {dynamicQuantity}
+            {dynamicUnit}
+          </QuantityContainer>
+        }
+        position={["bottom left"]}
+        closeOnDocumentClick
+      >
+        <span>did it!</span>
+      </Popup>
+
+      <NameContainer>{ingredient.name}</NameContainer>
     </IngredientContainer>
   );
 };
