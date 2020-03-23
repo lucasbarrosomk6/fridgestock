@@ -3,7 +3,7 @@ import Select from "react-select";
 import axios from "axios";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
-import IngredientOptions from "../../../../components/IngredientOptions";
+import IngredientOptions from "./QuantityPopup";
 
 import {
   IngredientContainer,
@@ -13,36 +13,10 @@ import {
 } from "./styles";
 import Popup from "reactjs-popup";
 
-const unitShortener = unitInput => {
-  let unit = unitInput;
-  console.log(unitInput);
-  const badUnits = ["Kilorgrams", "Kilogram"];
-  const goodUnits = ["kgs", "kg"];
-
-  badUnits.forEach((item, index) =>
-    unitInput.toLowerCase() === item.toLocaleLowerCase()
-      ? (unit = goodUnits[index])
-      : unit
-  );
-  return unit;
-};
-const amountRounder = (amount, unit) => {
-  const roundableUnits = ["ml", "g"];
-  let outcome = amount;
-  let i;
-  for (i = 0; i < roundableUnits.length; i++) {
-    if (roundableUnits[i] === unit.toLocaleLowerCase()) {
-      outcome = Math.round(amount);
-      break;
-    }
-  }
-  return outcome;
-};
 const Ingredient = ({ ingredient, unit, location, history, match }) => {
-  const [clicked, handleClicked] = useState(false);
   const [similarIngredients, setSimilarIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [quantity, setquantity] = useState(ingredient.measures.us.amount);
 
   const parsed = queryString.parse(location.search);
 
@@ -81,37 +55,26 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
   };
 
   const us = ingredient.measures.us;
-  const metric = ingredient.measures.metric;
-  const metricQuantity = amountRounder(metric.amount, metric.unitShort);
-  const imperialQuantity = us.amount;
-  let dynamicQuantity;
-  if (unit === "metric") {
-    dynamicQuantity = metricQuantity;
-  } else {
-    dynamicQuantity = imperialQuantity;
-  }
-  let dynamicUnit;
-  if (unit === "metric") {
-    dynamicUnit = metric.unitShort;
-  } else {
-    dynamicUnit = us.unitShort;
-  }
+
   return (
     <IngredientContainer className="Ingredient">
       <Popup
         trigger={
-          <QuantityContainer>
-            {dynamicQuantity}
-            {dynamicUnit}
-          </QuantityContainer>
+          <QuantityContainer>{`${quantity} ${us.unitShort}`}</QuantityContainer>
         }
         position={["bottom left"]}
         closeOnDocumentClick
       >
-        <span>did it!</span>
+        <IngredientOptions quantity={quantity} />
       </Popup>
-
-      <NameContainer>{ingredient.name}</NameContainer>
+      <Popup
+        trigger={<NameContainer>{ingredient.name}</NameContainer>}
+        position={["bottom center"]}
+        closeOnDocumentClick
+        on="focus"
+      >
+        <IngredientOptions quantity={quantity} />
+      </Popup>
     </IngredientContainer>
   );
 };

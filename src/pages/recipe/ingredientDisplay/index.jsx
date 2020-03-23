@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Ingredient from "./ingredient";
+import Ingredient from "./Ingredient";
 import {
   IngredientDisplayContainer,
   IngredientContainer,
@@ -18,7 +18,6 @@ const Toggle = props => (
 
 const IngredientDisplay = ({ ingredients, setIngredients }) => {
   const [unit, handleUnitChange] = useState("metric");
-  const [clicked, toggleClicked] = useState(false);
 
   return (
     <IngredientDisplayContainer>

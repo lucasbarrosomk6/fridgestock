@@ -1,19 +1,8 @@
 import styled from "styled-components";
 
-export const PopUpContainer = styled.div`
-  position: relative;
-  z-index: 8;
-  display: flex;
-  align-items: center;
-  width: 90vw;
-  max-width: 500px;
-  height: 30%;
-  max-height: 300px;
-  background-color: grey;
-`;
-
 export const Title = styled.h1`
   border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
 `;
 
 export const OptionContainer = styled.div`
@@ -22,7 +11,7 @@ export const OptionContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 80%;
   text-align: center;
   padding: 0 5%;

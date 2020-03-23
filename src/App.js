@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import FridgeStock from "./pages/FridgeStock";
 import Recipe from "./pages/recipe";
-import NavBar from "./nav-bar";
+import NavBar from "./NavBar";
 import "./App.css";
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
           <Route path="/" component={NavBar} />
           <Switch>
             <Route exact path="/" component={FridgeStock} />
-            <Route exact path="/recipe/:recipeId" component={Recipe} /> 
+            <Route exact path="/recipe/:recipeId" component={Recipe} />
             {/*the :recipeId key is how I determine which individual recipe is fetched*/}
           </Switch>
         </Router>

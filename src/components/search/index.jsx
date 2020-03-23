@@ -10,7 +10,7 @@ import {
   Ingredients,
   RecipeSearchButton
 } from "./styles";
-import IngredientCard from "components/ingredient-card";
+import IngredientCard from "components/IngredientCard";
 
 //when typing fast and using the enter key to add ingredients,
 //the autocomplete async function would render after the ingredient was added

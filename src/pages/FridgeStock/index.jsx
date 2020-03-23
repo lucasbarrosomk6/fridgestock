@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Search from "../../components/search";
+import Search from "../../components/Search";
 import _ from "lodash";
 import {
   FridgestockContainer,
@@ -11,7 +11,7 @@ import {
   Title,
   InputTitle
 } from "./styles";
-import Recipe from "../../components/recipe-card";
+import Recipe from "../../components/RecipeCard";
 
 class Fridgestock extends Component {
   state = {

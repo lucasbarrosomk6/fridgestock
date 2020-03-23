@@ -3,7 +3,6 @@ import Popup from "reactjs-popup";
 
 export const IngredientContainer = styled.div`
   position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
