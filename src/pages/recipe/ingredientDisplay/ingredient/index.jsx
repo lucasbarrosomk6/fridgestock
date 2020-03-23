@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import Select from "react-select";
+import React, { useState } from "react";
 import axios from "axios";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
@@ -16,7 +15,7 @@ import Popup from "reactjs-popup";
 const Ingredient = ({ ingredient, unit, location, history, match }) => {
   const [similarIngredients, setSimilarIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [quantity, setquantity] = useState(ingredient.measures.us.amount);
+  const [quantity, setQuantity] = useState(ingredient.measures.us.amount);
 
   const parsed = queryString.parse(location.search);
 
@@ -65,7 +64,11 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
         position={["bottom left"]}
         closeOnDocumentClick
       >
-        <IngredientOptions quantity={quantity} />
+        <IngredientOptions
+          quantity={quantity}
+          setQuantity={setQuantity}
+          unit={us.unitShort}
+        />{" "}
       </Popup>
       <Popup
         trigger={<NameContainer>{ingredient.name}</NameContainer>}
@@ -73,7 +76,11 @@ const Ingredient = ({ ingredient, unit, location, history, match }) => {
         closeOnDocumentClick
         on="focus"
       >
-        <IngredientOptions quantity={quantity} />
+        <IngredientOptions
+          quantity={quantity}
+          setQuantity={setQuantity}
+          unit={us.unitShort}
+        />
       </Popup>
     </IngredientContainer>
   );
