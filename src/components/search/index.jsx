@@ -64,7 +64,7 @@ class Search extends Component {
     console.log("autocomplete triggered");
     this.setState({ isSearching: true });
     const { data } = await axios({
-      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?number=5&query=${this.state.searchField}`,
+      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?query=${this.state.searchField}`,
       method: "get",
       signal: signal,
       headers: {

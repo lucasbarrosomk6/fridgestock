@@ -12,6 +12,7 @@ import {
   InputTitle
 } from "./styles";
 import Recipe from "../../components/RecipeCard";
+import api from "../../utils/api";
 
 class Fridgestock extends Component {
   state = {
@@ -93,15 +94,10 @@ class Fridgestock extends Component {
           }
         }
       };
-      let { data } = await axios({
-        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`,
-        method: "get",
-        headers: {
-          "X-RapidAPI-Host":
-            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-        }
-      });
+      const data = await api(
+        "ingredients",
+        `?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`
+      );
 
       if (
         this.state.recipes.find(
