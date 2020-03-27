@@ -11,6 +11,7 @@ import {
   RecipeSearchButton
 } from "./styles";
 import IngredientCard from "components/IngredientCard";
+import api from "../../utils/api";
 
 //when typing fast and using the enter key to add ingredients,
 //the autocomplete async function would render after the ingredient was added
@@ -33,7 +34,7 @@ class Search extends Component {
   handlesubmit = e => {
     e.preventDefault();
     if (this.state.isSearching) return;
-    this.props.setIngredients(this.state.searchField);
+    this.props.setIngredients(this.state.searchField, this.props.ingredients);
     this.setState({
       autoComplete: [],
       searchField: "",
@@ -41,7 +42,7 @@ class Search extends Component {
     });
   };
   handleAutocompleteSelect = x => {
-    this.props.setIngredients(x);
+    this.props.setIngredients(x, this.props.ingredients);
 
     this.setState({
       searchField: "",
@@ -63,15 +64,9 @@ class Search extends Component {
   fetchAutoComplete = debounce(async () => {
     console.log("autocomplete triggered");
     this.setState({ isSearching: true });
-    const { data } = await axios({
-      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?query=${this.state.searchField}`,
-      method: "get",
-      signal: signal,
-      headers: {
-        "X-RapidAPI-Host":
-          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-      }
+    const data = await api("food/ingredients/autocomplete", {
+      query: this.state.searchField,
+      number: 5
     });
     this.setState({ autoComplete: data, isSearching: false });
   }, 700);

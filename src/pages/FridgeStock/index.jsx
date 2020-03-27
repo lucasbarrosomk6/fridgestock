@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Search from "../../components/Search";
 import _ from "lodash";
 import {
@@ -13,6 +12,10 @@ import {
 } from "./styles";
 import Recipe from "../../components/RecipeCard";
 import api from "../../utils/api";
+import {
+  getLocalIngredients,
+  setLocalIngredients
+} from "../../utils/localStorage";
 
 class Fridgestock extends Component {
   state = {
@@ -23,100 +26,53 @@ class Fridgestock extends Component {
     error: false
   };
   componentDidMount() {
-    if (localStorage.getItem("ingredients")) {
-      const savedIngredients = localStorage.getItem("ingredients").split(",");
-      JSON.stringify(localStorage.getItem("ingredients").length) &&
-        this.setState({ ingredients: savedIngredients });
-    }
-    localStorage.setItem("missedIngredients", "");
+    this.setState({
+      ingredients: JSON.parse(getLocalIngredients("ingredients"))
+    });
+    setLocalIngredients("missedIngredients", "");
   }
-  setMissedIngredients = missedIngredients => {
-    localStorage.setItem("missedIngredients", missedIngredients);
-  };
-  setIngredients = ingredient => {
-    //removes whitespace, denies duplicates and denies blank searches
-    console.log("setIngredient's argument", ingredient);
-    const noSpaceIngredient = ingredient.trim();
-    if (noSpaceIngredient) {
-      if (
-        this.state.ingredients.find(
-          existingIngredient =>
-            existingIngredient.toLowerCase() === noSpaceIngredient
-        )
-      ) {
-        console.log("REJECTED: duplicate");
-      } else {
-        localStorage.setItem("ingredients", [
-          ...this.state.ingredients,
-          noSpaceIngredient
-        ]);
-        this.setState({
-          ingredients: [...this.state.ingredients, noSpaceIngredient]
-        });
-      }
-    } else {
-      console.log("REJECTED: no ingredient found");
-      this.setState({ ingredients: this.state.ingredients });
+
+  setIngredients = (ingredient, existingIngredients) => {
+    if (
+      ingredient.trim() &&
+      existingIngredients.find(x => x.toLowerCase() !== ingredient.trim())
+    ) {
+      setLocalIngredients(
+        "ingredients",
+        JSON.stringify([...existingIngredients, ingredient])
+      );
+      this.setState({ ingredients: [...this.state.ingredients, ingredient] });
     }
   };
   removeIngredient = removeIngredient => {
     // filters out an ingredient matching the argument and sets the state to the new array
-    console.log("removeIngredient has activated");
     const newIngredients = this.state.ingredients.filter(
       x => x !== removeIngredient
     );
-    localStorage.setItem("ingredients", newIngredients);
+    setLocalIngredients("ingredients", newIngredients);
     this.setState({ ingredients: newIngredients });
   };
   fetchRecipes = async () => {
-    //   fetches recipes using the ingredients added as the query, sorts them into 2 catagories: recipes (all recipies that only use what you have) and so close(all recipes that have some of what you have) then checks for duplicates
     this.setState({ error: false, recipes: [], soClose: [] });
     try {
-      const ingredientQueryString = this.state.ingredients;
-
       const recipeSort = array => {
-        let uniqueArray = _.uniqBy(array, "title"); ///removes duplicates
-        console.log("array: ", array, "duplicatefreeArray: ", uniqueArray);
-        let i;
-        for (i = 0; i < uniqueArray.length; i++) {
-          if (uniqueArray[i].missedIngredientCount === 0) {
-            this.setState({
-              recipes: [...this.state.recipes, uniqueArray[i]],
-              loaded: true,
-              error: false
-            });
-          } else {
-            this.setState({
-              soClose: [...this.state.soClose, uniqueArray[i]],
-              loaded: true,
-              error: false
-            });
-          }
-        }
-      };
-      const data = await api(
-        "ingredients",
-        `?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`
-      );
-
-      if (
-        this.state.recipes.find(
-          existingRecipe => existingRecipe.name === data.title
-        )
-      ) {
+        const uniqueArray = _.uniqBy(array, "title"); ///removes duplicates
         this.setState({
-          recipes: this.state.recipes,
-          soClose: this.state.soClose,
+          recipes: uniqueArray.filter(
+            recipe => recipe.missedIngredientCount === 0
+          ),
+          soClose: uniqueArray.filter(
+            recipe => recipe.missedIngredientCount !== 0
+          ),
           loaded: true
         });
-        console.log("recipes", this.state.recipes);
-        console.log("soClose", this.state.soClose);
-      } else {
-        recipeSort(data);
-        console.log("recipes", this.state.recipes);
-        console.log("soClose", this.state.soClose);
-        this.setState({ loaded: true });
-      }
+      };
+      const data = await api("recipes/findByIngredients", {
+        number: 20,
+        ranking: 1,
+        ingredients: this.state.ingredients
+      });
+      recipeSort(data);
     } catch (error) {
       console.log(error);
       this.setState({ error: true, loaded: true });
