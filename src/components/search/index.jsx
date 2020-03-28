@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import AbortController from "abort-controller";
 import { debounce } from "lodash";
 import {
   SearchBar,
@@ -13,12 +11,6 @@ import {
 import IngredientCard from "components/IngredientCard";
 import api from "../../utils/api";
 
-//when typing fast and using the enter key to add ingredients,
-//the autocomplete async function would render after the ingredient was added
-//creating an abort controller should fix this issue.
-const controller = new AbortController();
-const signal = controller.signal;
-
 class Search extends Component {
   state = {
     error: false,
@@ -30,11 +22,15 @@ class Search extends Component {
     this.props.ingredients.length
       ? this.setState({ DoIngredientsExist: true })
       : this.setState({ DoIngredientsExist: false });
+    console.log(this.props.ingredients);
   }
   handlesubmit = e => {
     e.preventDefault();
-    if (this.state.isSearching) return;
-    this.props.setIngredients(this.state.searchField, this.props.ingredients);
+
+    this.props.setIngredients(
+      this.state.searchField,
+      this.props.ingredients.join()
+    );
     this.setState({
       autoComplete: [],
       searchField: "",
@@ -42,7 +38,7 @@ class Search extends Component {
     });
   };
   handleAutocompleteSelect = x => {
-    this.props.setIngredients(x, this.props.ingredients);
+    this.props.setIngredients(x, this.props.ingredients.join());
 
     this.setState({
       searchField: "",
@@ -57,7 +53,6 @@ class Search extends Component {
   };
   handleChange = e => {
     this.setState({ searchField: e.target.value, autoComplete: [] });
-    controller.abort();
     this.fetchAutoComplete();
     !this.state.searchField.length && this.setState({ autoComplete: [] });
   };
@@ -70,7 +65,9 @@ class Search extends Component {
     });
     this.setState({ autoComplete: data, isSearching: false });
   }, 700);
+
   render() {
+    console.log(this.props.ingredients);
     return (
       <SearchBarForm
         onSubmit={this.handlesubmit}
@@ -102,7 +99,7 @@ class Search extends Component {
               ))
             : null}
         </AutoComplete>
-        {this.props.ingredients.length ? (
+        {this.props.ingredients ? (
           <Ingredients
             ingredientsExist={this.props.ingredients.length}
             className="ingredients"

@@ -16,6 +16,7 @@ import {
   getLocalIngredients,
   setLocalIngredients
 } from "../../utils/localStorage";
+import Ingredient from "pages/recipe/IngredientDisplay/Ingredient";
 
 class Fridgestock extends Component {
   state = {
@@ -26,22 +27,29 @@ class Fridgestock extends Component {
     error: false
   };
   componentDidMount() {
-    this.setState({
-      ingredients: JSON.parse(getLocalIngredients("ingredients"))
-    });
-    setLocalIngredients("missedIngredients", "");
+    if (localStorage.getItem("ingredients")) {
+      const savedIngredients = localStorage.getItem("ingredients").split(",");
+      JSON.stringify(localStorage.getItem("ingredients").length) &&
+        this.setState({ ingredients: savedIngredients });
+    }
+    localStorage.setItem("missedIngredients", "");
   }
 
   setIngredients = (ingredient, existingIngredients) => {
+    console.log(ingredient, existingIngredients);
     if (
-      ingredient.trim() &&
-      existingIngredients.find(x => x.toLowerCase() !== ingredient.trim())
+      ingredient.trim()
+
+      // (if(existingIngredients.length) {existingIngredients.find(x => x.toLowerCase() !== ingredient.trim())})
     ) {
-      setLocalIngredients(
-        "ingredients",
-        JSON.stringify([...existingIngredients, ingredient])
-      );
-      this.setState({ ingredients: [...this.state.ingredients, ingredient] });
+      setLocalIngredients("ingredients", [...existingIngredients, Ingredient]);
+      this.setState({
+        ingredients: this.state.ingredients
+          ? [...this.state.ingredients, ingredient]
+          : ingredient
+      });
+    } else {
+      console.log("rejected");
     }
   };
   removeIngredient = removeIngredient => {
