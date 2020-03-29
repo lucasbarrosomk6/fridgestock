@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import FridgeStock from "./pages/FridgeStock";
-import Recipe from "./pages/recipe";
+import FridgeStock from "./Pages/FridgeStock";
+import Recipe from "./Pages/Recipe";
 import NavBar from "./NavBar";
 import "./App.css";
 

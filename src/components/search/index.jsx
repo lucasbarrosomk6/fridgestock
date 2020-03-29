@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import AbortController from "abort-controller";
 import { debounce } from "lodash";
 import {
   SearchBar,
@@ -11,6 +9,7 @@ import {
   RecipeSearchButton
 } from "./styles";
 import IngredientCard from "components/IngredientCard";
+import api from "../../utils/api";
 
 //when typing fast and using the enter key to add ingredients,
 //the autocomplete async function would render after the ingredient was added
@@ -63,15 +62,10 @@ class Search extends Component {
   fetchAutoComplete = debounce(async () => {
     console.log("autocomplete triggered");
     this.setState({ isSearching: true });
-    const { data } = await axios({
-      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/autocomplete?query=${this.state.searchField}`,
-      method: "get",
-      signal: signal,
-      headers: {
-        "X-RapidAPI-Host":
-          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-      }
+    const data = await api("food/ingredients/autocomplete", {
+      query: this.state.searchField,
+      number: 5,
+      metaInformation: false
     });
     this.setState({ autoComplete: data, isSearching: false });
   }, 700);

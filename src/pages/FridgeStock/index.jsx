@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Search from "../../components/Search";
+import Search from "components/Search";
 import _ from "lodash";
 import {
   FridgestockContainer,
@@ -11,8 +10,8 @@ import {
   Title,
   InputTitle
 } from "./styles";
-import Recipe from "../../components/RecipeCard";
-import api from "../../utils/api";
+import Recipe from "components/RecipeCard";
+import api from "utils/api";
 
 class Fridgestock extends Component {
   state = {
@@ -24,7 +23,7 @@ class Fridgestock extends Component {
   };
   componentDidMount() {
     if (localStorage.getItem("ingredients")) {
-      const savedIngredients = localStorage.getItem("ingredients").split(",");
+      const savedIngredients = JSON.parse(localStorage.getItem("ingredients"));
       JSON.stringify(localStorage.getItem("ingredients").length) &&
         this.setState({ ingredients: savedIngredients });
     }
@@ -35,25 +34,29 @@ class Fridgestock extends Component {
   };
   setIngredients = ingredient => {
     //removes whitespace, denies duplicates and denies blank searches
-    console.log("setIngredient's argument", ingredient);
-    const noSpaceIngredient = ingredient.trim();
-    if (noSpaceIngredient) {
-      if (
-        this.state.ingredients.find(
-          existingIngredient =>
-            existingIngredient.toLowerCase() === noSpaceIngredient
-        )
-      ) {
+    console.log("setIngredients", typeof ingredient);
+    const { ingredients } = this.state;
+    const trimmedIngredient = ingredient.trim();
+
+    const isIngredientExisting = ingredients.find(
+      el => el.toLowerCase() === trimmedIngredient
+    );
+    if (trimmedIngredient) {
+      if (isIngredientExisting) {
         console.log("REJECTED: duplicate");
-      } else {
-        localStorage.setItem("ingredients", [
-          ...this.state.ingredients,
-          noSpaceIngredient
-        ]);
-        this.setState({
-          ingredients: [...this.state.ingredients, noSpaceIngredient]
-        });
+        return;
       }
+
+      const newIngredients = [...ingredients, trimmedIngredient];
+      console.log(typeof newIngredients);
+      localStorage.setItem(
+        "ingredients",
+        JSON.stringify([...ingredients, trimmedIngredient])
+      );
+      console.log(typeof JSON.parse(localStorage.getItem("ingredients")));
+      this.setState({
+        ingredients: [...ingredients, trimmedIngredient]
+      });
     } else {
       console.log("REJECTED: no ingredient found");
       this.setState({ ingredients: this.state.ingredients });
@@ -94,10 +97,11 @@ class Fridgestock extends Component {
           }
         }
       };
-      const data = await api(
-        "ingredients",
-        `?number=20&ranking=2&ignorePantry=true&ingredients=${ingredientQueryString}`
-      );
+      const data = await api("recipes/findByIngredients", {
+        number: 20,
+        ranking: 1,
+        ingredients: this.state.ingredients
+      });
 
       if (
         this.state.recipes.find(

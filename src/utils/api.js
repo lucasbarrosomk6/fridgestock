@@ -3,34 +3,15 @@ import axios from "axios";
 //how do I specify one argument in the function call?
 
 // function(examplePath, exampleQuery, ignorePantry) but skip over "id" and "numberOfResults"
-export default async (
-  path,
-  query = "",
-  id = "",
-  numberOfResults = 5,
-  ignorePantry = true
-) => {
-  let dynamicPath;
-  let dynamicQuery;
-  switch (path) {
-    case path === "autoComplete":
-      dynamicPath = "food/ingredients/autocomplete?";
-      dynamicQuery = `query=${query}`;
-      break;
-    case path === "fridgeStockSearch":
-      dynamicPath = "recipes/findByIngredients?";
-      dynamicQuery = `query=number=${numberOfResults}&ranking=1&ignorePantry=${ignorePantry}&ingredients=${query}`;
-      break;
-    case path === "recipePageSearch":
-      dynamicPath = `recipes/${id}/information`;
-      dynamicQuery = query;
-      break;
-    default:
-      dynamicPath = path;
-  }
+
+export default async (path, config = {}) => {
+  const dynamicQuery = Object.keys(config)
+    .map(key => key + "=" + config[key])
+    .join("&");
+
   const baseLink =
     "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/";
-  const url = `${baseLink}${dynamicPath}${dynamicQuery}`;
+  const url = `${baseLink}${path}?${dynamicQuery}`;
   console.log(url);
   let { data } = await axios({
     url: url,
@@ -55,3 +36,16 @@ export default async (
 //     "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
 //   }
 // });
+
+// let dynamicPath;
+// switch (path) {
+//   case path === "autoComplete":
+//     dynamicPath = "food/ingredients/autocomplete?";
+//     break;
+//   case path === "fridgeStockSearch":
+//     dynamicPath = "recipes/findByIngredients?";
+//     break;
+
+//   default:
+//     dynamicPath = path;
+// }

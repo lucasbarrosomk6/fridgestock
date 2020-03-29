@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
 import TagBanner from "../../components/TagBanner";
 import ImageDisplay from "./ImageDisplay";
 import IngredientDisplay from "./ingredientDisplay";
 import { RecipePageContainer } from "./styles";
 import { Title } from "./styles";
+import api from "../../utils/api";
 
 const tagFilterer = recipe => {
   const {
@@ -44,16 +44,9 @@ export default class Recipe extends Component {
   fetchData = async () => {
     try {
       this.setState({ loading: true });
-      const { data } = await axios({
-        url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${this.props.match.params.recipeId}/information`,
-        method: "get",
-        headers: {
-          "X-RapidAPI-Host":
-            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-          "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-        }
-      });
-
+      const data = await api(
+        `recipes/${this.props.match.params.recipeId}/information`
+      );
       this.setState({
         recipe: data,
         missedIngredients:
