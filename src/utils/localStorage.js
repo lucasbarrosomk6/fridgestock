@@ -1,10 +1,10 @@
 export const getLocalStorage = item => {
-  if (localStorage.getItem(`${item}`).length) {
-    const savedItem = JSON.parse(localStorage.getItem(`${item}`));
-    console.log("savedItem", JSON.stringify(savedItem));
-    return savedItem;
+  const defaultValue = "";
+  const foundItem = localStorage.getItem(`${item}`) || defaultValue;
+  if (foundItem.length) {
+    return JSON.parse(foundItem);
   }
-  return "";
+  return defaultValue;
 };
 export const setLocalIngredients = (itemKey, itemValue) =>
   localStorage.setItem(itemKey, itemValue);
