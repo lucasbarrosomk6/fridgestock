@@ -7,8 +7,7 @@ import IngredientOptions from "./QuantityPopup";
 import {
   IngredientContainer,
   NameContainer,
-  QuantityContainer,
-  StyledPopup
+  QuantityContainer
 } from "./styles";
 import Popup from "reactjs-popup";
 

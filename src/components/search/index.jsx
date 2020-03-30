@@ -28,10 +28,11 @@ class Search extends Component {
     this.props.ingredients.length
       ? this.setState({ DoIngredientsExist: true })
       : this.setState({ DoIngredientsExist: false });
+    console.log(this.props.ingredients);
   }
   handlesubmit = e => {
     e.preventDefault();
-    if (this.state.isSearching) return;
+
     this.props.setIngredients(this.state.searchField);
     this.setState({
       autoComplete: [],
@@ -55,7 +56,6 @@ class Search extends Component {
   };
   handleChange = e => {
     this.setState({ searchField: e.target.value, autoComplete: [] });
-    controller.abort();
     this.fetchAutoComplete();
     !this.state.searchField.length && this.setState({ autoComplete: [] });
   };
@@ -64,12 +64,13 @@ class Search extends Component {
     this.setState({ isSearching: true });
     const data = await api("food/ingredients/autocomplete", {
       query: this.state.searchField,
-      number: 5,
-      metaInformation: false
+      number: 5
     });
     this.setState({ autoComplete: data, isSearching: false });
   }, 700);
+
   render() {
+    console.log(this.props.ingredients);
     return (
       <SearchBarForm
         onSubmit={this.handlesubmit}

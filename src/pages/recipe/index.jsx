@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TagBanner from "../../components/TagBanner";
 import ImageDisplay from "./ImageDisplay";
-import IngredientDisplay from "./ingredientDisplay";
+import IngredientDisplay from "./IngredientDisplay";
 import { RecipePageContainer } from "./styles";
 import { Title } from "./styles";
 import api from "../../utils/api";

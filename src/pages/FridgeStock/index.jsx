@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
+import { setLocalIngredients, getLocalStorage } from "utils/localStorage";
 
 class Fridgestock extends Component {
   state = {
@@ -22,11 +23,8 @@ class Fridgestock extends Component {
     error: false
   };
   componentDidMount() {
-    if (localStorage.getItem("ingredients")) {
-      const savedIngredients = JSON.parse(localStorage.getItem("ingredients"));
-      JSON.stringify(localStorage.getItem("ingredients").length) &&
-        this.setState({ ingredients: savedIngredients });
-    }
+    this.setState({ ingredients: getLocalStorage("ingredients") });
+    console.log(getLocalStorage("ingredients"));
     localStorage.setItem("missedIngredients", "");
   }
   setMissedIngredients = missedIngredients => {
@@ -38,9 +36,9 @@ class Fridgestock extends Component {
     const { ingredients } = this.state;
     const trimmedIngredient = ingredient.trim();
 
-    const isIngredientExisting = ingredients.find(
-      el => el.toLowerCase() === trimmedIngredient
-    );
+    const isIngredientExisting =
+      ingredients.length &&
+      ingredients.find(el => el.toLowerCase() === trimmedIngredient);
     if (trimmedIngredient) {
       if (isIngredientExisting) {
         console.log("REJECTED: duplicate");
@@ -58,71 +56,42 @@ class Fridgestock extends Component {
         ingredients: [...ingredients, trimmedIngredient]
       });
     } else {
-      console.log("REJECTED: no ingredient found");
-      this.setState({ ingredients: this.state.ingredients });
+      console.log("rejected");
     }
   };
   removeIngredient = removeIngredient => {
     // filters out an ingredient matching the argument and sets the state to the new array
-    console.log("removeIngredient has activated");
     const newIngredients = this.state.ingredients.filter(
       x => x !== removeIngredient
     );
-    localStorage.setItem("ingredients", newIngredients);
+    setLocalIngredients("ingredients", newIngredients);
     this.setState({ ingredients: newIngredients });
   };
   fetchRecipes = async () => {
-    //   fetches recipes using the ingredients added as the query, sorts them into 2 catagories: recipes (all recipies that only use what you have) and so close(all recipes that have some of what you have) then checks for duplicates
     this.setState({ error: false, recipes: [], soClose: [] });
     try {
-      const ingredientQueryString = this.state.ingredients;
-
       const recipeSort = array => {
         let uniqueArray = _.uniqBy(array, "title"); ///removes duplicates
-        console.log("array: ", array, "duplicatefreeArray: ", uniqueArray);
-        let i;
-        for (i = 0; i < uniqueArray.length; i++) {
-          if (uniqueArray[i].missedIngredientCount === 0) {
-            this.setState({
-              recipes: [...this.state.recipes, uniqueArray[i]],
-              loaded: true,
-              error: false
-            });
-          } else {
-            this.setState({
-              soClose: [...this.state.soClose, uniqueArray[i]],
-              loaded: true,
-              error: false
-            });
-          }
-        }
+        const soClose = uniqueArray.filter(
+          recipe => recipe.missedIngredientCount !== 0
+        );
+        const recipes = uniqueArray.filter(
+          recipe => recipe.missedIngredientCount === 0
+        );
+        this.setState({
+          recipes: recipes,
+          soClose: soClose,
+          loaded: true
+        });
       };
       const data = await api("recipes/findByIngredients", {
         number: 20,
         ranking: 1,
         ingredients: this.state.ingredients
       });
-
-      if (
-        this.state.recipes.find(
-          existingRecipe => existingRecipe.name === data.title
-        )
-      ) {
-        this.setState({
-          recipes: this.state.recipes,
-          soClose: this.state.soClose,
-          loaded: true
-        });
-        console.log("recipes", this.state.recipes);
-        console.log("soClose", this.state.soClose);
-      } else {
-        recipeSort(data);
-        console.log("recipes", this.state.recipes);
-        console.log("soClose", this.state.soClose);
-        this.setState({ loaded: true });
-      }
+      recipeSort(data);
     } catch (error) {
-      console.log(error);
+      console.log("error", error);
       this.setState({ error: true, loaded: true });
     }
   };
