@@ -14,6 +14,14 @@ class Recipe extends Component {
     hover: false
   };
   toggleHover = () => this.setState({ hover: !this.state.hover });
+
+  handleSetIngredients = () => {
+    localStorage.setItem(
+      "missedIngredients",
+      JSON.stringify(this.props.missedIngredients)
+    );
+  };
+
   render() {
     const { recipe, match } = this.props;
     const { image, title, missedIngredients, usedIngredients, id } = recipe;
@@ -25,12 +33,7 @@ class Recipe extends Component {
       >
         <Container
           className="recipe"
-          onClick={() =>
-            localStorage.setItem(
-              "missedIngredients",
-              JSON.stringify(missedIngredients)
-            )
-          }
+          onClick={this.handleSetIngredients}
           onMouseEnter={this.toggleHover}
           onMouseLeave={this.toggleHover}
         >

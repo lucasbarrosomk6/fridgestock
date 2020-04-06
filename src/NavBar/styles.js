@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { deviceSizes as device } from "../diviceSizes";
 
 export const NavBarContainer = styled.div`
   display: flex;

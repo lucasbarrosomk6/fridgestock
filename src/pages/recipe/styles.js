@@ -23,6 +23,7 @@ export const Title = styled.div`
   width: 100%;
   background-color: lightgrey;
   text-align: center;
+
   @media ${device.desktop} {
     flex-direction: row;
     justify-content: center;
@@ -46,6 +47,7 @@ export const ImageContainer = styled.div`
   transition: all 0.5s;
   cursor: pointer;
   border-bottom: 1px solid black;
+
   &:hover {
     ${HoverMessage} {
       color: black;

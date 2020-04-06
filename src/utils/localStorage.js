@@ -6,5 +6,3 @@ export const getLocalStorage = item => {
   }
   return defaultValue;
 };
-export const setLocalIngredients = (itemKey, itemValue) =>
-  localStorage.setItem(itemKey, itemValue);

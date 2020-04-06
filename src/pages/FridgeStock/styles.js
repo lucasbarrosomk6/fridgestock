@@ -10,30 +10,23 @@ export const FridgestockContainer = styled.div`
   align-items: center;
   width: 90vw;
   margin: 2% 1%;
-  background-color: lightgrey;
   flex-direction: column;
   @media ${device.desktop} {
     align-items: flex-start;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     min-width: 540px;
   }
 `;
 export const InputContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
+  width: 100%;
   padding: 1vh 0;
   border-bottom: 1px solid black;
   height: fit-content;
   text-align: center;
   @media ${device.desktop} {
-    border-right: 1px solid black;
     border-bottom: none;
-    width: 33.5vw;
-    max-width: 266px;
-    min-width: 190px;
   }
 `;
 export const InputTitle = styled.div`

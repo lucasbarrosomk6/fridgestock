@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  OptionContainer,
-  Title,
-  InputContainer,
-  PopUpContainer
-} from "./styles";
+import { OptionContainer, Title, InputContainer } from "./styles";
 
 const IngredientOptions = ({ ingredient, quantity, unit }) => {
   let startingQuantity = quantity;

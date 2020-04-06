@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { Component } from "react";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
 import IngredientOptions from "./QuantityPopup";
@@ -10,78 +9,94 @@ import {
   QuantityContainer
 } from "./styles";
 import Popup from "reactjs-popup";
+import api from "utils/api";
 
-const Ingredient = ({ ingredient, unit, location, history, match }) => {
-  const [similarIngredients, setSimilarIngredients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [quantity, setQuantity] = useState(ingredient.measures.us.amount);
+class Ingredient extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      similarIngredients: [],
+      loading: false,
+      quantity: this.props.ingredient.measures.us.amount
+    };
+    this.trigger = React.createRef();
+    // this.getElementWidth = this.getElementWidth.bind(this);
+  }
+  componentDidMount() {
+    this.props.logWidth(this.trigger.current.clientWidth);
+  }
+  setSimilarIngredients = x => this.setState({ similarIngredients: x });
+  setLoading = x => this.setState({ loading: x });
+  setQuantity = x => this.setState({ quantity: x });
 
-  const parsed = queryString.parse(location.search);
+  render() {
+    const { ingredient, location, history, match } = this.props;
+    const { loading, quantity } = this.state;
+    const { setLoading, setQuantity, setSimilarIngredients } = this;
+    const us = ingredient.measures.us;
+    const trigger = React.createRef();
+    const quantityWidth =
+      this.trigger.current && this.trigger.current.clientWidth;
+    console.log("render");
+    console.log(this.trigger.current);
 
-  const fetchSimilarIngredients = async ingredient => {
-    setLoading(true);
-    const { data } = await axios({
-      url: `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients/${ingredient.id}/substitutes`,
-      method: "get",
-      headers: {
-        "X-RapidAPI-Host":
-          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY
-      }
-    });
+    const fetchSimilarIngredients = async ingredient => {
+      setLoading(true);
+      const data = await api(`food/ingredients/${ingredient.id}/substitutes`);
+      setLoading(false);
+      data.substitutes &&
+        setSimilarIngredients(
+          data.substitutes.map(ingredient => ({
+            value: ingredient,
+            label: ingredient
+          }))
+        );
+    };
 
-    setLoading(false);
-    console.log(data.substitutes);
-
-    data.substitutes &&
-      setSimilarIngredients(
-        data.substitutes.map(ingredient => ({
-          value: ingredient,
-          label: ingredient
-        }))
-      );
-  };
-
-  const handleSelect = data => {
     const parsed = queryString.parse(location.search);
-    parsed[ingredient.name] = data.value;
 
-    const stringified = queryString.stringify(parsed);
+    const handleSelect = data => {
+      const parsed = queryString.parse(location.search);
+      parsed[ingredient.name] = data.value;
 
-    console.log(stringified);
-    history.push(`${match.url}?${stringified}`);
-  };
+      const stringified = queryString.stringify(parsed);
 
-  const us = ingredient.measures.us;
+      console.log(stringified);
+      history.push(`${match.url}?${stringified}`);
+    };
+    if (loading) return;
+    return (
+      <IngredientContainer className="Ingredient">
+        <div ref={this.trigger}>
+          <Popup
+            trigger={
+              <QuantityContainer id="QuantittyContainer">{`${quantity} ${us.unitShort}`}</QuantityContainer>
+            }
+            position={["bottom left"]}
+            closeOnDocumentClick
+          >
+            <IngredientOptions
+              quantity={quantity}
+              setQuantity={setQuantity}
+              unit={us.unitShort}
+            />
+          </Popup>
+        </div>
 
-  return (
-    <IngredientContainer className="Ingredient">
-      <Popup
-        trigger={
-          <QuantityContainer>{`${quantity} ${us.unitShort}`}</QuantityContainer>
-        }
-        position={["bottom left"]}
-        closeOnDocumentClick
-      >
-        <IngredientOptions
-          quantity={quantity}
-          setQuantity={setQuantity}
-          unit={us.unitShort}
-        />{" "}
-      </Popup>
-      <Popup
-        trigger={<NameContainer>{ingredient.name}</NameContainer>}
-        position={["bottom center"]}
-        closeOnDocumentClick
-        on="focus"
-      >
-        <IngredientOptions
-          quantity={quantity}
-          setQuantity={setQuantity}
-          unit={us.unitShort}
-        />
-      </Popup>
-    </IngredientContainer>
-  );
-};
+        <Popup
+          trigger={<NameContainer>{ingredient.name}</NameContainer>}
+          position={["bottom center"]}
+          closeOnDocumentClick
+          on="focus"
+        >
+          <IngredientOptions
+            quantity={quantity}
+            setQuantity={setQuantity}
+            unit={us.unitShort}
+          />
+        </Popup>
+      </IngredientContainer>
+    );
+  }
+}
 export default withRouter(Ingredient);

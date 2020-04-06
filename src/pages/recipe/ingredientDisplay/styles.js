@@ -22,19 +22,19 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: fit-content;
   padding: 2%;
   margin: 2%;
   border: 1px solid black;
   width: 60%;
   cursor: pointer;
+  transition: all 0.5s;
+
   &:hover {
     color: white;
     border: white;
     background-color: black;
   }
-  transition: all 0.5s;
 `;
 export const RadioContainer = styled.form`
   display: flex;
@@ -55,6 +55,7 @@ export const UnitToggle = styled.div`
   color: ${props => (props.selected ? "white" : "black")};
   transition: all 0.2s;
   cursor: pointer;
+
   &:hover {
     color: white;
     border: white;

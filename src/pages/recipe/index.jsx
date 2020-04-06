@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import TagBanner from "../../components/TagBanner";
 import ImageDisplay from "./ImageDisplay";
 import IngredientDisplay from "./IngredientDisplay";
 import { RecipePageContainer } from "./styles";
 import { Title } from "./styles";
 import api from "../../utils/api";
+import { getLocalStorage } from "utils/localStorage";
 
 const tagFilterer = recipe => {
   const {
@@ -38,7 +40,8 @@ export default class Recipe extends Component {
     loading: true,
     error: false,
     recipe: {},
-    missedIngredients: []
+    missedIngredients: [],
+    steps: []
   };
 
   fetchData = async () => {
@@ -47,11 +50,11 @@ export default class Recipe extends Component {
       const data = await api(
         `recipes/${this.props.match.params.recipeId}/information`
       );
+      if (!data.length) return this.props.history.push("/not-found");
       this.setState({
         recipe: data,
-        missedIngredients:
-          JSON.parse(localStorage.getItem("missedIngredients")) || [],
-        loading: false
+        loading: false,
+        steps: data.analyzedInstructions[0].steps
       });
     } catch (error) {
       this.setState({ loading: false, error: true });
@@ -64,33 +67,51 @@ export default class Recipe extends Component {
   };
   componentDidMount() {
     this.fetchData();
+    this.setState({ missedIngredients: getLocalStorage("missedIngredients") });
   }
+
   render() {
-    const { recipe } = this.state;
+    const { recipe, missedIngredients, loading, steps } = this.state;
     const filteredTags = tagFilterer(recipe);
-    if (this.state.loading) {
-      return <Title>Thinking up something good</Title>;
-    } else {
-      return (
-        <RecipePageContainer className="recipe-page-container">
-          <Title>{recipe.title}</Title>
+    if (loading) return <Title>Thinking up something good</Title>;
 
-          <TagBanner
-            text="You're missing the following ingredients"
-            data={this.state.missedIngredients}
-            warning
-          />
+    return (
+      <RecipePageContainer className="recipe-page-container">
+        <Title>{recipe.title}</Title>
 
-          <TagBanner data={filteredTags} />
+        <TagBanner
+          text={
+            missedIngredients.length &&
+            "You're missing the following ingredients"
+          }
+          data={missedIngredients}
+          warning
+        />
 
-          {this.props.missedIngredients}
-          <ImageDisplay image={recipe.image} />
-          <IngredientDisplay
-            setIngredients={this.handleIngredientChange}
-            ingredients={recipe.extendedIngredients}
-          />
-        </RecipePageContainer>
-      );
-    }
+        <TagBanner data={filteredTags} />
+
+        {this.props.missedIngredients}
+        <ImageDisplay image={recipe.image} />
+        <IngredientDisplay
+          setIngredients={this.handleIngredientChange}
+          ingredients={recipe.extendedIngredients}
+        />
+        <div>
+          {steps.map(item => (
+            <div
+              style={{ margin: "5px", display: "flex", alignItems: "center" }}
+              key={item.number}
+            >
+              <h3
+                style={{ paddingRight: "15px", borderRight: "1px solid black" }}
+              >
+                {item.number}
+              </h3>
+              <p style={{ paddingLeft: "15px" }}>{item.step}</p>
+            </div>
+          ))}
+        </div>
+      </RecipePageContainer>
+    );
   }
 }

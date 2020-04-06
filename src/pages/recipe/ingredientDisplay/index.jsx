@@ -15,7 +15,9 @@ const Toggle = props => (
     {props.unit}
   </UnitToggle>
 );
-
+const logWidth = width => {
+  console.log(width);
+};
 const IngredientDisplay = ({ ingredients, setIngredients }) => {
   const [unit, handleUnitChange] = useState("metric");
 
@@ -36,7 +38,12 @@ const IngredientDisplay = ({ ingredients, setIngredients }) => {
 
       <IngredientContainer>
         {ingredients.map(ingredient => (
-          <Ingredient key={ingredient.id} ingredient={ingredient} unit={unit} />
+          <Ingredient
+            key={ingredient.id}
+            ingredient={ingredient}
+            unit={unit}
+            logWidth={logWidth}
+          />
         ))}
       </IngredientContainer>
     </IngredientDisplayContainer>
