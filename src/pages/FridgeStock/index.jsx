@@ -8,7 +8,6 @@ import {
   SoCloseContainer,
   RecipeContainer,
   Title,
-  InputTitle
 } from "./styles";
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
@@ -20,22 +19,25 @@ class Fridgestock extends Component {
     recipes: [],
     soClose: [],
     loaded: false,
-    error: false
+    error: false,
   };
-  componentDidMount() {
-    this.setState({ ingredients: getLocalStorage("ingredients") });
-    console.log(getLocalStorage("ingredients"));
-    localStorage.setItem("missedIngredients", "");
-  }
-  setMissedIngredients = missedIngredients => {
+  // componentDidMount() {
+  //   this.setState({
+  //     ingredients:
+  //       getLocalStorage("ingredients") && getLocalStorage("ingredients"),
+  //   });
+  //   console.log(getLocalStorage("ingredients"));
+  //   localStorage.setItem("missedIngredients", "");
+  // }
+  setMissedIngredients = (missedIngredients) => {
     localStorage.setItem("missedIngredients", missedIngredients);
   };
-  setIngredients = ingredient => {
+  setIngredients = (ingredient) => {
     const { ingredients } = this.state;
     const trimmedIngredient = ingredient.trim(); //removes whitespace, denies duplicates and denies blank searches
     const isIngredientExisting =
       ingredients.length &&
-      ingredients.find(el => el.toLowerCase() === trimmedIngredient);
+      ingredients.find((el) => el.toLowerCase() === trimmedIngredient);
 
     if (trimmedIngredient) {
       if (isIngredientExisting) {
@@ -48,17 +50,17 @@ class Fridgestock extends Component {
       );
 
       this.setState({
-        ingredients: [...ingredients, trimmedIngredient]
+        ingredients: [...ingredients, trimmedIngredient],
       });
     } else {
       console.log("rejected");
     }
   };
 
-  removeIngredient = removeIngredient => {
+  removeIngredient = (removeIngredient) => {
     // filters out an ingredient matching the argument and sets the state to the new array
     const newIngredients = this.state.ingredients.filter(
-      x => x !== removeIngredient
+      (x) => x !== removeIngredient
     );
     localStorage.setItem("ingredients", newIngredients);
     this.setState({ ingredients: newIngredients });
@@ -70,21 +72,21 @@ class Fridgestock extends Component {
       const data = await api("recipes/findByIngredients", {
         number: 20,
         ranking: 1,
-        ingredients: this.state.ingredients
+        ingredients: this.state.ingredients,
       });
 
       const uniqueArray = _.uniqBy(data, "title"); ///removes duplicates
       const soClose = uniqueArray.filter(
-        recipe => recipe.missedIngredientCount !== 0
+        (recipe) => recipe.missedIngredientCount !== 0
       );
       const recipes = uniqueArray.filter(
-        recipe => recipe.missedIngredientCount === 0
+        (recipe) => recipe.missedIngredientCount === 0
       );
 
       this.setState({
         recipes: recipes,
         soClose: soClose,
-        loaded: true
+        loaded: true,
       });
     } catch (error) {
       console.log("error", error);

@@ -7,32 +7,33 @@ import {
   SearchBarForm,
   AutoCompleteItem,
   Ingredients,
-  RecipeSearchButton
+  RecipeSearchButton,
+  AutoCompleteDisplay,
 } from "./styles";
 
 class AutoComplete extends Component {
   state = {
     autoComplete: [],
-    searchField: ""
+    searchField: "",
   };
 
-  handlesubmit = e => {
+  handlesubmit = (e) => {
     e.preventDefault();
 
     this.props.setIngredients(this.state.searchField);
     this.setState({
       autoComplete: [],
       searchField: "",
-      doIngredientsExist: true
+      doIngredientsExist: true,
     });
   };
-  handleAutocompleteSelect = x => {
+  handleAutocompleteSelect = (x) => {
     this.props.setIngredients(x);
 
     this.setState({
       searchField: "",
       autoComplete: [],
-      buttonClicked: false
+      buttonClicked: false,
     });
   };
 
@@ -40,7 +41,7 @@ class AutoComplete extends Component {
     this.props.fetchRecipes().then(this.setState({ buttonClicked: true }));
     this.setState({ searchField: "" });
   };
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ searchField: e.target.value, autoComplete: [] });
     this.fetchAutoComplete();
     !this.state.searchField.length && this.setState({ autoComplete: [] });
@@ -50,7 +51,7 @@ class AutoComplete extends Component {
     this.setState({ isSearching: true });
     const data = await api("food/ingredients/autocomplete", {
       query: this.state.searchField,
-      number: 5
+      number: 5,
     });
     this.setState({ autoComplete: data, isSearching: false });
   }, 700);
@@ -71,7 +72,7 @@ class AutoComplete extends Component {
           <MDBIcon icon="search" />
         </SearchBar>
 
-        <AutoComplete
+        <AutoCompleteDisplay
           className="autocomplete"
           fetchedItems={this.state.autoComplete.length ? true : false}
         >
@@ -86,7 +87,7 @@ class AutoComplete extends Component {
                 </AutoCompleteItem>
               ))
             : null}
-        </AutoComplete>
+        </AutoCompleteDisplay>
       </SearchBarForm>
     );
   }

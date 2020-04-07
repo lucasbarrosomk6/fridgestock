@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 const size = {
   mobile: "360px",
-  desktop: "600px"
+  desktop: "600px",
 };
 export const device = {
   mobile: `(min-width: ${size.mobile})`,
-  desktop: `(min-width: ${size.desktop})`
+  desktop: `(min-width: ${size.desktop})`,
 };
 
 export const SearchBarForm = styled.form`
@@ -30,12 +30,12 @@ export const SearchBarForm = styled.form`
 export const SearchBar = styled.div`
   display: flex;
 `;
-export const AutoComplete = styled.div`
+export const AutoCompleteDisplay = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 90%;
-  max-height: ${props => (!props.fetchedItems ? "0px" : "fit-content")};
+  max-height: ${(props) => (!props.fetchedItems ? "0px" : "fit-content")};
   transition: all 0.5s;
   font-size: 120%;
   background-color: rgb(255, 255, 255, 0.5);
@@ -45,7 +45,7 @@ export const AutoComplete = styled.div`
   overflow: hidden;
   @media ${device.desktop} {
     font-size: 150%;
-    height: ${props => (!props.fetchedItems ? "0px" : "15vh")};
+    height: ${(props) => (!props.fetchedItems ? "0px" : "15vh")};
   }
 `;
 

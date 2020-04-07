@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import TagBanner from "../../components/TagBanner";
 import ImageDisplay from "./ImageDisplay";
 import IngredientDisplay from "./IngredientDisplay";
@@ -8,7 +7,7 @@ import { Title } from "./styles";
 import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
 
-const tagFilterer = recipe => {
+const tagFilterer = (recipe) => {
   const {
     vegetarian,
     vegan,
@@ -17,7 +16,7 @@ const tagFilterer = recipe => {
     cheap,
     veryPopular,
     sustainable,
-    dairyFree
+    dairyFree,
   } = recipe;
 
   const tags = {
@@ -28,11 +27,11 @@ const tagFilterer = recipe => {
     cheap,
     veryPopular,
     sustainable,
-    dairyFree
+    dairyFree,
   };
   const relevantRecipeKeys = Object.keys(tags);
 
-  return relevantRecipeKeys.filter(key => tags[key]);
+  return relevantRecipeKeys.filter((key) => tags[key]);
 };
 
 export default class Recipe extends Component {
@@ -41,7 +40,7 @@ export default class Recipe extends Component {
     error: false,
     recipe: {},
     missedIngredients: [],
-    steps: []
+    steps: [],
   };
 
   fetchData = async () => {
@@ -54,15 +53,15 @@ export default class Recipe extends Component {
       this.setState({
         recipe: data,
         loading: false,
-        steps: data.analyzedInstructions[0].steps
+        steps: data.analyzedInstructions[0].steps,
       });
     } catch (error) {
       this.setState({ loading: false, error: true });
     }
   };
-  handleIngredientChange = newIngredients => {
+  handleIngredientChange = (newIngredients) => {
     this.setState(({ recipe }) => ({
-      recipe: { ...recipe, extendedIngredients: newIngredients }
+      recipe: { ...recipe, extendedIngredients: newIngredients },
     }));
   };
   componentDidMount() {
@@ -97,7 +96,7 @@ export default class Recipe extends Component {
           ingredients={recipe.extendedIngredients}
         />
         <div>
-          {steps.map(item => (
+          {steps.map((item) => (
             <div
               style={{ margin: "5px", display: "flex", alignItems: "center" }}
               key={item.number}

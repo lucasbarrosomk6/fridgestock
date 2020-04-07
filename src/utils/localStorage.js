@@ -1,4 +1,4 @@
-export const getLocalStorage = item => {
+export const getLocalStorage = (item) => {
   const defaultValue = "";
   const foundItem = localStorage.getItem(`${item}`) || defaultValue;
   if (foundItem.length) {
