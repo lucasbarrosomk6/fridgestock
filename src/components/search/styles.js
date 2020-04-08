@@ -38,6 +38,9 @@ export const Ingredients = styled.div`
   flex-grow: 1;
   min-width: 180px;
   height: fit-content;
+  @media (max-width: 360px) {
+    justify-content: center;
+  }
 `;
 export const RecipeSearchButton = styled.div`
   position: relative;

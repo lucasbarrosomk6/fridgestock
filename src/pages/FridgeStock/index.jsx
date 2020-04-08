@@ -12,12 +12,13 @@ import {
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
-
+import { MDBBtn } from "mdbreact";
 class Fridgestock extends Component {
   state = {
     ingredients: [],
     recipes: [],
     soClose: [],
+    isLoading: false,
     loaded: false,
     error: false,
   };
@@ -67,7 +68,7 @@ class Fridgestock extends Component {
   };
 
   fetchRecipes = async () => {
-    this.setState({ error: false, recipes: [], soClose: [] });
+    this.setState({ error: false, recipes: [], soClose: [], isLoading: true });
     try {
       const data = await api("recipes/findByIngredients", {
         number: 20,
@@ -87,6 +88,7 @@ class Fridgestock extends Component {
         recipes: recipes,
         soClose: soClose,
         loaded: true,
+        isLoading: false,
       });
     } catch (error) {
       console.log("error", error);
@@ -103,7 +105,19 @@ class Fridgestock extends Component {
             removeIngredient={this.removeIngredient}
           />
         </InputContainer>
-        {this.state.loaded && this.state.recipes && this.state.soClose ? (
+        <MDBBtn
+          onClick={this.fetchRecipes}
+          disabled={!this.state.ingredients.length}
+        >
+          {this.state.isLoading ? (
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          ) : (
+            "Search For Recipes"
+          )}
+        </MDBBtn>
+        {this.state.loaded && this.state.recipes && this.state.soClose && (
           <RecipeContainer className="recipe-container">
             <MakeItNowContainer
               recipesFetched={this.state.recipes.length}
@@ -126,10 +140,6 @@ class Fridgestock extends Component {
                   ))
                 : null}
             </SoCloseContainer>
-          </RecipeContainer>
-        ) : (
-          <RecipeContainer className="recipe-container">
-            <Title>Available Recipes will apear here</Title>
           </RecipeContainer>
         )}
       </FridgestockContainer>

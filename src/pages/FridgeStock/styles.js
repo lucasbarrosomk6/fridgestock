@@ -22,7 +22,6 @@ export const InputContainer = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding: 1vh 0;
-  border-bottom: 1px solid black;
   text-align: center;
   overflow: visible;
   @media (max-width: 360px) {
@@ -40,22 +39,7 @@ export const InputTitle = styled.div`
 
 export const RecipeContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-
-  height: fit-content;
-  width: 90vw;
-  margin: 1vh 0;
-  @media ${device.desktop} {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    flex: 1;
-    height: fit-content;
-    min-width: 350px;
-    margin: 1vh 13.3px;
-  }
 `;
 
 export const MakeItNowContainer = styled.div`
