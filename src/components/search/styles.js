@@ -33,6 +33,7 @@ export const SearchBar = styled.div`
 
 export const Ingredients = styled.div`
   display: flex;
+  justify-content: flex-end;
   flex-wrap: wrap;
   flex-grow: 1;
   min-width: 180px;
