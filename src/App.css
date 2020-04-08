@@ -6,6 +6,15 @@
 }
 .md-form,
 .form-control {
-  margin: 0;
+  margin: 0 !important;
   padding: 0;
+}
+input.form-control {
+  padding: 0 !important;
+}
+.md-form label {
+  transform: translate(0px);
+}
+.md-form {
+  flex-grow: 1;
 }

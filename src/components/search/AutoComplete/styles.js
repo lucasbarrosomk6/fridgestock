@@ -12,16 +12,17 @@ export const device = {
 export const SearchBarForm = styled.form`
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 90%;
-  z-index: 2;
-  margin: 0;
-  text-align: right;
 
-  @media ${device.desktop} {
-    width: 25%;
+  flex-direction: column;
+  align-items: column;
+  justify-content: flex-start;
+  z-index: 2;
+  margin-top: 5px;
+  text-align: right;
+  min-width: 180px;
+
+  @media (max-width: 360px) {
+    width: 100%;
   }
 `;
 export const SearchBar = styled.div`
@@ -40,6 +41,8 @@ export const AutoCompleteDisplay = styled.div`
   border: none;
   border-radius: 1vh;
   box-shadow: 1px 1px 4px black;
+  z-index: 100;
+  background-position: 0 0;
   cursor: pointer;
   @media ${device.desktop} {
     font-size: 150%;
@@ -61,7 +64,7 @@ export const AutoCompleteItem = styled.div`
   font-weight: 400;
   color: #495057;
   transition: all 0.2s;
-
+  background-color: white;
   &:hover {
     background-color: lightgrey;
   }

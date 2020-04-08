@@ -10,17 +10,17 @@ export const device = {
   desktop: `(min-width: ${size.desktop})`,
 };
 
-export const SearchBar = styled(MDBInput)`
+export const SearchBar = styled.div`
   display: flex;
   height: 10%;
-  width: 300px;
+  min-width: 180px;
   align-items: center;
   text-align: center;
   background-color: rgb(255, 255, 255, 0.5);
   border: none;
   border-radius: 1vh;
   box-shadow: 1px 1px 4px black;
-
+  margin: 5px 0;
   @media ${device.desktop} {
     align-items: center;
     width: 90%;
@@ -34,12 +34,9 @@ export const SearchBar = styled(MDBInput)`
 export const Ingredients = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: fit-content;
+  flex-grow: 1;
+  min-width: 180px;
   height: fit-content;
-
-  overflow: hidden;
-  @media ${device.desktop} {
-  }
 `;
 export const RecipeSearchButton = styled.div`
   position: relative;

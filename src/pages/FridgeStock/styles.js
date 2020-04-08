@@ -8,15 +8,12 @@ export const FridgestockContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 90vw;
-  margin: 2% 1%;
+  width: 90%;
+  margin: 2% 0;
   flex-direction: column;
   z-index: 10;
-  @media ${device.desktop} {
+  @media ${device.mobile} {
     align-items: flex-start;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-width: 540px;
   }
 `;
 export const InputContainer = styled.div`
@@ -28,8 +25,9 @@ export const InputContainer = styled.div`
   border-bottom: 1px solid black;
   text-align: center;
   overflow: visible;
-  @media ${device.desktop} {
-    border-bottom: none;
+  @media (max-width: 360px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 export const InputTitle = styled.div`

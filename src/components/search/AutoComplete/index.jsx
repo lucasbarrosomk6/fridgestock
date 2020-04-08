@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { MDBInput, MDBIcon } from "mdbreact";
 import { debounce } from "lodash";
 import api from "utils/api";
-import { SearchBar, SearchBarForm, AutoCompleteItem } from "./styles";
+import {
+  SearchBar,
+  SearchBarForm,
+  AutoCompleteItem,
+  AutoCompleteDisplay,
+} from "./styles";
 
 class AutoComplete extends Component {
   state = {
@@ -52,11 +57,7 @@ class AutoComplete extends Component {
 
   render() {
     return (
-      <SearchBarForm
-        onSubmit={this.handlesubmit}
-        className="searchForm"
-        autoComplete="off"
-      >
+      <SearchBarForm onSubmit={this.handlesubmit} className="searchForm">
         <SearchBar className="searchBar">
           <MDBInput
             value={this.state.searchField}
@@ -75,19 +76,20 @@ class AutoComplete extends Component {
             <MDBIcon icon="search" />
           )}
         </SearchBar>
-
-        {this.state.autoComplete
-          ? this.state.autoComplete.map((item, index) => (
-              <AutoCompleteItem
-                className="autocomplete-item"
-                onClick={() => this.handleAutocompleteSelect(item.name)}
-                key={index}
-                exists={!!item}
-              >
-                {item.name}
-              </AutoCompleteItem>
-            ))
-          : null}
+        <AutoCompleteDisplay>
+          {this.state.autoComplete
+            ? this.state.autoComplete.map((item, index) => (
+                <AutoCompleteItem
+                  className="autocomplete-item"
+                  onClick={() => this.handleAutocompleteSelect(item.name)}
+                  key={index}
+                  exists={!!item}
+                >
+                  {item.name}
+                </AutoCompleteItem>
+              ))
+            : null}
+        </AutoCompleteDisplay>
       </SearchBarForm>
     );
   }

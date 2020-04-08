@@ -2,6 +2,18 @@ import React from "react";
 import AutoComplete from "./AutoComplete";
 import { Ingredients } from "./styles";
 import Chip from "@material-ui/core/Chip";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#FDDAE1",
+      main: "#FDDAE1",
+      dark: "#FA8BA2",
+    },
+  },
+});
 
 const Search = ({ ingredients, setIngredients, removeIngredient }) => {
   return (
@@ -10,12 +22,17 @@ const Search = ({ ingredients, setIngredients, removeIngredient }) => {
       <Ingredients className="ingredientDisplay">
         {!!ingredients.length &&
           ingredients.map((item) => (
-            <Chip
-              key={item}
-              label={item}
-              onDelete={() => removeIngredient(item)}
-              className={`ingredientChip ${item}`}
-            />
+            <div style={{ margin: "5px 3px" }}>
+              <ThemeProvider theme={theme}>
+                <Chip
+                  key={item}
+                  label={item}
+                  onDelete={() => removeIngredient(item)}
+                  className={`ingredientChip ${item}`}
+                  color="primary"
+                />
+              </ThemeProvider>
+            </div>
           ))}
       </Ingredients>
     </>
