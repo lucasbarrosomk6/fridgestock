@@ -9,8 +9,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 const theme = {
-  lightGreen: "#EDFAE3",
-  darkGreen: "#8BAE65",
+  lightGreen: "#46BFBD",
+  darkGreen: "#5AD3D1",
   lightOrange: "#FAF1E4",
   darkOrange: "#D5B287",
   lightRed: "#FDDAE1",

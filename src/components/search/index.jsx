@@ -22,10 +22,9 @@ const Search = ({ ingredients, setIngredients, removeIngredient }) => {
       <Ingredients className="ingredientDisplay">
         {!!ingredients.length &&
           ingredients.map((item) => (
-            <div style={{ margin: "5px 3px" }}>
+            <div style={{ margin: "5px 3px" }} key={item}>
               <ThemeProvider theme={theme}>
                 <Chip
-                  key={item}
                   label={item}
                   onDelete={() => removeIngredient(item)}
                   className={`ingredientChip ${item}`}

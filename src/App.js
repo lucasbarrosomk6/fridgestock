@@ -4,12 +4,14 @@ import FridgeStock from "./Pages/FridgeStock";
 import Recipe from "./Pages/Recipe";
 import NavBar from "./NavBar";
 import "./App.css";
+import NavBarProtoType from "./NavBar/NavBarProtoType";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Router>
+          <Route path="/" component={NavBarProtoType} />
           <Route path="/" component={NavBar} />
           <Switch>
             <Route exact path="/" component={FridgeStock} />

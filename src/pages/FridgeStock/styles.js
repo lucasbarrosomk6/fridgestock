@@ -15,6 +15,10 @@ export const FridgestockContainer = styled.div`
   @media ${device.mobile} {
     align-items: flex-start;
   }
+  @media (max-width: 360px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 export const InputContainer = styled.div`
   display: flex;
@@ -39,7 +43,7 @@ export const InputTitle = styled.div`
 
 export const RecipeContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const MakeItNowContainer = styled.div`

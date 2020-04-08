@@ -103,40 +103,32 @@ function RecipeCard({ recipe, match }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {!!usedIngredients.length && <Typography paragraph>Used:</Typography>}
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {!!usedIngredients.length &&
-              usedIngredients.map((item, index) => (
-                <div style={{ margin: "5px 3px" }} key={index}>
-                  <ThemeProvider theme={theme}>
-                    <Chip
-                      label={item.name}
-                      className={`ingredientChip ${item}`}
-                      color="primary"
-                    />
-                  </ThemeProvider>
-                </div>
-              ))}
-          </div>
-
-          {!!missedIngredients.length && (
-            <Typography paragraph>Missed:</Typography>
-          )}
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {" "}
-            {!!missedIngredients.length &&
-              missedIngredients.map((item, index) => (
-                <div style={{ margin: "5px 3px" }} key={index}>
-                  <ThemeProvider theme={theme}>
-                    <Chip
-                      label={item.name}
-                      className={`ingredientChip ${item}`}
-                      color="secondary"
-                    />
-                  </ThemeProvider>
-                </div>
-              ))}
-          </div>
+          <Typography paragraph>Used:</Typography>
+          {!!usedIngredients.length &&
+            usedIngredients.map((item, index) => (
+              <div style={{ margin: "5px 3px" }} key={index}>
+                <ThemeProvider theme={theme}>
+                  <Chip
+                    label={item.name}
+                    className={`ingredientChip ${item}`}
+                    color="primary"
+                  />
+                </ThemeProvider>
+              </div>
+            ))}
+          <Typography paragraph>Missed:</Typography>
+          {!!missedIngredients &&
+            missedIngredients.map((item, index) => (
+              <div style={{ margin: "5px 3px" }} key={index}>
+                <ThemeProvider theme={theme}>
+                  <Chip
+                    label={item.name}
+                    className={`ingredientChip ${item}`}
+                    color="secondary"
+                  />
+                </ThemeProvider>
+              </div>
+            ))}
         </CardContent>
       </Collapse>
     </Card>
