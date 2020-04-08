@@ -3,11 +3,11 @@ import { MDBInput } from "mdbreact";
 
 const size = {
   mobile: "360px",
-  desktop: "600px"
+  desktop: "600px",
 };
 export const device = {
   mobile: `(min-width: ${size.mobile})`,
-  desktop: `(min-width: ${size.desktop})`
+  desktop: `(min-width: ${size.desktop})`,
 };
 
 export const SearchBar = styled(MDBInput)`
@@ -34,17 +34,11 @@ export const SearchBar = styled(MDBInput)`
 export const Ingredients = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: ${props => (props.ingredientsExist ? "fit-content" : "0")};
-  width: 90%;
-  font-size: 5vw;
-  cursor: pointer;
-  background-color: rgb(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 1vh;
-  box-shadow: 1px 1px 4px black;
+  width: fit-content;
+  height: fit-content;
+
   overflow: hidden;
   @media ${device.desktop} {
-    font-size: 1.7vw;
   }
 `;
 export const RecipeSearchButton = styled.div`

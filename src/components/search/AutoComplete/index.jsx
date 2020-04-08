@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import { MDBInput, MDBIcon } from "mdbreact";
 import { debounce } from "lodash";
 import api from "utils/api";
-import {
-  SearchBar,
-  SearchBarForm,
-  AutoCompleteItem,
-  Ingredients,
-  RecipeSearchButton,
-  AutoCompleteDisplay,
-} from "./styles";
+import { SearchBar, SearchBarForm, AutoCompleteItem } from "./styles";
 
 class AutoComplete extends Component {
   state = {
@@ -36,7 +29,8 @@ class AutoComplete extends Component {
       buttonClicked: false,
     });
   };
-
+  clearAutocomplete = () =>
+    this.setState({ autoComplete: [], searchField: "" });
   handleClick = () => {
     this.props.fetchRecipes().then(this.setState({ buttonClicked: true }));
     this.setState({ searchField: "" });
@@ -63,31 +57,37 @@ class AutoComplete extends Component {
         className="searchForm"
         autoComplete="off"
       >
-        <SearchBar>
+        <SearchBar className="searchBar">
           <MDBInput
             value={this.state.searchField}
             onChange={this.handleChange}
             label="Enter ingredients here"
           />
-          <MDBIcon icon="search" />
+          {this.state.isSearching ? (
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          ) : !!this.state.autoComplete.length ? (
+            <div style={{ cursor: "pointer", padding: "5px" }}>
+              <MDBIcon icon="times" onClick={this.clearAutocomplete} />
+            </div>
+          ) : (
+            <MDBIcon icon="search" />
+          )}
         </SearchBar>
 
-        <AutoCompleteDisplay
-          className="autocomplete"
-          fetchedItems={this.state.autoComplete.length ? true : false}
-        >
-          {this.state.autoComplete
-            ? this.state.autoComplete.map((item, index) => (
-                <AutoCompleteItem
-                  className="autocomplete-item"
-                  onClick={() => this.handleAutocompleteSelect(item.name)}
-                  key={index}
-                >
-                  {item.name}
-                </AutoCompleteItem>
-              ))
-            : null}
-        </AutoCompleteDisplay>
+        {this.state.autoComplete
+          ? this.state.autoComplete.map((item, index) => (
+              <AutoCompleteItem
+                className="autocomplete-item"
+                onClick={() => this.handleAutocompleteSelect(item.name)}
+                key={index}
+                exists={!!item}
+              >
+                {item.name}
+              </AutoCompleteItem>
+            ))
+          : null}
       </SearchBarForm>
     );
   }

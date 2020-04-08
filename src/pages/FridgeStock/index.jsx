@@ -21,14 +21,14 @@ class Fridgestock extends Component {
     loaded: false,
     error: false,
   };
-  // componentDidMount() {
-  //   this.setState({
-  //     ingredients:
-  //       getLocalStorage("ingredients") && getLocalStorage("ingredients"),
-  //   });
-  //   console.log(getLocalStorage("ingredients"));
-  //   localStorage.setItem("missedIngredients", "");
-  // }
+  componentDidMount() {
+    this.setState({
+      ingredients:
+        getLocalStorage("ingredients") && getLocalStorage("ingredients"),
+    });
+    console.log(getLocalStorage("ingredients"));
+    localStorage.setItem("missedIngredients", "");
+  }
   setMissedIngredients = (missedIngredients) => {
     localStorage.setItem("missedIngredients", missedIngredients);
   };

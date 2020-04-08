@@ -4,3 +4,8 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+.md-form,
+.form-control {
+  margin: 0;
+  padding: 0;
+}

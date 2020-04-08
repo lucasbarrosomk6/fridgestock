@@ -13,22 +13,20 @@ export const SearchBarForm = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: flex-start;
+  justify-content: flex-start;
   width: 90%;
-  height: 20%;
   z-index: 2;
-  margin: 2vh 2vh;
+  margin: 0;
   text-align: right;
-  align-items: center;
 
   @media ${device.desktop} {
-    width: 80%;
-    align-items: center;
+    width: 25%;
   }
 `;
 export const SearchBar = styled.div`
   display: flex;
+  align-items: center;
 `;
 export const AutoCompleteDisplay = styled.div`
   position: relative;
@@ -42,7 +40,7 @@ export const AutoCompleteDisplay = styled.div`
   border: none;
   border-radius: 1vh;
   box-shadow: 1px 1px 4px black;
-  overflow: hidden;
+  cursor: pointer;
   @media ${device.desktop} {
     font-size: 150%;
     height: ${(props) => (!props.fetchedItems ? "0px" : "15vh")};
@@ -50,18 +48,20 @@ export const AutoCompleteDisplay = styled.div`
 `;
 
 export const AutoCompleteItem = styled.div`
+  position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 5vh;
-  width: 100%;
-  padding: 3px;
-  font-size: 5vw;
+  height: 40px;
+  width: 174px;
+  border-bottom: 1px #4285f4 solid;
   cursor: pointer;
-  @media ${device.desktop} {
-    height: 3vh;
-    font-size: 1.7vw;
-  }
+  z-index: 5;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #495057;
+  transition: all 0.2s;
+
   &:hover {
     background-color: lightgrey;
   }

@@ -11,6 +11,7 @@ export const FridgestockContainer = styled.div`
   width: 90vw;
   margin: 2% 1%;
   flex-direction: column;
+  z-index: 10;
   @media ${device.desktop} {
     align-items: flex-start;
     flex-direction: column;
@@ -20,11 +21,13 @@ export const FridgestockContainer = styled.div`
 `;
 export const InputContainer = styled.div`
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
   padding: 1vh 0;
   border-bottom: 1px solid black;
-  height: fit-content;
   text-align: center;
+  overflow: visible;
   @media ${device.desktop} {
     border-bottom: none;
   }

@@ -9,9 +9,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 const theme = {
-  main: "red",
-  alternate: "green",
-  fontSize: 15
+  lightGreen: "#EDFAE3",
+  darkGreen: "#8BAE65",
+  lightOrange: "#FAF1E4",
+  darkOrange: "#D5B287",
+  lightRed: "#FDDAE1",
+  darkRed: "#FA8BA2",
 };
 
 ReactDOM.render(
