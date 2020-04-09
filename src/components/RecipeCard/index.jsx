@@ -1,13 +1,11 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
+import { CardContent, CardActions } from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -58,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RecipeCard({ recipe, match }) {
+export function RecipeCard({ recipe, match }) {
   const { image, title, usedIngredients, missedIngredients, id } = recipe;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -86,7 +84,7 @@ function RecipeCard({ recipe, match }) {
           <FavoriteIcon />
         </IconButton>
 
-        <Link to={`${match.url}recipe/${id}`}>
+        <Link to={`/recipe/${id}`}>
           <MDBBtn>See Full Recipe</MDBBtn>
         </Link>
 

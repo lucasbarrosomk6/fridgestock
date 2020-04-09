@@ -13,7 +13,6 @@ import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
 import { MDBBtn } from "mdbreact";
-import RecipePrototype from "../../components/RecipeCard/RecipePrototype";
 class Fridgestock extends Component {
   state = {
     ingredients: [],
@@ -97,19 +96,20 @@ class Fridgestock extends Component {
             ingredients={this.state.ingredients}
             removeIngredient={this.removeIngredient}
           />
+          <MDBBtn
+            onClick={this.fetchRecipes}
+            disabled={!this.state.ingredients.length || this.state.isLoading}
+          >
+            {this.state.isLoading ? (
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            ) : (
+              "Search For Recipes"
+            )}
+          </MDBBtn>
         </InputContainer>
-        <MDBBtn
-          onClick={this.fetchRecipes}
-          disabled={!this.state.ingredients.length || this.state.isLoading}
-        >
-          {this.state.isLoading ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          ) : (
-            "Search For Recipes"
-          )}
-        </MDBBtn>
+
         {this.state.loaded && !!this.state.recipes.length && (
           <RecipeContainer className="recipe-container">
             {this.state.recipes.map((item, index) => (

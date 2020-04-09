@@ -49,7 +49,7 @@ export default class Recipe extends Component {
       const data = await api(
         `recipes/${this.props.match.params.recipeId}/information`
       );
-      if (!data.length) return this.props.history.push("/not-found");
+
       this.setState({
         recipe: data,
         loading: false,
@@ -57,6 +57,7 @@ export default class Recipe extends Component {
       });
     } catch (error) {
       this.setState({ loading: false, error: true });
+      this.props.history.push("/not-found");
     }
   };
   handleIngredientChange = (newIngredients) => {
@@ -72,8 +73,9 @@ export default class Recipe extends Component {
   render() {
     const { recipe, missedIngredients, loading, steps } = this.state;
     const filteredTags = tagFilterer(recipe);
-    if (loading) return <Title>Thinking up something good</Title>;
+    console.log(recipe, loading);
 
+    if (loading) return <Title>Thinking up something good</Title>;
     return (
       <RecipePageContainer className="recipe-page-container">
         <Title>{recipe.title}</Title>
@@ -95,6 +97,7 @@ export default class Recipe extends Component {
           setIngredients={this.handleIngredientChange}
           ingredients={recipe.extendedIngredients}
         />
+
         <div>
           {steps.map((item) => (
             <div
