@@ -5,7 +5,7 @@ import { MDBContainer } from "mdbreact";
 class CardPieChart extends React.Component {
   state = {
     dataPie: {
-      labels: ["Missed", "Used"],
+      labels: ["Need", "Have"],
       datasets: [
         {
           data: [this.props.missedIngredients, this.props.usedIngredients],

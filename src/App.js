@@ -11,7 +11,6 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Route path="/" component={NavBarProtoType} />
           <Route path="/" component={NavBar} />
           <Switch>
             <Route exact path="/" component={FridgeStock} />

@@ -103,7 +103,7 @@ function RecipeCard({ recipe, match }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          {!!usedIngredients.length && <Typography paragraph>Used:</Typography>}
+          {!!usedIngredients.length && <Typography paragraph>Have:</Typography>}
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {!!usedIngredients.length &&
               usedIngredients.map((item, index) => (
@@ -120,7 +120,7 @@ function RecipeCard({ recipe, match }) {
           </div>
 
           {!!missedIngredients.length && (
-            <Typography paragraph>Missed:</Typography>
+            <Typography paragraph>Need:</Typography>
           )}
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {" "}

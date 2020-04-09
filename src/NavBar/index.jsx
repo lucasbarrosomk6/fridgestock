@@ -1,23 +1,25 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
-import { NavBarContainer, Title, NavigationContainer } from "./styles";
+class NavBarPrototype extends Component {
+  state = {
+    isOpen: false,
+  };
 
-class NavBar extends Component {
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
   render() {
     return (
-      <NavBarContainer className="navbar-container">
+      <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">
-          <Title className="Title">
-            <h1>FridgeStock</h1>
-            <div>The food at home can be pretty good</div>
-          </Title>
+          <Navbar.Brand>FridgeStock</Navbar.Brand>
         </Link>
-
-        <NavigationContainer></NavigationContainer>
-      </NavBarContainer>
+      </Navbar>
     );
   }
 }
 
-export default NavBar;
+export default NavBarPrototype;
