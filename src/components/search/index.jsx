@@ -4,6 +4,7 @@ import { Ingredients } from "./styles";
 import Chip from "@material-ui/core/Chip";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { MDBBtn } from "mdbreact";
 
 const theme = createMuiTheme({
   palette: {
@@ -15,7 +16,13 @@ const theme = createMuiTheme({
   },
 });
 
-const Search = ({ ingredients, setIngredients, removeIngredient }) => {
+const Search = ({
+  ingredients,
+  setIngredients,
+  removeIngredient,
+  fetchRecipes,
+  isLoading,
+}) => {
   return (
     <>
       <AutoComplete className="autocomplete" setIngredients={setIngredients} />

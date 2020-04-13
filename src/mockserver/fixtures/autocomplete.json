@@ -1,0 +1,7 @@
+[
+  { "name": "taro", "image": "taro-root.jpg" },
+  { "name": "tahini", "image": "tahini-paste.png" },
+  { "name": "tamari", "image": "soy-sauce.jpg" },
+  { "name": "tabasco", "image": "hot-sauce-or-tabasco.png" },
+  { "name": "tapioca", "image": "sago-pearls.png" }
+]

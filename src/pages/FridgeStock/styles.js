@@ -6,11 +6,11 @@ import { deviceSizes as device } from "../../diviceSizes";
 
 export const FridgestockContainer = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
   width: 90%;
   margin: 2% 0;
-  flex-direction: column;
+  // flex-direction: column;
   z-index: 10;
   @media ${device.mobile} {
     align-items: flex-start;

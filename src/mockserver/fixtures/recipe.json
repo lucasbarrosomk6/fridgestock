@@ -1,0 +1,298 @@
+{
+  "vegetarian": false,
+  "vegan": false,
+  "glutenFree": false,
+  "dairyFree": false,
+  "veryHealthy": false,
+  "cheap": false,
+  "veryPopular": true,
+  "sustainable": false,
+  "weightWatcherSmartPoints": 19,
+  "gaps": "no",
+  "lowFodmap": false,
+  "preparationMinutes": 20,
+  "cookingMinutes": 15,
+  "sourceUrl": "http://www.neighborfoodblog.com/2013/07/bacon-apple-and-dubliner-cheese-stuffed-french-toast-for-sundaysupper.html",
+  "spoonacularSourceUrl": "https://spoonacular.com/bacon-apple-and-dubliner-cheese-stuffed-french-toast-for-sundaysupper-479995",
+  "aggregateLikes": 772,
+  "spoonacularScore": 61.0,
+  "healthScore": 8.0,
+  "creditsText": "Neighbor Food Blog",
+  "sourceName": "Neighbor Food Blog",
+  "pricePerServing": 154.8,
+  "extendedIngredients": [
+    {
+      "id": 9003,
+      "aisle": "Produce",
+      "image": "apple.jpg",
+      "consistency": "solid",
+      "name": "apple",
+      "original": "1 apple, sliced thin",
+      "originalString": "1 apple, sliced thin",
+      "originalName": "apple, sliced thin",
+      "amount": 1.0,
+      "unit": "",
+      "meta": ["sliced", "thin"],
+      "metaInformation": ["sliced", "thin"],
+      "measures": {
+        "us": { "amount": 1.0, "unitShort": "", "unitLong": "" },
+        "metric": { "amount": 1.0, "unitShort": "", "unitLong": "" }
+      }
+    },
+    {
+      "id": 10123,
+      "aisle": "Meat",
+      "image": "raw-bacon.png",
+      "consistency": "solid",
+      "name": "bacon",
+      "original": "6 slices bacon, cut in half",
+      "originalString": "6 slices bacon, cut in half",
+      "originalName": "bacon, cut in half",
+      "amount": 6.0,
+      "unit": "slices",
+      "meta": ["cut in half"],
+      "metaInformation": ["cut in half"],
+      "measures": {
+        "us": { "amount": 6.0, "unitShort": "slice", "unitLong": "slices" },
+        "metric": { "amount": 6.0, "unitShort": "slice", "unitLong": "slices" }
+      }
+    },
+    {
+      "id": 18064,
+      "aisle": "Bakery/Bread",
+      "image": "white-bread.jpg",
+      "consistency": "solid",
+      "name": "bread",
+      "original": "4 thick slices day old Italian bread (1¼ inches thick)*",
+      "originalString": "4 thick slices day old Italian bread (1¼ inches thick)*",
+      "originalName": "thick slices day old Italian bread (1¼ inches thick)*",
+      "amount": 4.0,
+      "unit": "slices",
+      "meta": ["italian", "thick", "()"],
+      "metaInformation": ["italian", "thick", "()"],
+      "measures": {
+        "us": { "amount": 4.0, "unitShort": "slice", "unitLong": "slices" },
+        "metric": { "amount": 4.0, "unitShort": "slice", "unitLong": "slices" }
+      }
+    },
+    {
+      "id": 1001,
+      "aisle": "Milk, Eggs, Other Dairy",
+      "image": "butter-sliced.jpg",
+      "consistency": "solid",
+      "name": "butter",
+      "original": "2 Tablespoons butter",
+      "originalString": "2 Tablespoons butter",
+      "originalName": "butter",
+      "amount": 2.0,
+      "unit": "Tablespoons",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 2.0, "unitShort": "Tbsps", "unitLong": "Tbsps" },
+        "metric": { "amount": 2.0, "unitShort": "Tbsps", "unitLong": "Tbsps" }
+      }
+    },
+    {
+      "id": 1041009,
+      "aisle": "Cheese",
+      "image": "cheddar-cheese.png",
+      "consistency": "solid",
+      "name": "cheese",
+      "original": "4 oz. Dubliner cheese, sliced thin**",
+      "originalString": "4 oz. Dubliner cheese, sliced thin**",
+      "originalName": "Dubliner cheese, sliced thin**",
+      "amount": 4.0,
+      "unit": "oz",
+      "meta": ["sliced", "thin"],
+      "metaInformation": ["sliced", "thin"],
+      "measures": {
+        "us": { "amount": 4.0, "unitShort": "oz", "unitLong": "ounces" },
+        "metric": { "amount": 113.398, "unitShort": "g", "unitLong": "grams" }
+      }
+    },
+    {
+      "id": 1123,
+      "aisle": "Milk, Eggs, Other Dairy",
+      "image": "egg.png",
+      "consistency": "solid",
+      "name": "eggs",
+      "original": "4 large eggs",
+      "originalString": "4 large eggs",
+      "originalName": "eggs",
+      "amount": 4.0,
+      "unit": "large",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 4.0, "unitShort": "large", "unitLong": "larges" },
+        "metric": { "amount": 4.0, "unitShort": "large", "unitLong": "larges" }
+      }
+    },
+    {
+      "id": 1077,
+      "aisle": "Milk, Eggs, Other Dairy",
+      "image": "milk.png",
+      "consistency": "liquid",
+      "name": "milk",
+      "original": "1½ cups milk",
+      "originalString": "1½ cups milk",
+      "originalName": "milk",
+      "amount": 1.5,
+      "unit": "cups",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 1.5, "unitShort": "cups", "unitLong": "cups" },
+        "metric": {
+          "amount": 354.882,
+          "unitShort": "ml",
+          "unitLong": "milliliters"
+        }
+      }
+    },
+    {
+      "id": 2047,
+      "aisle": "Spices and Seasonings",
+      "image": "salt.jpg",
+      "consistency": "solid",
+      "name": "salt",
+      "original": "Pinch salt",
+      "originalString": "Pinch salt",
+      "originalName": "Pinch salt",
+      "amount": 1.0,
+      "unit": "pinch",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 1.0, "unitShort": "pinch", "unitLong": "pinch" },
+        "metric": { "amount": 1.0, "unitShort": "pinch", "unitLong": "pinch" }
+      }
+    },
+    {
+      "id": 19335,
+      "aisle": "Baking",
+      "image": "sugar-in-bowl.png",
+      "consistency": "solid",
+      "name": "sugar",
+      "original": "1 teaspoon sugar",
+      "originalString": "1 teaspoon sugar",
+      "originalName": "sugar",
+      "amount": 1.0,
+      "unit": "teaspoon",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 1.0, "unitShort": "tsp", "unitLong": "teaspoon" },
+        "metric": { "amount": 1.0, "unitShort": "tsp", "unitLong": "teaspoon" }
+      }
+    },
+    {
+      "id": 2050,
+      "aisle": "Baking",
+      "image": "vanilla.jpg",
+      "consistency": "solid",
+      "name": "vanilla",
+      "original": "1 teaspoon vanilla",
+      "originalString": "1 teaspoon vanilla",
+      "originalName": "vanilla",
+      "amount": 1.0,
+      "unit": "teaspoon",
+      "meta": [],
+      "metaInformation": [],
+      "measures": {
+        "us": { "amount": 1.0, "unitShort": "tsp", "unitLong": "teaspoon" },
+        "metric": { "amount": 1.0, "unitShort": "tsp", "unitLong": "teaspoon" }
+      }
+    }
+  ],
+  "id": 479995,
+  "title": "Bacon, Apple, and Dubliner Cheese Stuffed French Toast for #SundaySupper",
+  "readyInMinutes": 35,
+  "servings": 4,
+  "image": "https://spoonacular.com/recipeImages/479995-556x370.jpg",
+  "imageType": "jpg",
+  "summary": "Bacon, Apple, and Dubliner Cheese Stuffed French Toast for #SundaySupper might be just the <b>American</b> recipe you are searching for. This morn meal has <b>413 calories</b>, <b>16g of protein</b>, and <b>27g of fat</b> per serving. For <b>$1.18 per serving</b>, this recipe <b>covers 14%</b> of your daily requirements of vitamins and minerals. This recipe serves 4. This recipe is liked by 772 foodies and cooks. From preparation to the plate, this recipe takes roughly <b>35 minutes</b>. A mixture of salt, eggs, vanilla, and a handful of other ingredients are all it takes to make this recipe so yummy. All things considered, we decided this recipe <b>deserves a spoonacular score of 57%</b>. This score is good. Similar recipes include <a href=\"https://spoonacular.com/recipes/bacon-cream-cheese-stuffed-french-toast-278822\">Bacon & Cream Cheese-Stuffed French Toast</a>, <a href=\"https://spoonacular.com/recipes/apple-butter-cream-cheese-stuffed-french-toast-601842\">Apple Butter Cream Cheese Stuffed French Toast</a>, and <a href=\"https://spoonacular.com/recipes/cinnamon-toast-crunch-coated-apple-stuffed-french-toast-157194\">Cinnamon Toast Crunch® Coated Apple Stuffed French Toast</a>.",
+  "cuisines": ["American"],
+  "dishTypes": ["lunch", "main course", "main dish", "dinner"],
+  "diets": [],
+  "occasions": [],
+  "winePairing": { "pairedWines": [], "pairingText": "", "productMatches": [] },
+  "instructions": "Fry bacon over medium heat until crispy. Remove bacon and allow to drain on paper towels.Meanwhile, in a shallow bowl, whisk together eggs, milk, vanilla, sugar, and salt until well combined.Slice each piece of bread through the middle, leaving three sides intact, creating a pocket. Place slices of bacon, cheese, and apple into the pocket.Melt the butter in a large skillet set on medium high heat. Dip the bread pockets into the egg mixture, turning to soak both sides. Place the pockets in the skillet, fry for 30 seconds, then immediately turn the heat down to medium low. Allow to cook for 4-7 minutes or until bread is golden brown and baked clear through. Flip and do the same for the second side.Cut slices in half, sprinkle with sifted powdered sugar, and serve with real maple syrup.***If you’ve never had Dubliner cheese before, it’s a combination of sharp cheddar, swiss, and Parmesan. You can find it in most grocery stores under the brand name Kerrygold. Gruyere or a sharp white cheddar could work as substitutes.*I used La Brea’s Pane Toscano and it was perfect",
+  "analyzedInstructions": [
+    {
+      "name": "",
+      "steps": [
+        {
+          "number": 1,
+          "step": "Fry bacon over medium heat until crispy.",
+          "ingredients": [
+            { "id": 10123, "name": "bacon", "image": "raw-bacon.png" }
+          ],
+          "equipment": []
+        },
+        {
+          "number": 2,
+          "step": "Remove bacon and allow to drain on paper towels.Meanwhile, in a shallow bowl, whisk together eggs, milk, vanilla, sugar, and salt until well combined.Slice each piece of bread through the middle, leaving three sides intact, creating a pocket.",
+          "ingredients": [
+            { "id": 2050, "name": "vanilla", "image": "vanilla.jpg" },
+            { "id": 10123, "name": "bacon", "image": "raw-bacon.png" },
+            { "id": 18064, "name": "bread", "image": "white-bread.jpg" },
+            { "id": 19335, "name": "sugar", "image": "sugar-in-bowl.png" },
+            { "id": 1123, "name": "egg", "image": "egg.png" },
+            { "id": 1077, "name": "milk", "image": "milk.png" },
+            { "id": 2047, "name": "salt", "image": "salt.jpg" }
+          ],
+          "equipment": [
+            {
+              "id": 405895,
+              "name": "paper towels",
+              "image": "paper-towels.jpg"
+            },
+            { "id": 404661, "name": "whisk", "image": "whisk.png" },
+            { "id": 404783, "name": "bowl", "image": "bowl.jpg" }
+          ]
+        },
+        {
+          "number": 3,
+          "step": "Place slices of bacon, cheese, and apple into the pocket.Melt the butter in a large skillet set on medium high heat. Dip the bread pockets into the egg mixture, turning to soak both sides.",
+          "ingredients": [
+            { "id": 1001, "name": "butter", "image": "butter-sliced.jpg" },
+            { "id": 1041009, "name": "cheese", "image": "cheddar-cheese.png" },
+            { "id": 9003, "name": "apple", "image": "apple.jpg" },
+            { "id": 10123, "name": "bacon", "image": "raw-bacon.png" },
+            { "id": 18064, "name": "bread", "image": "white-bread.jpg" },
+            { "id": 1123, "name": "egg", "image": "egg.png" }
+          ],
+          "equipment": [
+            { "id": 404645, "name": "frying pan", "image": "pan.png" }
+          ]
+        },
+        {
+          "number": 4,
+          "step": "Place the pockets in the skillet, fry for 30 seconds, then immediately turn the heat down to medium low. Allow to cook for 4-7 minutes or until bread is golden brown and baked clear through. Flip and do the same for the second side.",
+          "ingredients": [
+            { "id": 18064, "name": "bread", "image": "white-bread.jpg" }
+          ],
+          "equipment": [
+            { "id": 404645, "name": "frying pan", "image": "pan.png" }
+          ],
+          "length": { "number": 7, "unit": "minutes" }
+        },
+        {
+          "number": 5,
+          "step": "Cut slices in half, sprinkle with sifted powdered sugar, and serve with real maple syrup.***If you’ve never had Dubliner cheese before, it’s a combination of sharp cheddar, swiss, and Parmesan. You can find it in most grocery stores under the brand name Kerrygold. Gruyere or a sharp white cheddar could work as substitutes.*I used La Brea’s Pane Toscano and it was perfect",
+          "ingredients": [
+            {
+              "id": 1031009,
+              "name": "sharp cheddar cheese",
+              "image": "cheddar-cheese.png"
+            }
+          ],
+          "equipment": []
+        }
+      ]
+    }
+  ],
+  "originalId": null
+}

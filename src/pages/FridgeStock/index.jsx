@@ -12,7 +12,7 @@ import {
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
-import { MDBBtn } from "mdbreact";
+
 class Fridgestock extends Component {
   state = {
     ingredients: [],
@@ -53,6 +53,7 @@ class Fridgestock extends Component {
       this.setState({
         ingredients: [...ingredients, trimmedIngredient],
       });
+      this.fetchRecipes();
     } else {
       console.log("rejected");
     }
@@ -82,6 +83,7 @@ class Fridgestock extends Component {
         loaded: true,
         isLoading: false,
       });
+      console.log(this.state.isLoading);
     } catch (error) {
       console.log("error", error);
       this.setState({ error: true, loaded: true });
@@ -95,30 +97,21 @@ class Fridgestock extends Component {
             setIngredients={this.setIngredients}
             ingredients={this.state.ingredients}
             removeIngredient={this.removeIngredient}
+            fetchRecipes={this.fetchRecipes}
+            isLoading={this.state.isLoading}
           />
-          <MDBBtn
-            onClick={this.fetchRecipes}
-            disabled={!this.state.ingredients.length || this.state.isLoading}
-          >
-            {this.state.isLoading ? (
-              <div className="spinner-border text-primary" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
-            ) : (
-              "Search For Recipes"
-            )}
-          </MDBBtn>
         </InputContainer>
-
-        {this.state.loaded && !!this.state.recipes.length && (
-          <RecipeContainer className="recipe-container">
-            {this.state.recipes.map((item, index) => (
-              <div key={index} style={{ margin: "10px" }}>
-                <Recipe recipe={item} />{" "}
-              </div>
-            ))}
-          </RecipeContainer>
-        )}
+        <div>
+          {this.state.loaded && !!this.state.recipes.length && (
+            <RecipeContainer className="recipe-container">
+              {this.state.recipes.map((item, index) => (
+                <div key={index} style={{ margin: "10px" }}>
+                  <Recipe recipe={item} />{" "}
+                </div>
+              ))}
+            </RecipeContainer>
+          )}
+        </div>
       </FridgestockContainer>
     );
   }

@@ -9,7 +9,7 @@ export const RecipePageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90vw;
+  width: 90%;
   background-color: lightgrey;
   z-index: 0;
   @media ${device.desktop} {
@@ -37,11 +37,11 @@ export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${props => (props.clicked ? "370px" : "200px")};
+  height: ${(props) => (props.clicked ? "370px" : "200px")};
   /* height changes to show the whole photo assuming a standard pic size of  556px x 370 */
   width: 556px;
   overflow: hidden;
-  background-image: url(${props => props.image});
+  background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
   transition: all 0.5s;

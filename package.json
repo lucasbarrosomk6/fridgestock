@@ -11,6 +11,8 @@
     "abort-controller": "^3.0.0",
     "axios": "^0.19.2",
     "bulma": "^0.8.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "mdbreact": "^4.25.5",
     "react": "^16.12.0",
@@ -28,8 +30,10 @@
     "styled-components": "^5.0.1"
   },
   "scripts": {
+    "mockserver": "node src/mockserver/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "dev": "concurrently \"npm run mockserver\" \"npm start\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

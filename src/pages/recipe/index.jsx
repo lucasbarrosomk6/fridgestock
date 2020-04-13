@@ -73,7 +73,6 @@ export default class Recipe extends Component {
   render() {
     const { recipe, missedIngredients, loading, steps } = this.state;
     const filteredTags = tagFilterer(recipe);
-    console.log(recipe, loading);
 
     if (loading) return <Title>Thinking up something good</Title>;
     return (
