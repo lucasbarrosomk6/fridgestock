@@ -8,64 +8,70 @@ export const RecipePageContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   width: 90%;
-  background-color: lightgrey;
   z-index: 0;
+  overflow: hidden;
   @media ${device.desktop} {
     justify-content: space-between;
   }
 `;
+export const TitleContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  /*  */
+`;
+export const BasicInfo = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  min-width: 320px;
+  z-index: 3;
+`;
+
 export const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  background-color: lightgrey;
   text-align: center;
-
-  @media ${device.desktop} {
-    flex-direction: row;
-    justify-content: center;
-  }
 `;
-export const HoverMessage = styled.h1`
-  color: transparent;
-  transition: color 0.5s;
-`;
-export const ImageContainer = styled.div`
+export const TagBanner = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: ${(props) => (props.clicked ? "370px" : "200px")};
-  /* height changes to show the whole photo assuming a standard pic size of  556px x 370 */
-  width: 556px;
+  width: 100%;
+  z-index: 3;
+`;
+export const Summary = styled.div`
+  width: 100%;
+  ${(props) => !props.expand && "height:100px"};
   overflow: hidden;
-  background-image: url(${(props) => props.image});
-  background-size: cover;
-  background-position: center;
   transition: all 0.5s;
-  cursor: pointer;
-  border-bottom: 1px solid black;
-
-  &:hover {
-    ${HoverMessage} {
-      color: black;
-    }
-  }
 `;
 
-export const Image = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+export const Circle = styled.div`
+  position: absolute;
+  display: block;
+  right: 70%;
+  width: 750px;
+  height: 350px;
+  border-radius: 50%;
+  z-index: 2;
+  background-color: #5ad3d1;
+  z-index: -1;
 `;
-
-export const TagContainer = styled.div`
+export const Display = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  border-bottom: black 1px solid;
+  flex-direction: column;
+  width: 25%;
+  background-color: #ade9e8;
+  padding: 10px;
+  border-radius: 10px;
 `;

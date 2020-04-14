@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
-import IngredientOptions from "./QuantityPopup";
 import {
   MDBContainer,
   MDBBtn,
@@ -9,13 +8,15 @@ import {
   MDBModalBody,
   MDBModalHeader,
   MDBModalFooter,
+  MDBIcon,
+  MDBInput,
 } from "mdbreact";
 import {
   IngredientContainer,
   NameContainer,
   QuantityContainer,
+  OptionContainer,
 } from "./styles";
-import Popup from "reactjs-popup";
 import api from "utils/api";
 
 class Ingredient extends Component {
@@ -24,22 +25,28 @@ class Ingredient extends Component {
     this.state = {
       similarIngredients: [],
       loading: false,
-      quantity: this.props.ingredient.measures.us.amount,
       modal: false,
+      quantityField: "",
     };
   }
 
   setSimilarIngredients = (x) => this.setState({ similarIngredients: x });
   setLoading = (x) => this.setState({ loading: x });
-  setQuantity = (x) => this.setState({ quantity: x });
   toggleOn = () => this.setState({ modal: true });
   toggleOff = () => this.setState({ modal: false });
+  handleChange = (e) => this.setState({ quantityField: e.target.value });
+  handleSubmit = () => {
+    this.props.handleIngredientChange(
+      this.state.quantityField,
+      this.props.ingredient.measures.us.amount
+    );
+    this.toggleOff();
+  };
   render() {
-    const { ingredient, location, history, match } = this.props;
-    const { loading, quantity } = this.state;
-    const { setLoading, setQuantity, setSimilarIngredients } = this;
+    const { ingredient, location, history, match, index } = this.props;
+    const { loading, quantityField } = this.state;
+    const { setLoading, setSimilarIngredients } = this;
     const us = ingredient.measures.us;
-    console.log("render");
 
     // const fetchSimilarIngredients = async ingredient => {
     //   setLoading(true);
@@ -64,26 +71,39 @@ class Ingredient extends Component {
 
     //   console.log(stringified);
     //   history.push(`${match.url}?${stringified}`);
-    // };
-    if (loading) return;
+    // };\
+    if (loading || !ingredient) return;
+
     return (
       <IngredientContainer className="Ingredient">
-        <QuantityContainer id="QuantittyContainer">{`${quantity} ${us.unitShort}`}</QuantityContainer>
+        <QuantityContainer id="QuantittyContainer">{`${ingredient.measures.us.amount} ${us.unitShort}`}</QuantityContainer>
 
-        <NameContainer onClick={this.toggleOn}>{ingredient.name}</NameContainer>
+        <NameContainer>
+          {ingredient.name}
+          <OptionContainer onClick={this.toggleOn}>
+            <MDBIcon icon="ellipsis-v" />
+          </OptionContainer>
+        </NameContainer>
 
-        <MDBModal isOpen={this.state.modal} toggle={this.toggleOff}>
+        <MDBModal isOpen={this.state.modal} toggle={this.toggleOff} centered>
           <MDBModalHeader toggle={this.toggleOff}>
-            MDBModal title
+            Change Ingredient Quantity
           </MDBModalHeader>
           <MDBModalBody>
-            <h1>HI</h1>
+            <p>This will change the quantity of all other ingredients</p>
+            <MDBInput
+              value={quantityField}
+              onChange={this.handleChange}
+              label={ingredient.measures.us.amount + " " + us.unitShort}
+            />
           </MDBModalBody>
           <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggle}>
+            <MDBBtn color="secondary" onClick={this.toggleOff}>
               Close
             </MDBBtn>
-            <MDBBtn color="primary">Save changes</MDBBtn>
+            <MDBBtn color="primary" onClick={this.handleSubmit}>
+              Save changes
+            </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
       </IngredientContainer>

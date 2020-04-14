@@ -4,10 +4,10 @@ import {
   IngredientDisplayContainer,
   IngredientContainer,
   RadioContainer,
-  UnitToggle
+  UnitToggle,
 } from "./styles";
 
-const Toggle = props => (
+const Toggle = (props) => (
   <UnitToggle
     onClick={() => props.handleUnitChange(props.unit)}
     selected={props.selected}
@@ -15,7 +15,7 @@ const Toggle = props => (
     {props.unit}
   </UnitToggle>
 );
-const logWidth = width => {
+const logWidth = (width) => {
   console.log(width);
 };
 const IngredientDisplay = ({ ingredients, setIngredients }) => {
@@ -23,21 +23,8 @@ const IngredientDisplay = ({ ingredients, setIngredients }) => {
 
   return (
     <IngredientDisplayContainer>
-      <RadioContainer>
-        <Toggle
-          selected={unit === "metric"}
-          handleUnitChange={handleUnitChange}
-          unit={"metric"}
-        />
-        <Toggle
-          selected={unit === "imperial"}
-          handleUnitChange={handleUnitChange}
-          unit={"imperial"}
-        />
-      </RadioContainer>
-
       <IngredientContainer>
-        {ingredients.map(ingredient => (
+        {ingredients.map((ingredient) => (
           <Ingredient
             key={ingredient.id}
             ingredient={ingredient}
