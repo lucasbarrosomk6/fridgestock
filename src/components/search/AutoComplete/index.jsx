@@ -36,10 +36,7 @@ class AutoComplete extends Component {
   };
   clearAutocomplete = () =>
     this.setState({ autoComplete: [], searchField: "" });
-  handleClick = () => {
-    this.props.fetchRecipes().then(this.setState({ buttonClicked: true }));
-    this.setState({ searchField: "" });
-  };
+
   handleChange = (e) => {
     this.setState({ searchField: e.target.value, autoComplete: [] });
     this.fetchAutoComplete();

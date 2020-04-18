@@ -67,11 +67,22 @@ export const Circle = styled.div`
   background-color: #5ad3d1;
   z-index: -1;
 `;
-export const Display = styled.div`
+export const DisplayContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 10px 0;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 80px;
+`;
+
+export const IngredientDisplay = styled.div`
+  display: flex;
+  flex: 1;
   flex-direction: column;
-  width: 25%;
   background-color: #ade9e8;
   padding: 10px;
   border-radius: 10px;
+  height: fit-content;
 `;

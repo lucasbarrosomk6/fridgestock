@@ -15,7 +15,9 @@ class NavBarPrototype extends Component {
     return (
       <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">
-          <Navbar.Brand>FridgeStock</Navbar.Brand>
+          <Navbar.Brand>
+            <strong>FridgeStock</strong>
+          </Navbar.Brand>
         </Link>
       </Navbar>
     );

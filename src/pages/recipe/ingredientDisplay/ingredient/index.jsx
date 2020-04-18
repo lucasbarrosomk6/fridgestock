@@ -42,6 +42,7 @@ class Ingredient extends Component {
     );
     this.toggleOff();
   };
+
   render() {
     const { ingredient, location, history, match, index } = this.props;
     const { loading, quantityField } = this.state;
@@ -72,10 +73,14 @@ class Ingredient extends Component {
     //   console.log(stringified);
     //   history.push(`${match.url}?${stringified}`);
     // };\
+
     if (loading || !ingredient) return;
 
     return (
-      <IngredientContainer className="Ingredient">
+      <IngredientContainer
+        missing={ingredient.isMissing}
+        className="Ingredient"
+      >
         <QuantityContainer id="QuantittyContainer">{`${ingredient.measures.us.amount} ${us.unitShort}`}</QuantityContainer>
 
         <NameContainer>

@@ -4,11 +4,12 @@ import {
   RecipePageContainer,
   TitleContainer,
   BasicInfo,
-  TagBanner,
   Summary,
   Circle,
-  Display,
+  IngredientDisplay,
+  DisplayContainer,
 } from "./styles";
+import InstructionDisplay from "./InstructionDisplay";
 import { Title } from "./styles";
 import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
@@ -16,6 +17,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import Chip from "@material-ui/core/Chip";
 import { MDBBtn } from "mdbreact";
+import ChipDisplay from "components/ChipDisplay";
 
 const tagFilterer = (recipe) => {
   const {
@@ -61,7 +63,7 @@ export default class Recipe extends Component {
     backupRecipe: {},
     recipe: {},
     recipeChanged: false,
-    missedIngredients: [],
+    ingredients: [],
     steps: [],
     expand: false,
   };
@@ -74,7 +76,25 @@ export default class Recipe extends Component {
       const data = await api(
         `recipes/${this.props.match.params.recipeId}/information`
       );
-      const untiedData = { ...data };
+      let untiedData = {
+        ...data,
+        extendedIngredients: data.extendedIngredients.map((item) => {
+          item.isMissing = true;
+          for (var i = 0; i < getLocalStorage("ingredients").length; i++) {
+            if (getLocalStorage("ingredients")[i].name === item.name) {
+              item.isMissing = false;
+              break;
+            }
+          }
+          return item;
+        }),
+      };
+      // untiedData = untiedData.extendedIngredients.forEach(
+      //   (item) =>
+      //     (item.ismissing = getLocalStorage("missedIngredients").includes(
+      //       item.name
+      //     ))
+      // );
       this.setState({
         backupRecipe: untiedData,
         recipe: untiedData,
@@ -106,37 +126,19 @@ export default class Recipe extends Component {
       recipe: newRecipe,
       backupRecipe: backupRecipe,
     });
-    console.log(
-      "oldIngredients: ",
-      oldIngredients,
-      "newIngredients: ",
-      newIngredients,
-      "oldRecipe: ",
-      oldRecipe,
-      "newRecipe: ",
-      newRecipe,
-      "state Recipe: ",
-      this.state.recipe,
-      "state backupRecipe: ",
-      this.state.backupRecipe
-    );
   };
   clearNewRecipe = () => this.setState({ recipe: this.state.backupRecipe });
   componentDidMount() {
     this.fetchData();
-
-    this.setState({
-      missedIngredients: getLocalStorage("missedIngredients"),
-    });
   }
 
   render() {
     const {
       recipe,
 
-      missedIngredients,
+      ingredients,
       loading,
-      steps,
+
       expand,
     } = this.state;
     const filteredTags = tagFilterer(recipe);
@@ -149,21 +151,7 @@ export default class Recipe extends Component {
             <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
               <strong>{recipe.title}</strong>
             </h1>
-
-            <TagBanner>
-              {!!filteredTags &&
-                filteredTags.map((tag) => (
-                  <div style={{ margin: "5px 3px 5px 0px" }} key={tag}>
-                    <ThemeProvider theme={theme}>
-                      <Chip
-                        label={tag}
-                        className={`tagChip ${tag}`}
-                        color="primary"
-                      />
-                    </ThemeProvider>
-                  </div>
-                ))}
-            </TagBanner>
+            <ChipDisplay data={filteredTags} />
             <Summary
               expand={expand}
               dangerouslySetInnerHTML={{ __html: recipe.summary }}
@@ -172,28 +160,35 @@ export default class Recipe extends Component {
               see{`${this.state.expand ? " less" : " more"}`}
             </MDBBtn>
           </BasicInfo>
-          <div>
+          <div style={{ zIndex: "0", position: "absolute", right: "0" }}>
             <img src={recipe.image} alt={recipe.title} />
           </div>
         </TitleContainer>
-        <Display>
-          <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
-            <strong>Ingredients</strong>
-          </h1>
-          {recipe.extendedIngredients.map((ingredient, index) => (
-            <Ingredient
-              key={index}
-              index={index}
-              ingredient={ingredient}
-              handleIngredientChange={this.handleIngredientChange}
-            />
-          ))}
-          {this.state.recipe !== this.state.backupRecipe && (
-            <MDBBtn onClick={this.clearNewRecipe} color="primary">
-              Restore to default values
-            </MDBBtn>
-          )}
-        </Display>
+
+        <DisplayContainer>
+          <IngredientDisplay>
+            <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
+              <strong>Ingredients</strong>
+            </h1>
+            {recipe.extendedIngredients.map((ingredient, index) => (
+              <Ingredient
+                key={index}
+                index={index}
+                ingredient={ingredient}
+                handleIngredientChange={this.handleIngredientChange}
+              />
+            ))}
+            {this.state.recipe !== this.state.backupRecipe && (
+              <MDBBtn onClick={this.clearNewRecipe} color="primary">
+                Restore to default values
+              </MDBBtn>
+            )}
+          </IngredientDisplay>
+          <InstructionDisplay
+            ingredients={recipe.extendedIngredients}
+            steps={recipe.analyzedInstructions[0].steps}
+          />
+        </DisplayContainer>
       </RecipePageContainer>
     );
   }

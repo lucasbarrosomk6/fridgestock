@@ -28,19 +28,17 @@ class Fridgestock extends Component {
         getLocalStorage("ingredients") && getLocalStorage("ingredients"),
     });
     console.log(getLocalStorage("ingredients"));
-    localStorage.setItem("missedIngredients", "");
   }
-  setMissedIngredients = (missedIngredients) => {
-    localStorage.setItem("missedIngredients", missedIngredients);
-  };
   setIngredients = (ingredient) => {
     const { ingredients } = this.state;
-    const trimmedIngredient = ingredient.trim(); //removes whitespace, denies duplicates and denies blank searches
+    const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches
     const isIngredientExisting =
       ingredients.length &&
-      ingredients.find((el) => el.toLowerCase() === trimmedIngredient);
+      ingredients.find(
+        (el) => el.name.toLowerCase() === trimmedIngredient.name.toLowerCase()
+      );
 
-    if (trimmedIngredient) {
+    if (trimmedIngredient.name) {
       if (isIngredientExisting) {
         return;
       }
@@ -61,11 +59,13 @@ class Fridgestock extends Component {
 
   removeIngredient = (removeIngredient) => {
     // filters out an ingredient matching the argument and sets the state to the new array
+    console.log("before", this.state.ingredients);
     const newIngredients = this.state.ingredients.filter(
-      (x) => x !== removeIngredient
+      (x) => x.name !== removeIngredient.name
     );
-    localStorage.setItem("ingredients", newIngredients);
+    localStorage.setItem("ingredients", JSON.stringify(newIngredients));
     this.setState({ ingredients: newIngredients });
+    console.log("after", newIngredients);
   };
 
   fetchRecipes = async () => {

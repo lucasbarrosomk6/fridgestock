@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import Popup from "reactjs-popup";
 
 export const IngredientContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  min-height: 30px;
-  max-height: 50px;
-  height: 3vh;
-  padding: 5px 10px;
+  /* width: 100%; */
+
+  padding: 0 10px;
+  margin: 5px 0;
   border-radius: 20px;
   transition: all 0.5s;
+  background-color: ${(props) => (!props.missing ? "#ade9e8" : "#FA8BA2")};
   &:hover {
-    background-color: #5ad3d1;
+    background-color: ${(props) => (!props.missing ? "#5ad3d1" : "#FA8BA2")};
   }
 `;
 export const QuantityContainer = styled.div`
@@ -23,10 +22,10 @@ export const QuantityContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 15%;
-  min-width: 100px;
+  min-width: 70px;
   height: 100%;
   border-right: solid black 1px;
-  padding: 0 10px;
+  padding: 5px 0px;
   cursor: pointer;
 `;
 export const NameContainer = styled.div`
