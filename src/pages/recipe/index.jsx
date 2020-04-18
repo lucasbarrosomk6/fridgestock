@@ -76,7 +76,8 @@ export default class Recipe extends Component {
       const data = await api(
         `recipes/${this.props.match.params.recipeId}/information`
       );
-      let untiedData = {
+
+      const untiedData = {
         ...data,
         extendedIngredients: data.extendedIngredients.map((item) => {
           item.isMissing = true;
@@ -89,18 +90,13 @@ export default class Recipe extends Component {
           return item;
         }),
       };
-      // untiedData = untiedData.extendedIngredients.forEach(
-      //   (item) =>
-      //     (item.ismissing = getLocalStorage("missedIngredients").includes(
-      //       item.name
-      //     ))
-      // );
       this.setState({
         backupRecipe: untiedData,
         recipe: untiedData,
         loading: false,
         steps: data.analyzedInstructions[0].steps,
       });
+      console.log(this.state.recipe, untiedData);
     } catch (error) {
       this.setState({ loading: false, error: true });
       this.props.history.push("/not-found");
@@ -142,6 +138,7 @@ export default class Recipe extends Component {
       expand,
     } = this.state;
     const filteredTags = tagFilterer(recipe);
+    //console.log(recipe);
     if (loading) return <Title>Thinking up something good</Title>;
     return (
       <RecipePageContainer className="recipe-page-container">

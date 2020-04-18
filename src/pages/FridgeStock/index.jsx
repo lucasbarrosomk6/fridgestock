@@ -69,12 +69,16 @@ class Fridgestock extends Component {
   };
 
   fetchRecipes = async () => {
+    console.log("fetch started");
     this.setState({ error: false, recipes: [], soClose: [], isLoading: true });
     try {
+      const ingredientNames = [...this.state.ingredients].map(
+        (item) => item.name
+      );
       const data = await api("recipes/findByIngredients", {
         number: 20,
         ranking: 1,
-        ingredients: this.state.ingredients,
+        ingredients: ingredientNames,
       });
 
       const uniqueArray = _.uniqBy(data, "title"); ///removes duplicates
@@ -83,7 +87,7 @@ class Fridgestock extends Component {
         loaded: true,
         isLoading: false,
       });
-      console.log(this.state.isLoading);
+      console.log(this.state.ingredients);
     } catch (error) {
       console.log("error", error);
       this.setState({ error: true, loaded: true });
