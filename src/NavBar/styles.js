@@ -24,6 +24,7 @@ export const FridgeStockDisplay = styled.div`
   box-shadow: 1px 2px 5px black;
   transition: all 0.3s;
   overflow-y: auto;
+  scrollbar-color: #4285f4 #f5f5f5;
 `;
 export const IngredientDisplay = styled.div`
   display: flex;

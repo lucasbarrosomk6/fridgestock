@@ -34,12 +34,9 @@ class Fridgestock extends Component {
     window.addEventListener("storage", (e) =>
       this.setState({ ingredients: e.newValue })
     );
-
-    window.addEventListener("storage", (e) =>
-      this.setState({ store: "Store value changed: " + e.newValue })
-    );
   }
   setIngredients = (ingredient) => {
+    this.setState({ ingredients: getLocalStorage("ingredients") });
     const { ingredients } = this.state;
     const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches
     const isIngredientExisting =

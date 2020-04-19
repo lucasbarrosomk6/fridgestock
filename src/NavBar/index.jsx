@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { BrowserRouter as Link, Router } from "react-router-dom";
-import { MDBIcon } from "mdbreact";
+import { MDBIcon, MDBScrollbar } from "mdbreact";
 import {
   FridgestockButton,
   FridgeStockDisplay,
@@ -21,6 +21,8 @@ class NavBarPrototype extends Component {
     this.setState({ isOpen: !this.state.isOpen });
   };
   setIngredients = (ingredient) => {
+    this.setState({ ingredients: getLocalStorage("ingredients") });
+
     const { ingredients } = this.state;
     const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches
     const isIngredientExisting =
