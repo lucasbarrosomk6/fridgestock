@@ -42,3 +42,8 @@ input.form-control {
 .fa-search {
   color: #5ad3d1;
 }
+
+.navbar-expand-lg {
+  @media (min-width: 992px) flex-flow: row nowrap;
+  justify-content: space-between !important;
+}

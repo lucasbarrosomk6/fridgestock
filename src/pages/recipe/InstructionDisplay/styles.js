@@ -4,7 +4,7 @@ export const InstructionDisplayStyles = styled.div`
   display: flex;
   flex-direction: column;
   flex: 100;
-  margin-left: 10px;
+  margin: 10px;
   background-color: #ade9e8;
   padding: 10px;
   height: fit-content;

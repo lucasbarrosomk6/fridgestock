@@ -83,6 +83,7 @@ export const IngredientDisplay = styled.div`
   flex-direction: column;
   background-color: #ade9e8;
   padding: 10px;
+  margin: 10px;
   border-radius: 10px;
   height: fit-content;
 `;

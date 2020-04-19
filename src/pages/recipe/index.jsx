@@ -13,9 +13,6 @@ import InstructionDisplay from "./InstructionDisplay";
 import { Title } from "./styles";
 import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-import Chip from "@material-ui/core/Chip";
 import { MDBBtn } from "mdbreact";
 import ChipDisplay from "components/ChipDisplay";
 
@@ -46,31 +43,21 @@ const tagFilterer = (recipe) => {
   return relevantRecipeKeys.filter((key) => tags[key]);
 };
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#5ad3d1",
-      main: "#5ad3d1",
-      dark: "#FA8BA2",
-    },
-  },
-});
-
 export default class Recipe extends Component {
   state = {
     loading: true,
     error: false,
     backupRecipe: {},
     recipe: {},
-    recipeChanged: false,
     ingredients: [],
-    steps: [],
     expand: false,
   };
   toggleExpand = () => {
     this.setState({ expand: !this.state.expand });
   };
   fetchData = async () => {
+    console.log("fetched");
+
     try {
       this.setState({ loading: true });
       const data = await api(
@@ -96,7 +83,7 @@ export default class Recipe extends Component {
         loading: false,
         steps: data.analyzedInstructions[0].steps,
       });
-      console.log(this.state.recipe, untiedData);
+      localStorage.setItem("recipe", JSON.stringify(untiedData));
     } catch (error) {
       this.setState({ loading: false, error: true });
       this.props.history.push("/not-found");
@@ -125,18 +112,25 @@ export default class Recipe extends Component {
   };
   clearNewRecipe = () => this.setState({ recipe: this.state.backupRecipe });
   componentDidMount() {
-    this.fetchData();
+    const recipeId = this.props.match.params.recipeId;
+    const untiedLocalStorage = { ...getLocalStorage("recipe") };
+    if (untiedLocalStorage) {
+      if (JSON.stringify(untiedLocalStorage.id) === recipeId) {
+        this.setState({
+          backupRecipe: untiedLocalStorage,
+          recipe: untiedLocalStorage,
+          loading: false,
+        });
+      } else {
+        this.fetchData();
+      }
+    } else {
+      this.fetchData();
+    }
   }
 
   render() {
-    const {
-      recipe,
-
-      ingredients,
-      loading,
-
-      expand,
-    } = this.state;
+    const { recipe, loading, expand } = this.state;
     const filteredTags = tagFilterer(recipe);
     //console.log(recipe);
     if (loading) return <Title>Thinking up something good</Title>;
@@ -148,7 +142,15 @@ export default class Recipe extends Component {
             <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
               <strong>{recipe.title}</strong>
             </h1>
-            <ChipDisplay data={filteredTags} />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              <ChipDisplay data={filteredTags} />
+            </div>
+
             <Summary
               expand={expand}
               dangerouslySetInnerHTML={{ __html: recipe.summary }}

@@ -26,8 +26,18 @@ class Fridgestock extends Component {
     this.setState({
       ingredients:
         getLocalStorage("ingredients") && getLocalStorage("ingredients"),
+      recipes: getLocalStorage("recipes") && getLocalStorage("recipes"),
+      loaded: !!getLocalStorage("recipes"),
     });
-    console.log(getLocalStorage("ingredients"));
+
+    this.setState({ ingredients: getLocalStorage("ingredients") });
+    window.addEventListener("storage", (e) =>
+      this.setState({ ingredients: e.newValue })
+    );
+
+    window.addEventListener("storage", (e) =>
+      this.setState({ store: "Store value changed: " + e.newValue })
+    );
   }
   setIngredients = (ingredient) => {
     const { ingredients } = this.state;
@@ -87,7 +97,7 @@ class Fridgestock extends Component {
         loaded: true,
         isLoading: false,
       });
-      console.log(this.state.ingredients);
+      localStorage.setItem("recipes", JSON.stringify(uniqueArray));
     } catch (error) {
       console.log("error", error);
       this.setState({ error: true, loaded: true });

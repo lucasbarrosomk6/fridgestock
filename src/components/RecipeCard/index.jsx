@@ -6,17 +6,13 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import { CardContent, CardActions } from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CardPieChart from "./CardPieChart";
+import ChipDisplay from "components/ChipDisplay";
 import { MDBBtn } from "mdbreact";
-import Chip from "@material-ui/core/Chip";
-import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { Ingredients } from "./styles";
 
 const theme = createMuiTheme({
   palette: {
@@ -73,10 +69,18 @@ export function RecipeCard({ recipe, match }) {
         image={image}
         title={title}
       />
-      <CardContent>
-        <CardPieChart
-          missedIngredients={missedIngredients.length}
-          usedIngredients={usedIngredients.length}
+      <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
+        <ChipDisplay
+          data={[...usedIngredients].map((Ingredient) => ({
+            ...Ingredient,
+            isMissing: false,
+          }))}
+        />
+        <ChipDisplay
+          data={[...missedIngredients].map((Ingredient) => ({
+            ...Ingredient,
+            isMissing: true,
+          }))}
         />
       </CardContent>
       <CardActions disableSpacing>
@@ -95,48 +99,8 @@ export function RecipeCard({ recipe, match }) {
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        ></IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {!!usedIngredients.length && <Typography paragraph>Have:</Typography>}
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {!!usedIngredients.length &&
-              usedIngredients.map((item, index) => (
-                <div style={{ margin: "5px 3px" }} key={index}>
-                  <ThemeProvider theme={theme}>
-                    <Chip
-                      label={item.name}
-                      className={`ingredientChip ${item}`}
-                      color="primary"
-                    />
-                  </ThemeProvider>
-                </div>
-              ))}
-          </div>
-
-          {!!missedIngredients.length && (
-            <Typography paragraph>Need:</Typography>
-          )}
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {" "}
-            {!!missedIngredients.length &&
-              missedIngredients.map((item, index) => (
-                <div style={{ margin: "5px 3px" }} key={index}>
-                  <ThemeProvider theme={theme}>
-                    <Chip
-                      label={item.name}
-                      className={`ingredientChip ${item}`}
-                      color="secondary"
-                    />
-                  </ThemeProvider>
-                </div>
-              ))}
-          </div>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
