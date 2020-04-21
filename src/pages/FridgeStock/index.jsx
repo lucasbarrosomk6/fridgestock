@@ -12,102 +12,76 @@ import {
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
+import { setIngredients, removeIngredient } from "utils/setIngredients";
+import { withFridge } from "../../Contexts/Fridge";
 
 class Fridgestock extends Component {
-  state = {
-    ingredients: [],
-    recipes: [],
-    soClose: [],
-    isLoading: false,
-    loaded: false,
-    error: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipes: [],
+      soClose: [],
+      isLoading: false,
+      loaded: false,
+      error: false,
+    };
+  }
+
   componentDidMount() {
     this.setState({
-      ingredients:
-        getLocalStorage("ingredients") && getLocalStorage("ingredients"),
-      recipes: getLocalStorage("recipes") && getLocalStorage("recipes"),
+      recipes: getLocalStorage("recipes") || [],
       loaded: !!getLocalStorage("recipes"),
     });
 
-    this.setState({ ingredients: getLocalStorage("ingredients") });
-    window.addEventListener("storage", (e) =>
-      this.setState({ ingredients: e.newValue })
-    );
+    console.log("mounted");
   }
-  setIngredients = (ingredient) => {
-    this.setState({ ingredients: getLocalStorage("ingredients") });
-    const { ingredients } = this.state;
-    const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches
-    const isIngredientExisting =
-      ingredients.length &&
-      ingredients.find(
-        (el) => el.name.toLowerCase() === trimmedIngredient.name.toLowerCase()
-      );
 
-    if (trimmedIngredient.name) {
-      if (isIngredientExisting) {
-        return;
-      }
+  componentWillUnmount() {
+    console.log("unmounting");
+  }
 
-      localStorage.setItem(
-        "ingredients",
-        JSON.stringify([...ingredients, trimmedIngredient])
-      );
-
-      this.setState({
-        ingredients: [...ingredients, trimmedIngredient],
-      });
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.ingredients &&
+      this.props.ingredients.length &&
+      prevProps.ingredients !== this.props.ingredients
+    ) {
       this.fetchRecipes();
-    } else {
-      console.log("rejected");
     }
-  };
-
-  removeIngredient = (removeIngredient) => {
-    // filters out an ingredient matching the argument and sets the state to the new array
-    console.log("before", this.state.ingredients);
-    const newIngredients = this.state.ingredients.filter(
-      (x) => x.name !== removeIngredient.name
-    );
-    localStorage.setItem("ingredients", JSON.stringify(newIngredients));
-    this.setState({ ingredients: newIngredients });
-    console.log("after", newIngredients);
-  };
+  }
 
   fetchRecipes = async () => {
-    console.log("fetch started");
     this.setState({ error: false, recipes: [], soClose: [], isLoading: true });
     try {
-      const ingredientNames = [...this.state.ingredients].map(
-        (item) => item.name
-      );
+      const ingredientNames = this.props.ingredients.map((item) => item.name);
       const data = await api("recipes/findByIngredients", {
         number: 20,
         ranking: 1,
         ingredients: ingredientNames,
       });
 
-      const uniqueArray = _.uniqBy(data, "title"); ///removes duplicates
+      const uniqueRecipes = _.uniqBy(data, "title"); ///removes duplicates
       this.setState({
-        recipes: uniqueArray,
+        recipes: uniqueRecipes,
         loaded: true,
         isLoading: false,
       });
-      localStorage.setItem("recipes", JSON.stringify(uniqueArray));
+      localStorage.setItem("recipes", JSON.stringify(uniqueRecipes));
     } catch (error) {
       console.log("error", error);
       this.setState({ error: true, loaded: true });
     }
   };
+
   render() {
+    console.log(this.props);
     return (
       <FridgestockContainer className="fridgeStock-container">
         <InputContainer className="input-container">
           <Search
-            setIngredients={this.setIngredients}
-            ingredients={this.state.ingredients}
-            removeIngredient={this.removeIngredient}
+            setIngredients={this.props.setIngredients}
+            ingredients={this.props.ingredients}
+            removeIngredient={removeIngredient}
             fetchRecipes={this.fetchRecipes}
             isLoading={this.state.isLoading}
           />
@@ -128,4 +102,4 @@ class Fridgestock extends Component {
   }
 }
 
-export default Fridgestock;
+export default withFridge(Fridgestock);

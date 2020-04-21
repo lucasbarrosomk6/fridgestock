@@ -14,11 +14,13 @@ class AutoComplete extends Component {
     autoComplete: [],
     searchField: "",
   };
-
+  componentDidMount() {
+    console.log(this.props);
+  }
   handlesubmit = (e) => {
     e.preventDefault();
 
-    this.props.setIngredients(this.state.searchField);
+    this.props.setIngredients(this.state.searchField, true, this);
     this.setState({
       autoComplete: [],
       searchField: "",
@@ -26,7 +28,7 @@ class AutoComplete extends Component {
     });
   };
   handleAutocompleteSelect = (x) => {
-    this.props.setIngredients(x);
+    this.props.setIngredients(x, true, this);
 
     this.setState({
       searchField: "",

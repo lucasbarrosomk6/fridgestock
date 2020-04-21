@@ -60,7 +60,6 @@ export function RecipeCard({ recipe, match }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log(id);
   return (
     <Card className={classes.root}>
       <CardHeader title={title} />

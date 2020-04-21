@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import { BrowserRouter as Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MDBIcon, MDBScrollbar } from "mdbreact";
 import {
   FridgestockButton,
@@ -10,53 +10,22 @@ import {
 } from "./styles";
 import AutoComplete from "../components/Search/AutoComplete";
 import { getLocalStorage } from "../utils/localStorage";
+import { withFridge } from "../Contexts/Fridge";
+import { setIngredients, removeIngredient } from "utils/setIngredients";
 
 class NavBarPrototype extends Component {
   state = {
     isOpen: false,
-    ingredients: [],
+    ingredients: this.props.data,
   };
 
   toggleCollapse = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
-  setIngredients = (ingredient) => {
-    this.setState({ ingredients: getLocalStorage("ingredients") });
 
-    const { ingredients } = this.state;
-    const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches
-    const isIngredientExisting =
-      ingredients.length &&
-      ingredients.find(
-        (el) => el.name.toLowerCase() === trimmedIngredient.name.toLowerCase()
-      );
-
-    if (trimmedIngredient.name) {
-      if (isIngredientExisting) {
-        return;
-      }
-
-      localStorage.setItem(
-        "ingredients",
-        JSON.stringify([...ingredients, trimmedIngredient])
-      );
-
-      this.setState({
-        ingredients: [...ingredients, trimmedIngredient],
-      });
-    } else {
-      console.log("rejected");
-    }
-  };
-  removeIngredient = (removeIngredient) => {
-    const newIngredients = this.state.ingredients.filter(
-      (x) => x.name !== removeIngredient.name
-    );
-    localStorage.setItem("ingredients", JSON.stringify(newIngredients));
-    this.setState({ ingredients: newIngredients });
-  };
   render() {
-    const ingredientArray = getLocalStorage("ingredients");
+    const ingredientArray = getLocalStorage("ingredients") || [];
+    console.log(this.props);
     return (
       <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">
@@ -77,16 +46,16 @@ class NavBarPrototype extends Component {
         <FridgeStockDisplay clicked={this.state.isOpen}>
           <AutoComplete
             className="autocomplete"
-            setIngredients={this.setIngredients}
+            setIngredients={this.props.setIngredients}
           />
-          {ingredientArray.map((Ingredient) => (
+          {this.props.ingredients.map((Ingredient) => (
             <IngredientDisplay key={Ingredient.name}>
               {Ingredient.name}
               <DeleteContainer>
                 <MDBIcon
                   far
                   icon="times-circle"
-                  onClick={() => this.removeIngredient(Ingredient)}
+                  onClick={() => removeIngredient(Ingredient)}
                 />
               </DeleteContainer>
             </IngredientDisplay>
@@ -97,4 +66,4 @@ class NavBarPrototype extends Component {
   }
 }
 
-export default NavBarPrototype;
+export default withFridge(NavBarPrototype);
