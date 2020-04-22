@@ -86,17 +86,8 @@ export function RecipeCard({ recipe, match }) {
       </CardContent>
       <CardActions disableSpacing>
         <Link to={`/recipe/${id}`}>
-          <MDBBtn>See Full Recipe</MDBBtn>
+          <MDBBtn style={{ width: "290px" }}>See Full Recipe</MDBBtn>
         </Link>
-
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        ></IconButton>
       </CardActions>
     </Card>
   );
