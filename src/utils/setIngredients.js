@@ -23,5 +23,5 @@ export const removeIngredient = (removeIngredient, ingredients) => {
     (x) => x.name !== removeIngredient.name
   );
   localStorage.setItem("ingredients", JSON.stringify(newIngredients));
-  this.setState({ ingredients: newIngredients });
+  return newIngredients;
 };

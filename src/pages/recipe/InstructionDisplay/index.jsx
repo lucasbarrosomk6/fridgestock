@@ -22,7 +22,6 @@ const InstructiontDisplay = ({ steps, ingredients }) => {
     });
     return step;
   });
-  console.log(newSteps);
   return (
     <InstructionDisplayStyles>
       <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>

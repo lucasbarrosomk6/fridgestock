@@ -15,6 +15,7 @@ import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
 import { MDBBtn } from "mdbreact";
 import ChipDisplay from "components/ChipDisplay";
+import { withFridge } from "Contexts/Fridge";
 
 const tagFilterer = (recipe) => {
   const {
@@ -43,21 +44,19 @@ const tagFilterer = (recipe) => {
   return relevantRecipeKeys.filter((key) => tags[key]);
 };
 
-export default class Recipe extends Component {
+class Recipe extends Component {
   state = {
     loading: true,
     error: false,
     backupRecipe: {},
     recipe: {},
-    ingredients: [],
     expand: false,
   };
   toggleExpand = () => {
     this.setState({ expand: !this.state.expand });
   };
-  fetchData = async () => {
-    console.log("fetched");
 
+  fetchData = async () => {
     try {
       this.setState({ loading: true });
       const data = await api(
@@ -66,16 +65,6 @@ export default class Recipe extends Component {
 
       const untiedData = {
         ...data,
-        extendedIngredients: data.extendedIngredients.map((item) => {
-          item.isMissing = true;
-          for (var i = 0; i < getLocalStorage("ingredients").length; i++) {
-            if (getLocalStorage("ingredients")[i].name === item.name) {
-              item.isMissing = false;
-              break;
-            }
-          }
-          return item;
-        }),
       };
       this.setState({
         backupRecipe: untiedData,
@@ -192,3 +181,4 @@ export default class Recipe extends Component {
     );
   }
 }
+export default withFridge(Recipe);

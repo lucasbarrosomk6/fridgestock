@@ -2,21 +2,23 @@ import React from "react";
 import AutoComplete from "./AutoComplete";
 import { Ingredients } from "./styles";
 import ChipDisplay from "components/ChipDisplay";
+import { withFridge } from "../../Contexts/Fridge";
 
-const Search = ({
-  ingredients,
-  setIngredients,
-  removeIngredient,
-  fetchRecipes,
-  isLoading,
-}) => {
+const Search = (props) => {
   return (
     <>
-      <AutoComplete className="autocomplete" setIngredients={setIngredients} />
+      <AutoComplete
+        className="autocomplete"
+        setIngredients={props.setIngredients}
+      />
       <Ingredients className="ingredientDisplay">
-        <ChipDisplay data={ingredients} deleteFunction={removeIngredient} />;
+        <ChipDisplay
+          data={props.ingredients}
+          deleteFunction={props.removeIngredient}
+        />
+        ;
       </Ingredients>
     </>
   );
 };
-export default Search;
+export default withFridge(Search);

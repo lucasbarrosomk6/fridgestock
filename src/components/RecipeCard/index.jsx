@@ -62,13 +62,15 @@ export function RecipeCard({ recipe, match }) {
   };
   return (
     <Card className={classes.root}>
-      <CardHeader title={title} />
       <CardMedia
         className={classes.media} // put recipe image here
         image={image}
         title={title}
       />
-      <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
+      <CardHeader title={title} />
+      <CardContent
+        style={{ display: "flex", flexWrap: "wrap", overflowY: "scroll" }}
+      >
         <ChipDisplay
           data={[...usedIngredients].map((Ingredient) => ({
             ...Ingredient,
@@ -83,10 +85,6 @@ export function RecipeCard({ recipe, match }) {
         />
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-
         <Link to={`/recipe/${id}`}>
           <MDBBtn>See Full Recipe</MDBBtn>
         </Link>

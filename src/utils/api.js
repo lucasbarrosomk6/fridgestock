@@ -7,7 +7,6 @@ export default async (path, config = {}) => {
 
   const url = `${process.env.REACT_APP_SERVER}${path}?${dynamicQuery}`;
 
-  console.log(url);
   let { data } = await axios({
     url: url,
     method: "get",

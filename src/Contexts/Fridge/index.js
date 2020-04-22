@@ -33,12 +33,17 @@ export class Fridge extends React.Component {
 
     this.setState({ ingredients });
   };
+  removeIngredient = (ingredient) =>
+    this.setState({
+      ingredients: removeIngredient(ingredient, this.state.ingredients),
+    });
   render() {
     return (
       <FridgeContext.Provider
         value={{
           ingredients: this.state.ingredients,
           setIngredients: this.setIngredients,
+          removeIngredient: this.removeIngredient,
         }}
       >
         {this.props.children}

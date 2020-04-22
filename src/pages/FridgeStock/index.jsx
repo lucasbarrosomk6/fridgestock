@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Search from "components/Search";
-import _ from "lodash";
+import _, { debounce } from "lodash";
 import {
   FridgestockContainer,
   InputContainer,
@@ -32,12 +32,6 @@ class Fridgestock extends Component {
       recipes: getLocalStorage("recipes") || [],
       loaded: !!getLocalStorage("recipes"),
     });
-
-    console.log("mounted");
-  }
-
-  componentWillUnmount() {
-    console.log("unmounting");
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -50,7 +44,7 @@ class Fridgestock extends Component {
     }
   }
 
-  fetchRecipes = async () => {
+  fetchRecipes = debounce(async () => {
     this.setState({ error: false, recipes: [], soClose: [], isLoading: true });
     try {
       const ingredientNames = this.props.ingredients.map((item) => item.name);
@@ -71,17 +65,14 @@ class Fridgestock extends Component {
       console.log("error", error);
       this.setState({ error: true, loaded: true });
     }
-  };
+  }, 500);
 
   render() {
-    console.log(this.props);
     return (
       <FridgestockContainer className="fridgeStock-container">
         <InputContainer className="input-container">
           <Search
-            setIngredients={this.props.setIngredients}
             ingredients={this.props.ingredients}
-            removeIngredient={removeIngredient}
             fetchRecipes={this.fetchRecipes}
             isLoading={this.state.isLoading}
           />

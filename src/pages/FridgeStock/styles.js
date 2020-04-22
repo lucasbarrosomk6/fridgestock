@@ -6,11 +6,13 @@ import { deviceSizes as device } from "../../diviceSizes";
 
 export const FridgestockContainer = styled.div`
   position: relative;
-  // display: flex;
-  // align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 90%;
+  max-width: 1000px;
   margin: 2% 0;
-  // flex-direction: column;
+  flex-direction: column;
   z-index: 10;
   @media ${device.mobile} {
     align-items: flex-start;
@@ -23,7 +25,7 @@ export const FridgestockContainer = styled.div`
 export const InputContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   padding: 1vh 0;
   text-align: center;
@@ -44,6 +46,7 @@ export const InputTitle = styled.div`
 export const RecipeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export const MakeItNowContainer = styled.div`

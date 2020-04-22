@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import { withRouter } from "react-router-dom";
+import { withFridge } from "../../../../Contexts/Fridge";
 import {
   MDBContainer,
   MDBBtn,
@@ -35,6 +36,7 @@ class Ingredient extends Component {
   toggleOn = () => this.setState({ modal: true });
   toggleOff = () => this.setState({ modal: false });
   handleChange = (e) => this.setState({ quantityField: e.target.value });
+  handleAdd = (x) => this.props.setIngredients(x);
   handleSubmit = () => {
     this.props.handleIngredientChange(
       this.state.quantityField,
@@ -44,38 +46,13 @@ class Ingredient extends Component {
   };
 
   render() {
-    const { ingredient, location, history, match, index } = this.props;
+    const { ingredient } = this.props;
     const { loading, quantityField } = this.state;
-    const { setLoading, setSimilarIngredients } = this;
+    console.log(this.props.ingredients);
+
     const us = ingredient.measures.us;
 
-    // const fetchSimilarIngredients = async ingredient => {
-    //   setLoading(true);
-    //   const data = await api(`food/ingredients/${ingredient.id}/substitutes`);
-    //   setLoading(false);
-    //   data.substitutes &&
-    //     setSimilarIngredients(
-    //       data.substitutes.map(ingredient => ({
-    //         value: ingredient,
-    //         label: ingredient
-    //       }))
-    //     );
-    // };
-
-    // const parsed = queryString.parse(location.search);
-
-    // const handleSelect = data => {
-    //   const parsed = queryString.parse(location.search);
-    //   parsed[ingredient.name] = data.value;
-
-    //   const stringified = queryString.stringify(parsed);
-
-    //   console.log(stringified);
-    //   history.push(`${match.url}?${stringified}`);
-    // };\
-
     if (loading || !ingredient) return;
-
     return (
       <IngredientContainer
         missing={ingredient.isMissing}
@@ -109,10 +86,16 @@ class Ingredient extends Component {
             <MDBBtn color="primary" onClick={this.handleSubmit}>
               Save changes
             </MDBBtn>
+            <MDBBtn
+              color="secondary"
+              onClick={() => this.handleAdd(ingredient.name)}
+            >
+              I have this Ingredient
+            </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
       </IngredientContainer>
     );
   }
 }
-export default withRouter(Ingredient);
+export default withFridge(withRouter(Ingredient));

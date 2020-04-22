@@ -8,19 +8,18 @@ import {
   AutoCompleteItem,
   AutoCompleteDisplay,
 } from "./styles";
+import { withFridge } from "../../../Contexts/Fridge";
 
 class AutoComplete extends Component {
   state = {
     autoComplete: [],
     searchField: "",
   };
-  componentDidMount() {
-    console.log(this.props);
-  }
+
   handlesubmit = (e) => {
     e.preventDefault();
 
-    this.props.setIngredients(this.state.searchField, true, this);
+    this.props.setIngredients(this.state.searchField, this.props.ingredients);
     this.setState({
       autoComplete: [],
       searchField: "",
@@ -28,12 +27,11 @@ class AutoComplete extends Component {
     });
   };
   handleAutocompleteSelect = (x) => {
-    this.props.setIngredients(x, true, this);
+    this.props.setIngredients(x, this.props.setIngredients);
 
     this.setState({
       searchField: "",
       autoComplete: [],
-      buttonClicked: false,
     });
   };
   clearAutocomplete = () =>
@@ -94,4 +92,4 @@ class AutoComplete extends Component {
   }
 }
 
-export default AutoComplete;
+export default withFridge(AutoComplete);

@@ -34,7 +34,7 @@ input.form-control {
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 .navbar {
-  width: 90%;
+  width: 100%;
 }
 .bg-light {
   background-color: #5ad3d1 !important ;
@@ -46,4 +46,10 @@ input.form-control {
 .navbar-expand-lg {
   @media (min-width: 992px) flex-flow: row nowrap;
   justify-content: space-between !important;
+}
+.makeStyles-root-138 {
+  width: 300px;
+}
+.makeStyles-root-236 {
+  width: 345px;
 }

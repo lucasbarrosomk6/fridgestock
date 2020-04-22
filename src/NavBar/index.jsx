@@ -24,8 +24,6 @@ class NavBarPrototype extends Component {
   };
 
   render() {
-    const ingredientArray = getLocalStorage("ingredients") || [];
-    console.log(this.props);
     return (
       <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">
@@ -55,7 +53,12 @@ class NavBarPrototype extends Component {
                 <MDBIcon
                   far
                   icon="times-circle"
-                  onClick={() => removeIngredient(Ingredient)}
+                  onClick={() =>
+                    this.props.removeIngredient(
+                      Ingredient,
+                      this.props.ingredients
+                    )
+                  }
                 />
               </DeleteContainer>
             </IngredientDisplay>

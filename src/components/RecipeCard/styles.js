@@ -22,7 +22,7 @@ export const RecipeImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(${props => props.image});
+  background-image: url(${(props) => props.image});
   background-size: cover;
   height: 100%;
   min-height: 80px;
@@ -46,14 +46,6 @@ export const Title = styled.div`
   height: fit-content;
   border-bottom: 1px solid black;
   width: 100%;
-`;
-
-export const IngredientsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  text-align: center;
-  width: 90%;
-  height: 60%;
 `;
 
 export const Ingredients = styled.div`
