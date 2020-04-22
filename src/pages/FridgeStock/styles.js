@@ -30,7 +30,7 @@ export const InputContainer = styled.div`
   padding: 1vh 0;
   text-align: center;
   overflow: visible;
-  @media (max-width: 360px) {
+  @media (max-width: 420px) {
     flex-direction: column;
     align-items: center;
   }

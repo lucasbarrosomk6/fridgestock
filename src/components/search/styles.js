@@ -38,7 +38,7 @@ export const Ingredients = styled.div`
   flex-grow: 1;
   min-width: 180px;
   height: fit-content;
-  @media (max-width: 360px) {
+  @media (max-width: 420px) {
     justify-content: center;
   }
 `;

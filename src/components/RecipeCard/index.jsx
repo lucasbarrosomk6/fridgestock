@@ -68,9 +68,7 @@ export function RecipeCard({ recipe, match }) {
         title={title}
       />
       <CardHeader title={title} />
-      <CardContent
-        style={{ display: "flex", flexWrap: "wrap", overflowY: "scroll" }}
-      >
+      <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
         <ChipDisplay
           data={[...usedIngredients].map((Ingredient) => ({
             ...Ingredient,
@@ -85,8 +83,8 @@ export function RecipeCard({ recipe, match }) {
         />
       </CardContent>
       <CardActions disableSpacing>
-        <Link to={`/recipe/${id}`}>
-          <MDBBtn style={{ width: "290px" }}>See Full Recipe</MDBBtn>
+        <Link to={`/recipe/${id}`} style={{ width: "100%" }}>
+          <MDBBtn style={{ width: "100%" }}>See Full Recipe</MDBBtn>
         </Link>
       </CardActions>
     </Card>

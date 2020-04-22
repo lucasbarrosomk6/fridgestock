@@ -21,7 +21,7 @@ export const SearchBarForm = styled.form`
   text-align: right;
   min-width: 180px;
 
-  @media (max-width: 360px) {
+  @media (max-width: 420px) {
     width: 100%;
   }
 `;
