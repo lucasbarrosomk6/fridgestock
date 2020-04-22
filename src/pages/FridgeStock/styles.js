@@ -27,7 +27,7 @@ export const InputContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  padding: 1vh 0;
+
   text-align: center;
   overflow: visible;
   @media (max-width: 420px) {

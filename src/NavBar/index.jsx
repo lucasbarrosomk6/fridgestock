@@ -13,7 +13,7 @@ import { getLocalStorage } from "../utils/localStorage";
 import { withFridge } from "../Contexts/Fridge";
 import { setIngredients, removeIngredient } from "utils/setIngredients";
 
-class NavBarPrototype extends Component {
+class NavBar extends Component {
   state = {
     isOpen: false,
     ingredients: this.props.data,
@@ -69,4 +69,4 @@ class NavBarPrototype extends Component {
   }
 }
 
-export default withFridge(NavBarPrototype);
+export default withFridge(NavBar);
