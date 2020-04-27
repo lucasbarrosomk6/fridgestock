@@ -30,17 +30,16 @@ export const SearchBar = styled.div`
   align-items: center;
 `;
 export const AutoCompleteDisplay = styled.div`
-  position: relative;
+  position: absolute;
+  top: 32px;
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-height: ${(props) => (!props.fetchedItems ? "0px" : "fit-content")};
-  transition: all 0.5s;
+  width: 174px;
+  height: ${(props) => `${props.length * 40}px`};
+
   font-size: 120%;
   background-color: rgb(255, 255, 255, 0.5);
   border: none;
-  border-radius: 1vh;
-  box-shadow: 1px 1px 4px black;
   z-index: 100;
   background-position: 0 0;
   cursor: pointer;
@@ -56,14 +55,14 @@ export const AutoCompleteItem = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 40px;
-  width: 174px;
+
   border-bottom: 1px #4285f4 solid;
   cursor: pointer;
   z-index: 5;
   font-size: 1rem;
   font-weight: 400;
   color: #495057;
-  transition: all 0.2s;
+
   background-color: white;
   &:hover {
     background-color: lightgrey;

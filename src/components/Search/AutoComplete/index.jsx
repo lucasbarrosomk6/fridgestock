@@ -73,7 +73,7 @@ class AutoComplete extends Component {
             <MDBIcon icon="search" />
           )}
         </SearchBar>
-        <AutoCompleteDisplay>
+        <AutoCompleteDisplay length={this.state.autoComplete.length}>
           {this.state.autoComplete
             ? this.state.autoComplete.map((item, index) => (
                 <AutoCompleteItem
