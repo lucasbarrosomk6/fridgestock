@@ -57,11 +57,8 @@ export function RecipeCard({ recipe, match }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{ width: "300px" }}>
       <CardMedia
         className={classes.media} // put recipe image here
         image={image}
@@ -70,16 +67,24 @@ export function RecipeCard({ recipe, match }) {
       <CardHeader title={title} />
       <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
         <ChipDisplay
-          data={[...usedIngredients].map((Ingredient) => ({
-            ...Ingredient,
-            isMissing: false,
-          }))}
+          data={
+            usedIngredients
+              ? [...usedIngredients].map((Ingredient) => ({
+                  ...Ingredient,
+                  isMissing: false,
+                }))
+              : null
+          }
         />
         <ChipDisplay
-          data={[...missedIngredients].map((Ingredient) => ({
-            ...Ingredient,
-            isMissing: true,
-          }))}
+          data={
+            missedIngredients[0].id
+              ? [...missedIngredients].map((Ingredient) => ({
+                  ...Ingredient,
+                  isMissing: true,
+                }))
+              : missedIngredients
+          }
         />
       </CardContent>
       <CardActions disableSpacing>

@@ -4,15 +4,12 @@ import _, { debounce } from "lodash";
 import {
   FridgestockContainer,
   InputContainer,
-  MakeItNowContainer,
-  SoCloseContainer,
   RecipeContainer,
-  Title,
 } from "./styles";
+import SlideShow from "components/SlideShow";
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
-import { setIngredients, removeIngredient } from "utils/setIngredients";
 import { withFridge } from "../../Contexts/Fridge";
 
 class Fridgestock extends Component {
@@ -26,12 +23,42 @@ class Fridgestock extends Component {
       error: false,
     };
   }
+  fetchRandomRecipes = async () => {
+    this.setState({ error: false, loaded: false, isLoading: true });
 
+    try {
+      const data = await api("recipes/random", {
+        number: 3,
+      });
+      const refinedRecipes = [...data.recipes].map((item) => ({
+        ...item,
+        missedIngredients: [...item.extendedIngredients].map(
+          (ingredient) => ingredient.name
+        ),
+      }));
+
+      this.setState({
+        recipes: refinedRecipes,
+        error: false,
+        loaded: true,
+        isLoading: false,
+      });
+      return data.recipes;
+    } catch (error) {
+      console.log("error", error);
+      this.setState({ error: true, loaded: true, isLoading: false });
+    }
+  };
   componentDidMount() {
-    this.setState({
-      recipes: getLocalStorage("recipes") || [],
-      loaded: !!getLocalStorage("recipes"),
-    });
+    if (getLocalStorage("recipes")) {
+      this.setState({
+        recipes: getLocalStorage("recipes"),
+        loaded: true,
+      });
+    } else {
+      console.log("fetching random recipes");
+      this.fetchRandomRecipes();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,6 +97,7 @@ class Fridgestock extends Component {
   render() {
     return (
       <FridgestockContainer className="fridgeStock-container">
+        <SlideShow />
         <InputContainer className="input-container">
           <Search
             ingredients={this.props.ingredients}
@@ -77,17 +105,16 @@ class Fridgestock extends Component {
             isLoading={this.state.isLoading}
           />
         </InputContainer>
-        <div>
-          {this.state.loaded && !!this.state.recipes.length && (
-            <RecipeContainer className="recipe-container">
-              {this.state.recipes.map((item, index) => (
-                <div key={index} style={{ margin: "10px" }}>
-                  <Recipe recipe={item} />{" "}
-                </div>
-              ))}
-            </RecipeContainer>
-          )}
-        </div>
+
+        {this.state.loaded && !!this.state.recipes.length && (
+          <RecipeContainer className="recipe-container">
+            {this.state.recipes.map((item, index) => (
+              <div key={index} style={{ margin: "10px" }}>
+                <Recipe recipe={item} />{" "}
+              </div>
+            ))}
+          </RecipeContainer>
+        )}
       </FridgestockContainer>
     );
   }
