@@ -46,7 +46,7 @@ export const InputTitle = styled.div`
 export const RecipeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 `;
 

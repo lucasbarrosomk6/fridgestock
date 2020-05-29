@@ -1,5 +1,3 @@
-import { getLocalStorage } from "./localStorage";
-
 export const setIngredients = (ingredient, ingredients = []) => {
   try {
     const trimmedIngredient = { name: ingredient.trim(), isMissing: false }; //removes whitespace, denies duplicates and denies blank searches

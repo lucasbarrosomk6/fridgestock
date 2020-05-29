@@ -16,7 +16,6 @@ const Search = (props) => {
           data={props.ingredients}
           deleteFunction={props.removeIngredient}
         />
-        ;
       </Ingredients>
     </>
   );

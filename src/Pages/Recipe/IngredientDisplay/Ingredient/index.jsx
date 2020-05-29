@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import queryString from "query-string";
 import { withRouter } from "react-router-dom";
 import { withFridge } from "../../../../Contexts/Fridge";
 import {
-  MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalBody,
@@ -18,7 +16,6 @@ import {
   QuantityContainer,
   OptionContainer,
 } from "./styles";
-import api from "utils/api";
 
 class Ingredient extends Component {
   constructor(props) {

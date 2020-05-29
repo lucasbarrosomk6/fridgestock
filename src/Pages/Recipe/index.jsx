@@ -121,8 +121,9 @@ class Recipe extends Component {
   render() {
     const { recipe, loading, expand } = this.state;
     const filteredTags = tagFilterer(recipe);
-    //console.log(recipe);
-    if (loading) return <Title>Thinking up something good</Title>;
+    console.log(recipe);
+    if (loading || !recipe.id) return <Title>Thinking up something good</Title>;
+
     return (
       <RecipePageContainer className="recipe-page-container">
         <TitleContainer className="title-container">
@@ -158,14 +159,15 @@ class Recipe extends Component {
             <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
               <strong>Ingredients</strong>
             </h1>
-            {recipe.extendedIngredients.map((ingredient, index) => (
-              <Ingredient
-                key={index}
-                index={index}
-                ingredient={ingredient}
-                handleIngredientChange={this.handleIngredientChange}
-              />
-            ))}
+            {recipe.extendedIngredients &&
+              recipe.extendedIngredients.map((ingredient, index) => (
+                <Ingredient
+                  key={index}
+                  index={index}
+                  ingredient={ingredient}
+                  handleIngredientChange={this.handleIngredientChange}
+                />
+              ))}
             {this.state.recipe !== this.state.backupRecipe && (
               <MDBBtn onClick={this.clearNewRecipe} color="primary">
                 Restore to default values

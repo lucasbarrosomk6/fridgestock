@@ -2,13 +2,12 @@ import React from "react";
 import Chip from "@material-ui/core/Chip";
 
 const ChipDisplay = ({ data, deleteFunction }) => {
-  console.log(data);
   return (
     <>
       {!!data &&
         !!data.length &&
-        data.map((item) => (
-          <div style={{ margin: "5px 3px" }} key={item.name ? item.name : item}>
+        data.map((item, index) => (
+          <div style={{ margin: "5px 3px" }} key={index}>
             <Chip
               label={item.name ? item.name : item}
               onDelete={deleteFunction && (() => deleteFunction(item, data))}

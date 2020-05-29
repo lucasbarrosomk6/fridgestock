@@ -1,33 +1,14 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import { CardContent, CardActions } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChipDisplay from "components/ChipDisplay";
 import { MDBBtn } from "mdbreact";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { Ingredients } from "./styles";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#46BFBD",
-      main: "#46BFBD",
-      dark: "#5AD3D1",
-    },
-    secondary: {
-      light: "#FDDAE1",
-      main: "#FDDAE1",
-      dark: "#FA8BA2",
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 export function RecipeCard({ recipe, match }) {
   const { image, title, usedIngredients, missedIngredients, id } = recipe;
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <Card className={classes.root} style={{ width: "300px" }}>
@@ -65,7 +45,14 @@ export function RecipeCard({ recipe, match }) {
         title={title}
       />
       <CardHeader title={title} />
-      <CardContent style={{ display: "flex", flexWrap: "wrap" }}>
+      <CardContent
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          maxHeight: "200px",
+          overflowY: "auto",
+        }}
+      >
         <ChipDisplay
           data={
             usedIngredients

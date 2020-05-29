@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { MDBIcon, MDBScrollbar } from "mdbreact";
+import { MDBIcon } from "mdbreact";
 import {
   FridgestockButton,
   FridgeStockDisplay,
@@ -9,9 +9,7 @@ import {
   DeleteContainer,
 } from "./styles";
 import AutoComplete from "../components/Search/AutoComplete";
-import { getLocalStorage } from "../utils/localStorage";
 import { withFridge } from "../Contexts/Fridge";
-import { setIngredients, removeIngredient } from "utils/setIngredients";
 
 class NavBar extends Component {
   state = {

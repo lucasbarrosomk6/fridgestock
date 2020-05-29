@@ -6,11 +6,12 @@ import {
   InputContainer,
   RecipeContainer,
 } from "./styles";
-import SlideShow from "components/SlideShow";
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
 import { withFridge } from "../../Contexts/Fridge";
+import USP from "../../components/USP";
+import { USPData } from "../../assets/usp.js";
 
 class Fridgestock extends Component {
   constructor(props) {
@@ -97,7 +98,7 @@ class Fridgestock extends Component {
   render() {
     return (
       <FridgestockContainer className="fridgeStock-container">
-        <SlideShow />
+        <USP data={USPData} />
         <InputContainer className="input-container">
           <Search
             ingredients={this.props.ingredients}
@@ -109,7 +110,7 @@ class Fridgestock extends Component {
         {this.state.loaded && !!this.state.recipes.length && (
           <RecipeContainer className="recipe-container">
             {this.state.recipes.map((item, index) => (
-              <div key={index} style={{ margin: "10px" }}>
+              <div key={index}>
                 <Recipe recipe={item} />{" "}
               </div>
             ))}
