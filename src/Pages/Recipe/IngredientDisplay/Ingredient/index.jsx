@@ -43,9 +43,8 @@ class Ingredient extends Component {
   };
 
   render() {
-    const { ingredient } = this.props;
+    const { ingredient, nameWidth } = this.props;
     const { loading, quantityField } = this.state;
-    console.log(this.props.ingredients);
 
     const us = ingredient.measures.us;
 
@@ -57,7 +56,7 @@ class Ingredient extends Component {
       >
         <QuantityContainer id="QuantittyContainer">{`${ingredient.measures.us.amount} ${us.unitShort}`}</QuantityContainer>
 
-        <NameContainer>
+        <NameContainer className="name-container" width={nameWidth}>
           {ingredient.name}
           <OptionContainer onClick={this.toggleOn}>
             <MDBIcon icon="ellipsis-v" />

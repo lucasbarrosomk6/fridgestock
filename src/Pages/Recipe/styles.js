@@ -22,6 +22,8 @@ export const TitleContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
+  margin: 10px 0 20px;
+
   /*  */
 `;
 export const BasicInfo = styled.div`
@@ -32,7 +34,7 @@ export const BasicInfo = styled.div`
   width: 50%;
   background: rgba(255, 255, 255, 0.5);
   padding: 20px;
-  min-width: 320px;
+  min-width: 324px;
   z-index: 3;
 `;
 
@@ -67,6 +69,16 @@ export const Circle = styled.div`
   background-color: #5ad3d1;
   z-index: -1;
 `;
+export const ImageContainer = styled.div`
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  min-width: 324px;
+  max-width: 556px;
+`;
 export const DisplayContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -83,7 +95,7 @@ export const IngredientDisplay = styled.div`
   flex-direction: column;
   background-color: #ade9e8;
   padding: 10px;
-  margin: 10px;
+
   border-radius: 10px;
   height: fit-content;
 `;

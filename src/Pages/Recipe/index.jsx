@@ -8,6 +8,7 @@ import {
   Circle,
   IngredientDisplay,
   DisplayContainer,
+  ImageContainer,
 } from "./styles";
 import InstructionDisplay from "./InstructionDisplay";
 import { Title } from "./styles";
@@ -42,6 +43,14 @@ const tagFilterer = (recipe) => {
   const relevantRecipeKeys = Object.keys(tags);
 
   return relevantRecipeKeys.filter((key) => tags[key]);
+};
+
+const nameWidthDectector = (array) => {
+  const stringArray = array.map((item) => item.name);
+  const longestName = stringArray.sort(function (a, b) {
+    return b.length - a.length;
+  })[0];
+  return longestName.length * 10;
 };
 
 class Recipe extends Component {
@@ -101,6 +110,7 @@ class Recipe extends Component {
   };
   clearNewRecipe = () => this.setState({ recipe: this.state.backupRecipe });
   componentDidMount() {
+    //API call saving procausion, if recipe being viewed was the last to be viewed, use local storage instead of API call.
     const recipeId = this.props.match.params.recipeId;
     const untiedLocalStorage = { ...getLocalStorage("recipe") };
     if (untiedLocalStorage) {
@@ -117,13 +127,15 @@ class Recipe extends Component {
       this.fetchData();
     }
   }
-
   render() {
     const { recipe, loading, expand } = this.state;
     const filteredTags = tagFilterer(recipe);
-    console.log(recipe);
-    if (loading || !recipe.id) return <Title>Thinking up something good</Title>;
+    const nameWidth =
+      recipe.extendedIngredients &&
+      nameWidthDectector(recipe.extendedIngredients);
 
+    if (loading || !recipe.id) return <Title>Thinking up something good</Title>;
+    console.log(recipe.image);
     return (
       <RecipePageContainer className="recipe-page-container">
         <TitleContainer className="title-container">
@@ -149,9 +161,9 @@ class Recipe extends Component {
               see{`${this.state.expand ? " less" : " more"}`}
             </MDBBtn>
           </BasicInfo>
-          <div style={{ zIndex: "0", position: "absolute", right: "0" }}>
+          <ImageContainer>
             <img src={recipe.image} alt={recipe.title} />
-          </div>
+          </ImageContainer>
         </TitleContainer>
 
         <DisplayContainer>
@@ -160,12 +172,14 @@ class Recipe extends Component {
               <strong>Ingredients</strong>
             </h1>
             {recipe.extendedIngredients &&
+              recipe.extendedIngredients.length &&
               recipe.extendedIngredients.map((ingredient, index) => (
                 <Ingredient
                   key={index}
                   index={index}
                   ingredient={ingredient}
                   handleIngredientChange={this.handleIngredientChange}
+                  nameWidth={nameWidth}
                 />
               ))}
             {this.state.recipe !== this.state.backupRecipe && (
@@ -174,10 +188,13 @@ class Recipe extends Component {
               </MDBBtn>
             )}
           </IngredientDisplay>
-          <InstructionDisplay
-            ingredients={recipe.extendedIngredients}
-            steps={recipe.analyzedInstructions[0].steps}
-          />
+          {recipe.analyzedInstructions[0].steps &&
+            recipe.analyzedInstructions[0].steps.length && (
+              <InstructionDisplay
+                ingredients={recipe.extendedIngredients}
+                steps={recipe.analyzedInstructions[0].steps}
+              />
+            )}
         </DisplayContainer>
       </RecipePageContainer>
     );

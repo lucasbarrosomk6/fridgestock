@@ -5,7 +5,7 @@ export const IngredientContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* width: 100%; */
+  width: 100%;
 
   padding: 0 10px;
   margin: 5px 0;
@@ -36,6 +36,8 @@ export const NameContainer = styled.div`
   justify-content: space-between;
   padding-left: 10px;
   height: 100%;
+  width: ${(props) => `${props.width}px`};
+  max-width: 200px;
 `;
 export const OptionContainer = styled.div`
   display: flex;

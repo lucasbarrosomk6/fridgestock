@@ -51,8 +51,8 @@ export const UnitToggle = styled.div`
   height: 90%;
   margin: 5%;
   border: 1px solid black;
-  background-color: ${props => (props.selected ? "black" : "transparent")};
-  color: ${props => (props.selected ? "white" : "black")};
+  background-color: ${(props) => (props.selected ? "black" : "transparent")};
+  color: ${(props) => (props.selected ? "white" : "black")};
   transition: all 0.2s;
   cursor: pointer;
 

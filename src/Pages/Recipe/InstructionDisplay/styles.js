@@ -1,14 +1,19 @@
 import styled from "styled-components";
+
 //instruction styles start here
 export const InstructionDisplayStyles = styled.div`
   display: flex;
   flex-direction: column;
   flex: 100;
-  margin: 10px;
+  margin: 10px 0 10px 0;
   background-color: #ade9e8;
   padding: 10px;
   height: fit-content;
   border-radius: 10px;
+  min-width: 300px;
+  @media (min-width: 700px) {
+    margin: 0 0 0 10px;
+  }
 `;
 export const InstructionContainer = styled.div`
   position: relative;
