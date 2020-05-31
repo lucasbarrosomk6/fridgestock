@@ -7,21 +7,45 @@ import {
   IngredientContainer,
 } from "./styles";
 import ChipDisplay from "components/ChipDisplay";
-const InstructiontDisplay = ({ steps, ingredients }) => {
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../../../redux/user/user.selector";
+
+const InstructiontDisplay = ({ steps, ingredients, fridgeStock }) => {
+  const ingredientArray = ingredients.map((ingredient) => {
+    //used to determine if step uses an ingredient
+    return {
+      name: ingredient.name,
+      nameArray: ingredient.name.split(" "),
+    };
+  });
+
   const newSteps = steps.map((step) => {
-    step.ingredients.forEach((ingredient) => {
-      ingredient.isMissing = true;
-      for (var i = 0; i < ingredients.length; i++) {
-        if (ingredients[i].name === ingredient.name) {
-          if (ingredients[i].isMissing === false) {
-            ingredient.isMissing = false;
-            break;
-          }
-        }
+    const stepArray = step.step
+      .replace(
+        /(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,
+        ""
+      ) //removes punctuation
+      .split(" ");
+    const usedIngredients = [];
+    ingredientArray.forEach((ingredient) => {
+      if (ingredient.nameArray.some((el) => stepArray.includes(el))) {
+        //if an ingredient's name is included in the text of the step, it is pushed to the "used ingredient" array
+        usedIngredients.push({
+          name: ingredient.name,
+          isMissing: !fridgeStock.includes(ingredient.name), //
+        });
       }
     });
-    return step;
+
+    return {
+      equipment: step.equipment,
+      number: step.number,
+      step: step.step,
+      ingredients: usedIngredients,
+    };
   });
+  console.log(newSteps);
   return (
     <InstructionDisplayStyles>
       <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
@@ -44,4 +68,7 @@ const InstructiontDisplay = ({ steps, ingredients }) => {
     </InstructionDisplayStyles>
   );
 };
-export default InstructiontDisplay;
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+export default connect(mapStateToProps)(InstructiontDisplay);

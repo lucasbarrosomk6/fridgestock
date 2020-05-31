@@ -17,7 +17,7 @@ export const FridgestockContainer = styled.div`
   @media ${device.mobile} {
     align-items: flex-start;
   }
-  @media (max-width: 360px) {
+  @media (max-width: 420px) {
     flex-direction: column;
     align-items: center;
   }

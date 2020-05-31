@@ -7,6 +7,9 @@ import "mdbreact/dist/css/mdb.css";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const theme = {
   lightGreen: "#46BFBD",
@@ -18,9 +21,14 @@ const theme = {
 };
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </ThemeProvider>
+  </Provider>,
+
   document.getElementById("root")
 );
 

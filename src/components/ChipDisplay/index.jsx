@@ -10,7 +10,7 @@ const ChipDisplay = ({ data, deleteFunction }) => {
           <div style={{ margin: "5px 3px" }} key={index}>
             <Chip
               label={item.name ? item.name : item}
-              onDelete={deleteFunction && (() => deleteFunction(item, data))}
+              onDelete={deleteFunction && (() => deleteFunction(item))}
               className="ingredientChip"
               color={!item.isMissing ? "primary" : "secondary"}
             />

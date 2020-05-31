@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../../redux/user/user.selector";
+
 import Search from "components/Search";
 import _, { debounce } from "lodash";
 import {
@@ -9,7 +13,6 @@ import {
 import Recipe from "components/RecipeCard";
 import api from "utils/api";
 import { getLocalStorage } from "utils/localStorage";
-import { withFridge } from "../../Contexts/Fridge";
 import USP from "../../components/USP";
 import { USPData } from "../../assets/usp.js";
 
@@ -64,9 +67,9 @@ class Fridgestock extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      this.props.ingredients &&
-      this.props.ingredients.length &&
-      prevProps.ingredients !== this.props.ingredients
+      this.props.fridgeStock &&
+      this.props.fridgeStock.length &&
+      prevProps.fridgeStock !== this.props.fridgeStock
     ) {
       this.fetchRecipes();
     }
@@ -75,11 +78,10 @@ class Fridgestock extends Component {
   fetchRecipes = debounce(async () => {
     this.setState({ error: false, recipes: [], soClose: [], isLoading: true });
     try {
-      const ingredientNames = this.props.ingredients.map((item) => item.name);
       const data = await api("recipes/findByIngredients", {
         number: 20,
         ranking: 1,
-        ingredients: ingredientNames,
+        ingredients: this.props.fridgeStock,
       });
 
       const uniqueRecipes = _.uniqBy(data, "title"); ///removes duplicates
@@ -121,4 +123,8 @@ class Fridgestock extends Component {
   }
 }
 
-export default withFridge(Fridgestock);
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+
+export default connect(mapStateToProps)(Fridgestock);

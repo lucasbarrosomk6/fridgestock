@@ -18,14 +18,27 @@ export const IngredientContainer = styled.div`
 `;
 export const QuantityContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  width: 15%;
-  min-width: 70px;
+  width: ${(props) => {
+    if (props.width.quantity.idealWidth < props.width.quantity.maxWidth) {
+      return `${props.width.quantity.idealWidth}px`;
+    } else if (
+      props.width.name.idealWidth < props.width.name.maxWidth &&
+      props.width.quantity.idealWidth > props.width.quantity.maxWidth
+    ) {
+      return `${
+        props.width.quantity.maxWidth +
+        (props.width.name.maxWidth - props.width.name.idealWidth)
+      }`;
+    } else {
+      return `${props.width.quantity.maxWidth}px`;
+    }
+  }};
   height: 100%;
   border-right: solid black 1px;
-  padding: 5px 0px;
+  padding: 0 10px 0 0;
+  text-align: right;
   cursor: pointer;
 `;
 export const NameContainer = styled.div`
@@ -36,8 +49,13 @@ export const NameContainer = styled.div`
   justify-content: space-between;
   padding-left: 10px;
   height: 100%;
-  width: ${(props) => `${props.width}px`};
-  max-width: 200px;
+  min-width: ${(props) => {
+    if (props.width.name.idealWidth < props.width.name.maxWidth) {
+      return `${props.width.name.idealWidth}px`;
+    } else {
+      return `${props.width.name.maxWidth}px`;
+    }
+  }};
 `;
 export const OptionContainer = styled.div`
   display: flex;

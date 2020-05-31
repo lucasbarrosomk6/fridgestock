@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { withFridge } from "../../../../Contexts/Fridge";
 import {
   MDBBtn,
   MDBModal,
@@ -16,6 +15,10 @@ import {
   QuantityContainer,
   OptionContainer,
 } from "./styles";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../../../redux/user/user.selector";
+import { addToFridgeStock } from "../../../redux/user/user.actions";
 
 class Ingredient extends Component {
   constructor(props) {
@@ -43,20 +46,21 @@ class Ingredient extends Component {
   };
 
   render() {
-    const { ingredient, nameWidth } = this.props;
+    const { ingredient, widths, fridgeStock } = this.props;
     const { loading, quantityField } = this.state;
+    const isMissing = !fridgeStock.includes(ingredient.name);
 
     const us = ingredient.measures.us;
 
     if (loading || !ingredient) return;
     return (
-      <IngredientContainer
-        missing={ingredient.isMissing}
-        className="Ingredient"
-      >
-        <QuantityContainer id="QuantittyContainer">{`${ingredient.measures.us.amount} ${us.unitShort}`}</QuantityContainer>
+      <IngredientContainer missing={isMissing} className="Ingredient">
+        <QuantityContainer
+          id="QuantittyContainer"
+          width={widths}
+        >{`${us.amount} ${us.unitShort}`}</QuantityContainer>
 
-        <NameContainer className="name-container" width={nameWidth}>
+        <NameContainer className="name-container" width={widths}>
           {ingredient.name}
           <OptionContainer onClick={this.toggleOn}>
             <MDBIcon icon="ellipsis-v" />
@@ -76,22 +80,30 @@ class Ingredient extends Component {
             />
           </MDBModalBody>
           <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggleOff}>
-              Close
-            </MDBBtn>
             <MDBBtn color="primary" onClick={this.handleSubmit}>
               Save changes
             </MDBBtn>
-            <MDBBtn
-              color="secondary"
-              onClick={() => this.handleAdd(ingredient.name)}
-            >
-              I have this Ingredient
-            </MDBBtn>
+            {isMissing && (
+              <MDBBtn
+                color="secondary"
+                onClick={() => this.props.addToFridgeStock(ingredient.name)}
+              >
+                I have this Ingredient
+              </MDBBtn>
+            )}
           </MDBModalFooter>
         </MDBModal>
       </IngredientContainer>
     );
   }
 }
-export default withFridge(withRouter(Ingredient));
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+const mapDispatchToProps = (dispatch) => ({
+  addToFridgeStock: (item) => dispatch(addToFridgeStock(item)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Ingredient));

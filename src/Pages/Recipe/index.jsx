@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Ingredient from "./IngredientDisplay/Ingredient";
+import Ingredient from "./Ingredient";
 import {
   RecipePageContainer,
   TitleContainer,
@@ -9,14 +9,14 @@ import {
   IngredientDisplay,
   DisplayContainer,
   ImageContainer,
+  Title,
+  TagBanner,
 } from "./styles";
 import InstructionDisplay from "./InstructionDisplay";
-import { Title } from "./styles";
 import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
 import { MDBBtn } from "mdbreact";
 import ChipDisplay from "components/ChipDisplay";
-import { withFridge } from "Contexts/Fridge";
 
 const tagFilterer = (recipe) => {
   const {
@@ -45,12 +45,30 @@ const tagFilterer = (recipe) => {
   return relevantRecipeKeys.filter((key) => tags[key]);
 };
 
-const nameWidthDectector = (array) => {
-  const stringArray = array.map((item) => item.name);
-  const longestName = stringArray.sort(function (a, b) {
-    return b.length - a.length;
-  })[0];
-  return longestName.length * 10;
+const widthDectector = (array) => {
+  //takes array, if its a name and a max width
+
+  const quantityArray = array.map(
+    (item) => ` ${item.measures.us.amount} ${item.measures.us.unitShort}`
+  );
+  const nameArray = array.map((item) => item.name);
+
+  const longest = (stringArray) =>
+    stringArray.sort(function (a, b) {
+      return b.length - a.length;
+    })[0];
+  const longestQuantity = {
+    idealWidth: longest(quantityArray).length * 9,
+    maxWidth: 80,
+  };
+  const longestName = {
+    idealWidth: longest(nameArray).length * 9,
+    maxWidth: 180,
+  };
+  return {
+    quantity: longestQuantity,
+    name: longestName,
+  };
 };
 
 class Recipe extends Component {
@@ -59,10 +77,14 @@ class Recipe extends Component {
     error: false,
     backupRecipe: {},
     recipe: {},
-    expand: false,
+    expandSummary: false,
+    expandImage: false,
   };
-  toggleExpand = () => {
-    this.setState({ expand: !this.state.expand });
+  toggleExpandSummary = () => {
+    this.setState({ expandSummary: !this.state.expandSummary });
+  };
+  toggleExpandImage = () => {
+    this.setState({ expandImage: !this.state.expandImage });
   };
 
   fetchData = async () => {
@@ -128,46 +150,43 @@ class Recipe extends Component {
     }
   }
   render() {
-    const { recipe, loading, expand } = this.state;
+    const { recipe, loading, expandSummary, expandImage } = this.state;
     const filteredTags = tagFilterer(recipe);
-    const nameWidth =
-      recipe.extendedIngredients &&
-      nameWidthDectector(recipe.extendedIngredients);
+    const calculatedWidths =
+      recipe.extendedIngredients && widthDectector(recipe.extendedIngredients);
 
     if (loading || !recipe.id) return <Title>Thinking up something good</Title>;
-    console.log(recipe.image);
     return (
       <RecipePageContainer className="recipe-page-container">
         <TitleContainer className="title-container">
+          <ImageContainer
+            onClick={() => this.toggleExpandImage()}
+            clicked={expandImage}
+            image={recipe.image}
+          >
+            <img src={recipe.image} alt={recipe.title} />
+          </ImageContainer>
           <Circle />
           <BasicInfo className="basic-info">
-            <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
+            <Title>
               <strong>{recipe.title}</strong>
-            </h1>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-              }}
-            >
+            </Title>
+            <TagBanner className="tag-banner">
               <ChipDisplay data={filteredTags} />
-            </div>
+            </TagBanner>
 
             <Summary
-              expand={expand}
+              expand={expandSummary}
               dangerouslySetInnerHTML={{ __html: recipe.summary }}
             />
-            <MDBBtn onClick={this.toggleExpand} color="primary">
+            <MDBBtn onClick={this.toggleExpandSummary} color="primary">
               see{`${this.state.expand ? " less" : " more"}`}
             </MDBBtn>
           </BasicInfo>
-          <ImageContainer>
-            <img src={recipe.image} alt={recipe.title} />
-          </ImageContainer>
         </TitleContainer>
 
         <DisplayContainer>
-          <IngredientDisplay>
+          <IngredientDisplay className="ingredient-display">
             <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
               <strong>Ingredients</strong>
             </h1>
@@ -179,7 +198,7 @@ class Recipe extends Component {
                   index={index}
                   ingredient={ingredient}
                   handleIngredientChange={this.handleIngredientChange}
-                  nameWidth={nameWidth}
+                  widths={calculatedWidths}
                 />
               ))}
             {this.state.recipe !== this.state.backupRecipe && (
@@ -200,4 +219,4 @@ class Recipe extends Component {
     );
   }
 }
-export default withFridge(Recipe);
+export default Recipe;

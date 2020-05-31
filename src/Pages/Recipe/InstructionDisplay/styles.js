@@ -5,13 +5,13 @@ export const InstructionDisplayStyles = styled.div`
   display: flex;
   flex-direction: column;
   flex: 100;
-  margin: 10px 0 10px 0;
+  margin: 0 0 10px 0;
   background-color: #ade9e8;
   padding: 10px;
   height: fit-content;
   border-radius: 10px;
   min-width: 300px;
-  @media (min-width: 700px) {
+  @media (min-width: 768px) {
     margin: 0 0 0 10px;
   }
 `;

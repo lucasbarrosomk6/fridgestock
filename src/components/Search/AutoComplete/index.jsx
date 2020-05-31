@@ -8,7 +8,8 @@ import {
   AutoCompleteItem,
   AutoCompleteDisplay,
 } from "./styles";
-import { withFridge } from "../../../Contexts/Fridge";
+import { connect } from "react-redux";
+import { addToFridgeStock } from "../../../redux/user/user.actions";
 
 class AutoComplete extends Component {
   state = {
@@ -19,19 +20,20 @@ class AutoComplete extends Component {
   handlesubmit = (e) => {
     e.preventDefault();
 
-    this.props.setIngredients(this.state.searchField, this.props.ingredients);
+    this.props.addToFridgeStock(this.state.searchField, this.props.ingredients);
     this.setState({
       autoComplete: [],
       searchField: "",
-      doIngredientsExist: true,
+      isSearching: false,
     });
   };
   handleAutocompleteSelect = (x) => {
-    this.props.setIngredients(x, this.props.setIngredients);
+    this.props.addToFridgeStock(x);
 
     this.setState({
       searchField: "",
       autoComplete: [],
+      isSearching: false,
     });
   };
   clearAutocomplete = () =>
@@ -43,7 +45,6 @@ class AutoComplete extends Component {
     !this.state.searchField.length && this.setState({ autoComplete: [] });
   };
   fetchAutoComplete = debounce(async () => {
-    console.log("autocomplete triggered");
     this.setState({ isSearching: true });
     const data = await api("food/ingredients/autocomplete", {
       query: this.state.searchField,
@@ -92,4 +93,8 @@ class AutoComplete extends Component {
   }
 }
 
-export default withFridge(AutoComplete);
+const mapDispatchToProps = (dispatch) => ({
+  addToFridgeStock: (item) => dispatch(addToFridgeStock(item)),
+});
+
+export default connect(null, mapDispatchToProps)(AutoComplete);

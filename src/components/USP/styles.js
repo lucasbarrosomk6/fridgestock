@@ -7,6 +7,10 @@ export const Container = styled.div`
   align-items: flex-start;
   min-width: 100%;
   text-align: center;
+  @media (max-width: 420px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 export const USPItem = styled.div`
   display: flex;

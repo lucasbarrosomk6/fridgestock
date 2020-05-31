@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { removeFromFridgeStock } from "../redux/user/user.actions";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../redux/user/user.selector";
+
 import { MDBIcon } from "mdbreact";
 import {
   FridgestockButton,
@@ -9,12 +14,10 @@ import {
   DeleteContainer,
 } from "./styles";
 import AutoComplete from "../components/Search/AutoComplete";
-import { withFridge } from "../Contexts/Fridge";
 
 class NavBar extends Component {
   state = {
     isOpen: false,
-    ingredients: this.props.data,
   };
 
   toggleCollapse = () => {
@@ -22,6 +25,7 @@ class NavBar extends Component {
   };
 
   render() {
+    console.log(this.props.fridgeStock);
     return (
       <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">
@@ -40,31 +44,32 @@ class NavBar extends Component {
           />
         </FridgestockButton>
         <FridgeStockDisplay clicked={this.state.isOpen}>
-          <AutoComplete
-            className="autocomplete"
-            setIngredients={this.props.setIngredients}
-          />
-          {this.props.ingredients.map((Ingredient) => (
-            <IngredientDisplay key={Ingredient.name}>
-              {Ingredient.name}
-              <DeleteContainer>
-                <MDBIcon
-                  far
-                  icon="times-circle"
-                  onClick={() =>
-                    this.props.removeIngredient(
-                      Ingredient,
-                      this.props.ingredients
-                    )
-                  }
-                />
-              </DeleteContainer>
-            </IngredientDisplay>
-          ))}
+          <AutoComplete className="autocomplete" />
+          {this.props.fridgeStock &&
+            !!this.props.fridgeStock.length &&
+            this.props.fridgeStock.map((Ingredient) => (
+              <IngredientDisplay key={Ingredient}>
+                {Ingredient}
+                <DeleteContainer>
+                  <MDBIcon
+                    far
+                    icon="times-circle"
+                    onClick={() => this.props.removeFromFridgeStock(Ingredient)}
+                  />
+                </DeleteContainer>
+              </IngredientDisplay>
+            ))}
         </FridgeStockDisplay>
       </Navbar>
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  removeFromFridgeStock: (item) => dispatch(removeFromFridgeStock(item)),
+});
 
-export default withFridge(NavBar);
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
