@@ -14,6 +14,7 @@ import {
   NameContainer,
   QuantityContainer,
   OptionContainer,
+  Circle,
 } from "./styles";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -38,10 +39,11 @@ class Ingredient extends Component {
   handleChange = (e) => this.setState({ quantityField: e.target.value });
   handleAdd = (x) => this.props.setIngredients(x);
   handleSubmit = () => {
-    this.props.handleIngredientChange(
-      this.state.quantityField,
-      this.props.ingredient.measures.us.amount
-    );
+    this.state.quantityField &&
+      this.props.handleIngredientChange(
+        this.state.quantityField,
+        this.props.ingredient.measures.us.amount
+      );
     this.toggleOff();
   };
 
@@ -54,7 +56,8 @@ class Ingredient extends Component {
 
     if (loading || !ingredient) return;
     return (
-      <IngredientContainer missing={isMissing} className="Ingredient">
+      <IngredientContainer className="Ingredient">
+        <Circle missing={isMissing} />
         <QuantityContainer
           id="QuantittyContainer"
           width={widths}

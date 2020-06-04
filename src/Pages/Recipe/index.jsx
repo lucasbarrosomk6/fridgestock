@@ -1,49 +1,53 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../../redux/user/user.selector";
 import Ingredient from "./Ingredient";
 import {
   RecipePageContainer,
   TitleContainer,
   BasicInfo,
   Summary,
-  Circle,
-  IngredientDisplay,
   DisplayContainer,
   ImageContainer,
   Title,
-  TagBanner,
+  RecipeStats,
+  // TagBanner,
 } from "./styles";
+
 import InstructionDisplay from "./InstructionDisplay";
 import api from "../../utils/api";
 import { getLocalStorage } from "utils/localStorage";
 import { MDBBtn } from "mdbreact";
-import ChipDisplay from "components/ChipDisplay";
+import ExpandableContainer from "components/ExpandableContainer";
+import { MDBIcon } from "mdbreact";
 
-const tagFilterer = (recipe) => {
-  const {
-    vegetarian,
-    vegan,
-    glutenFree,
-    veryHealthy,
-    cheap,
-    veryPopular,
-    sustainable,
-    dairyFree,
-  } = recipe;
+// const tagFilterer = (recipe) => {
+//   const {
+//     vegetarian,
+//     vegan,
+//     glutenFree,
+//     veryHealthy,
+//     cheap,
+//     veryPopular,
+//     sustainable,
+//     dairyFree,
+//   } = recipe;
 
-  const tags = {
-    vegetarian,
-    vegan,
-    glutenFree,
-    veryHealthy,
-    cheap,
-    veryPopular,
-    sustainable,
-    dairyFree,
-  };
-  const relevantRecipeKeys = Object.keys(tags);
+//   const tags = {
+//     vegetarian,
+//     vegan,
+//     glutenFree,
+//     veryHealthy,
+//     cheap,
+//     veryPopular,
+//     sustainable,
+//     dairyFree,
+//   };
+//   const relevantRecipeKeys = Object.keys(tags);
 
-  return relevantRecipeKeys.filter((key) => tags[key]);
-};
+//   return relevantRecipeKeys.filter((key) => tags[key]);
+// };
 
 const widthDectector = (array) => {
   //takes array, if its a name and a max width
@@ -150,8 +154,10 @@ class Recipe extends Component {
     }
   }
   render() {
-    const { recipe, loading, expandSummary, expandImage } = this.state;
-    const filteredTags = tagFilterer(recipe);
+    const { recipe, loading } = this.state;
+
+    // const filteredTags = tagFilterer(recipe);
+    console.log(recipe);
     const calculatedWidths =
       recipe.extendedIngredients && widthDectector(recipe.extendedIngredients);
 
@@ -159,40 +165,45 @@ class Recipe extends Component {
     return (
       <RecipePageContainer className="recipe-page-container">
         <TitleContainer className="title-container">
-          <ImageContainer
-            onClick={() => this.toggleExpandImage()}
-            clicked={expandImage}
-            image={recipe.image}
-          >
+          <ImageContainer image={recipe.image}>
             <img src={recipe.image} alt={recipe.title} />
           </ImageContainer>
-          <Circle />
-          <BasicInfo className="basic-info">
-            <Title>
-              <strong>{recipe.title}</strong>
-            </Title>
-            <TagBanner className="tag-banner">
-              <ChipDisplay data={filteredTags} />
-            </TagBanner>
 
-            <Summary
-              expand={expandSummary}
-              dangerouslySetInnerHTML={{ __html: recipe.summary }}
-            />
-            <MDBBtn onClick={this.toggleExpandSummary} color="primary">
-              see{`${this.state.expand ? " less" : " more"}`}
-            </MDBBtn>
+          <BasicInfo className="basic-info">
+            <div style={{ position: "relative" }}>
+              <h1>
+                <strong>{recipe.title}</strong>
+              </h1>{" "}
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                <RecipeStats style={{ marginBottom: "5px" }}>
+                  <MDBIcon far icon="clock" />
+                  {" " + recipe.readyInMinutes} minutes
+                </RecipeStats>
+
+                <RecipeStats style={{ marginBottom: "5px" }}>
+                  <MDBIcon icon="concierge-bell" />
+                  {" " + recipe.servings} servings
+                </RecipeStats>
+                <RecipeStats style={{ marginBottom: "5px" }}>
+                  <MDBIcon icon="search-dollar" />
+                  {`$${Math.round(recipe.pricePerServing) / 100}`}
+                  /serving
+                </RecipeStats>
+              </div>
+            </div>
+
+            <Summary dangerouslySetInnerHTML={{ __html: recipe.summary }} />
           </BasicInfo>
         </TitleContainer>
 
         <DisplayContainer>
-          <IngredientDisplay className="ingredient-display">
-            <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
-              <strong>Ingredients</strong>
-            </h1>
-            {recipe.extendedIngredients &&
-              recipe.extendedIngredients.length &&
-              recipe.extendedIngredients.map((ingredient, index) => (
+          {recipe.extendedIngredients && recipe.extendedIngredients.length && (
+            <ExpandableContainer
+              title="Ingredients"
+              clicked={true}
+              ingredients={recipe.extendedIngredients}
+            >
+              {recipe.extendedIngredients.map((ingredient, index) => (
                 <Ingredient
                   key={index}
                   index={index}
@@ -201,22 +212,29 @@ class Recipe extends Component {
                   widths={calculatedWidths}
                 />
               ))}
-            {this.state.recipe !== this.state.backupRecipe && (
-              <MDBBtn onClick={this.clearNewRecipe} color="primary">
-                Restore to default values
-              </MDBBtn>
-            )}
-          </IngredientDisplay>
+              {this.state.recipe !== this.state.backupRecipe && (
+                <MDBBtn onClick={this.clearNewRecipe} color="primary">
+                  Restore to default values
+                </MDBBtn>
+              )}
+            </ExpandableContainer>
+          )}
+
           {recipe.analyzedInstructions[0].steps &&
             recipe.analyzedInstructions[0].steps.length && (
-              <InstructionDisplay
-                ingredients={recipe.extendedIngredients}
-                steps={recipe.analyzedInstructions[0].steps}
-              />
+              <ExpandableContainer title="instructions" clicked={true}>
+                <InstructionDisplay
+                  ingredients={recipe.extendedIngredients}
+                  steps={recipe.analyzedInstructions[0].steps}
+                />
+              </ExpandableContainer>
             )}
         </DisplayContainer>
       </RecipePageContainer>
     );
   }
 }
-export default Recipe;
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+export default connect(mapStateToProps)(Recipe);

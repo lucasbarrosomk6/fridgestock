@@ -5,8 +5,9 @@ import {
   StepNuber,
   StepContainer,
   IngredientContainer,
+  IngredientList,
 } from "./styles";
-import ChipDisplay from "components/ChipDisplay";
+
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectUserFridgeStock } from "../../../redux/user/user.selector";
@@ -45,22 +46,30 @@ const InstructiontDisplay = ({ steps, ingredients, fridgeStock }) => {
       ingredients: usedIngredients,
     };
   });
-  console.log(newSteps);
   return (
     <InstructionDisplayStyles>
-      <h1 style={{ fontSize: "1.5rem", zIndex: "3" }}>
-        <strong>Instructions</strong>
-      </h1>
       {newSteps.map((step, index) => (
         <InstructionContainer
           key={step.number}
           className="instructionContainer"
         >
-          <StepNuber className="stepNumber">{step.number}</StepNuber>
+          <StepNuber className="stepNumber">
+            <strong>{step.number}</strong>
+          </StepNuber>
           <StepContainer className="stepContainer">
             {step.step}
             <IngredientContainer>
-              <ChipDisplay data={step.ingredients} />
+              {!!step.ingredients.length && <strong>Step includes:</strong>}
+
+              {step.ingredients.map((item, index) => (
+                <IngredientList missing={item.isMissing} key={item.name}>
+                  <strong>
+                    {` ${item.name}${
+                      index !== step.ingredients.length - 1 ? ", " : ""
+                    }`}
+                  </strong>
+                </IngredientList>
+              ))}
             </IngredientContainer>
           </StepContainer>
         </InstructionContainer>

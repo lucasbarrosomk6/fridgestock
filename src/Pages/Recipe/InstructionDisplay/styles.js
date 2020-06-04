@@ -6,7 +6,6 @@ export const InstructionDisplayStyles = styled.div`
   flex-direction: column;
   flex: 100;
   margin: 0 0 10px 0;
-  background-color: #ade9e8;
   padding: 10px;
   height: fit-content;
   border-radius: 10px;
@@ -22,10 +21,16 @@ export const InstructionContainer = styled.div`
   width: 100%;
 
   padding: 5px 10px;
-  border-radius: 20px;
+  border-radius: 2px;
   transition: all 0.5s;
-  &:hover {
-    background-color: #5ad3d1;
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - 16px);
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    left: 8px;
   }
 `;
 export const StepNuber = styled.div`
@@ -36,12 +41,13 @@ export const StepNuber = styled.div`
   min-width: 30px;
   height: 100%;
   padding: 0 10px;
+  color: #6c757d;
 `;
 export const StepContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  border-left: solid black 1px;
+
   justify-content: space-between;
   padding-left: 10px;
 `;
@@ -51,5 +57,16 @@ export const IngredientContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 `;
-
+export const IngredientList = styled.p`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: ${(props) => (!props.missing ? "#5AD3D1" : "#FA8BA2")};
+  margin: 0 5px;
+`;
+export const Divider = styled.div`
+  display: block;
+  width: 95%;
+`;
 //instruction styles end here

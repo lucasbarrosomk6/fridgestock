@@ -25,7 +25,6 @@ class NavBar extends Component {
   };
 
   render() {
-    console.log(this.props.fridgeStock);
     return (
       <Navbar bg="light" id="nav" expand="lg" sticky="top">
         <Link to="/">

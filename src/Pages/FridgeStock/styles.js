@@ -14,10 +14,7 @@ export const FridgestockContainer = styled.div`
   margin: 2% 0;
   flex-direction: column;
   z-index: 10;
-  @media ${device.mobile} {
-    align-items: flex-start;
-  }
-  @media (max-width: 420px) {
+  @media (min-width: 768px) {
     flex-direction: column;
     align-items: center;
   }
@@ -48,6 +45,10 @@ export const RecipeContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
+  @media (max-width: 420px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const MakeItNowContainer = styled.div`

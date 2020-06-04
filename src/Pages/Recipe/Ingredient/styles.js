@@ -6,14 +6,20 @@ export const IngredientContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  padding: 0 10px;
-  margin: 5px 0;
-  border-radius: 20px;
+  padding: 10px;
+  margin: 0;
   transition: all 0.5s;
-  background-color: ${(props) => (!props.missing ? "#ade9e8" : "#FA8BA2")};
+  &::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - 72px);
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    left: 36px;
+  }
   &:hover {
-    background-color: ${(props) => (!props.missing ? "#5ad3d1" : "#FA8BA2")};
+    background-color: lightgrey;
   }
 `;
 export const QuantityContainer = styled.div`
@@ -36,7 +42,7 @@ export const QuantityContainer = styled.div`
     }
   }};
   height: 100%;
-  border-right: solid black 1px;
+  border-right: solid #aaa 2px;
   padding: 0 10px 0 0;
   text-align: right;
   cursor: pointer;
@@ -64,5 +70,17 @@ export const OptionContainer = styled.div`
   justify-content: center;
   padding: 0 10px;
   height: 100%;
+  cursor: pointer;
+`;
+export const Circle = styled.div`
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  justify-content: center;
+  margin: 0 5px;
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background-color: ${(props) => (!props.missing ? "#ade9e8" : "#FA8BA2")};
   cursor: pointer;
 `;
