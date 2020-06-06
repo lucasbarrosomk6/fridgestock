@@ -36,7 +36,7 @@ export const QuantityContainer = styled.div`
       return `${
         props.width.quantity.maxWidth +
         (props.width.name.maxWidth - props.width.name.idealWidth)
-      }`;
+      }px`;
     } else {
       return `${props.width.quantity.maxWidth}px`;
     }

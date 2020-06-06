@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { removeFromFridgeStock } from "../redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
@@ -71,4 +71,4 @@ const mapStateToProps = createStructuredSelector({
   fridgeStock: selectUserFridgeStock,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));

@@ -6,7 +6,7 @@ export const RecipePageContainer = styled.div`
   flex-direction: column;
   /* align-items: center; */
   width: 100%;
-  max-width: 1000px;
+  max-width: 1300px;
   z-index: 0;
   overflow: hidden;
   margin-top: 10px;
@@ -19,11 +19,10 @@ export const TitleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 100%;
 
-  margin: 0px 0 0px;
+  max-width: 100%;
+
   @media (min-width: 768px) {
-    max-height: 370px;
     flex-direction: row;
   }
   @media (max-width: 768px) {
@@ -36,13 +35,14 @@ export const BasicInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: calc(100% - 570px);
+
   max-height: 370px;
   padding: 0 15px;
   min-width: 324px;
 
   @media (min-width: 768px) {
     justify-content: flex-start;
+    flex: 1;
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -71,6 +71,7 @@ export const Summary = styled.div`
   flex: 1;
   overflow: auto;
   transition: all 0.5s;
+
   @media (max-width: 768px) {
     text-align: center;
   }
@@ -107,7 +108,9 @@ export const DisplayContainer = styled.div`
   margin: 10px 0;
   justify-content: space-between;
   position: relative;
-
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
     margin-top: 0;

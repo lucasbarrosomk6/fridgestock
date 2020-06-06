@@ -56,3 +56,6 @@ input.form-control {
 .makeStyles-root-116 {
   width: 300px;
 }
+.ReactCollapse--collapse {
+  transition: height 0.5s;
+}

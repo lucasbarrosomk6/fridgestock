@@ -196,7 +196,7 @@ class Recipe extends Component {
           </BasicInfo>
         </TitleContainer>
 
-        <DisplayContainer>
+        <DisplayContainer className="display-container">
           {recipe.extendedIngredients && recipe.extendedIngredients.length && (
             <ExpandableContainer
               title="Ingredients"

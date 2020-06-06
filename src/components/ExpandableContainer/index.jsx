@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectUserFridgeStock } from "../../redux/user/user.selector";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { Collapse } from "react-collapse";
 import {
   Container,
   TitleContainer,
-  DataContainer,
   CloseContainer,
-  EndCap,
   IngredientProgress,
 } from "./styles";
 import { MDBIcon } from "mdbreact";
@@ -88,8 +87,7 @@ class ExpandableContainer extends Component {
             <MDBIcon icon="angle-up" />
           </CloseContainer>
         </TitleContainer>
-        <DataContainer clicked={clicked}>{children}</DataContainer>
-        <EndCap />
+        <Collapse isOpened={clicked}>{children}</Collapse>
       </Container>
     );
   }
