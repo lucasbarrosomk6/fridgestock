@@ -1,54 +1,50 @@
 import styled from "styled-components";
 
-export const FridgestockButton = styled.div`
+export const NavBarContainer = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 50px;
+  padding: 5px 30px;
+  z-index: 1000;
+  @media (min-width: 768px) {
+    background-color: #0ce5e1;
+  }
+  @media (max-width: 768px) {
+    background: ${(props) => (props.path === "/" ? "#0ce5e1" : "rgb(0, 0, 0)")};
+    background: ${(props) =>
+      props.path === "/"
+        ? "#0ce5e1"
+        : "linear-gradient(180deg,rgba(0, 0, 0, 0.6797093837535014) 0%,rgba(0, 0, 0, 0.16150210084033612) 88%)"};
+    padding: 5px 15px;
+  }
+`;
+export const NavRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+export const UserIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px;
-  background-color: ${(props) => (props.clicked ? "white" : "transparent")};
-  border-radius: 3px;
-  transition: all 0.3s;
+  width: 35px;
+  height: 35px;
+  color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
 `;
-export const FridgeStockDisplay = styled.div`
-  position: absolute;
-  right: 2%;
-  top: ${(props) => (props.clicked ? "64px" : "40px")};
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  width: ${(props) => (props.clicked ? "250px" : "0px")};
-  height: ${(props) => (props.clicked ? "300px" : "0px")};
-  padding: ${(props) => (props.clicked ? "10px" : "0px")};
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 1px 2px 5px black;
-  transition: all 0.3s;
-  overflow-y: auto;
-  scrollbar-color: #4285f4 #f5f5f5;
-`;
-export const IngredientDisplay = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  background-color: #5ad3d1;
-  border-radius: 20px;
-  padding: 0 10px;
-  margin: 5px 0;
-  :hover {
-    background-color: #ade9e8;
-  }
-  transition: all.3s;
-`;
-export const NavButton = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-export const DeleteContainer = styled.div`
+export const SignInSignUp = styled.div`
   display: flex;
   align-items: center;
-  height: fit-content;
   justify-content: center;
-  height: 100%;
+  height: 30px;
 
-  cursor: pointer;
+  border-radius: 2px;
+  background: white;
+  margin: 0 10px;
 `;

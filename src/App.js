@@ -6,18 +6,20 @@ import FridgeStock from "./Pages/FridgeStock";
 import Recipe from "./Pages/Recipe";
 import NavBar from "./NavBar";
 import "./App.css";
+import Theme from "./styles";
+
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#0ce5e1",
-      main: "#0ce5e1",
-      dark: "#45969b",
+      light: Theme.lightBlue,
+      main: Theme.lightBlue,
+      dark: Theme.darkBlue,
     },
     secondary: {
-      main: "#f2eaec",
+      main: Theme.red,
     },
   },
-  danger: "#ff0340",
+  danger: Theme.red,
 });
 
 class App extends Component {

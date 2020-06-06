@@ -5,15 +5,18 @@ import { selectUserFridgeStock } from "../../redux/user/user.selector";
 import Ingredient from "./Ingredient";
 import {
   RecipePageContainer,
-  TitleContainer,
+  Overview,
   BasicInfo,
   Summary,
-  DisplayContainer,
+  HowToContainer,
   ImageContainer,
   Title,
   RecipeStats,
-  // TagBanner,
+  CloseContainer,
+  TitleContainer,
+  RecipeStatWrapper,
 } from "./styles";
+import { Collapse } from "react-collapse";
 
 import InstructionDisplay from "./InstructionDisplay";
 import api from "../../utils/api";
@@ -81,7 +84,7 @@ class Recipe extends Component {
     error: false,
     backupRecipe: {},
     recipe: {},
-    expandSummary: false,
+    expandSummary: true,
     expandImage: false,
   };
   toggleExpandSummary = () => {
@@ -154,27 +157,36 @@ class Recipe extends Component {
     }
   }
   render() {
-    const { recipe, loading } = this.state;
+    const { recipe, loading, expandSummary } = this.state;
 
     // const filteredTags = tagFilterer(recipe);
     console.log(recipe);
     const calculatedWidths =
       recipe.extendedIngredients && widthDectector(recipe.extendedIngredients);
 
-    if (loading || !recipe.id) return <Title>Thinking up something good</Title>;
+    if (loading || !recipe.id) return <div>Thinking up something good</div>;
     return (
       <RecipePageContainer className="recipe-page-container">
-        <TitleContainer className="title-container">
+        <Overview className="title-container">
           <ImageContainer image={recipe.image}>
             <img src={recipe.image} alt={recipe.title} />
           </ImageContainer>
 
           <BasicInfo className="basic-info">
-            <div style={{ position: "relative" }}>
-              <h1>
-                <strong>{recipe.title}</strong>
-              </h1>{" "}
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
+            <TitleContainer>
+              <Title>
+                <h1>
+                  <strong>{recipe.title}</strong>
+                </h1>
+                <CloseContainer
+                  onClick={() => this.toggleExpandSummary()}
+                  clicked={expandSummary}
+                >
+                  <MDBIcon icon="angle-up" />
+                </CloseContainer>
+              </Title>
+
+              <RecipeStatWrapper>
                 <RecipeStats style={{ marginBottom: "5px" }}>
                   <MDBIcon far icon="clock" />
                   {" " + recipe.readyInMinutes} minutes
@@ -189,14 +201,21 @@ class Recipe extends Component {
                   {`$${Math.round(recipe.pricePerServing) / 100}`}
                   /serving
                 </RecipeStats>
-              </div>
-            </div>
-
-            <Summary dangerouslySetInnerHTML={{ __html: recipe.summary }} />
+              </RecipeStatWrapper>
+            </TitleContainer>
+            <Collapse
+              isOpened={expandSummary}
+              style={{ overflowY: "auto", flex: "1" }}
+            >
+              <Summary
+                className="summary"
+                dangerouslySetInnerHTML={{ __html: recipe.summary }}
+              />
+            </Collapse>
           </BasicInfo>
-        </TitleContainer>
+        </Overview>
 
-        <DisplayContainer className="display-container">
+        <HowToContainer className="how-to-container">
           {recipe.extendedIngredients && recipe.extendedIngredients.length && (
             <ExpandableContainer
               title="Ingredients"
@@ -229,7 +248,7 @@ class Recipe extends Component {
                 />
               </ExpandableContainer>
             )}
-        </DisplayContainer>
+        </HowToContainer>
       </RecipePageContainer>
     );
   }

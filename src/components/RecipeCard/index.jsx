@@ -1,85 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserFridgeStock } from "../../redux/user/user.selector";
 import { withRouter, Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import { CardContent, CardActions } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import ChipDisplay from "components/ChipDisplay";
-import { MDBBtn } from "mdbreact";
-import { createMuiTheme } from "@material-ui/core/styles";
+import Collapse from "react-collapse";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
+import {
+  RecipeCardContainer,
+  RecipeImage,
+  InfoContainer,
+  IngredientContainer,
+  Title,
+  Row,
+  Circle,
+  CloseContainer,
+  IngredientProgress,
+} from "./styles";
+import { MDBIcon } from "mdbreact";
 
-export function RecipeCard({ recipe, match }) {
+export function RecipeCard({ recipe, match, fridgeStock }) {
   const { image, title, usedIngredients, missedIngredients, id } = recipe;
-  const classes = useStyles();
+  const ingredients = usedIngredients.concat(missedIngredients);
+  const [open, toggleOpen] = useState(false);
+  const percentage =
+    ingredients &&
+    fridgeStock &&
+    Math.floor(
+      (fridgeStock.filter((item) =>
+        ingredients.map((item) => item.name).includes(item)
+      ).length /
+        ingredients.length) *
+        100
+    );
 
   return (
-    <Card className={classes.root} style={{ width: "300px" }}>
-      <CardMedia
-        className={classes.media} // put recipe image here
-        image={image}
-        title={title}
-      />
-      <CardHeader title={title} />
-      <CardContent
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          maxHeight: "200px",
-          overflowY: "auto",
-        }}
-      >
-        <ChipDisplay
-          data={
-            usedIngredients
-              ? [...usedIngredients].map((Ingredient) => ({
-                  ...Ingredient,
-                  isMissing: false,
-                }))
-              : null
-          }
-        />
-        <ChipDisplay
-          data={
-            missedIngredients[0].id
-              ? [...missedIngredients].map((Ingredient) => ({
-                  ...Ingredient,
-                  isMissing: true,
-                }))
-              : missedIngredients
-          }
-        />
-      </CardContent>
-      <CardActions disableSpacing>
-        <Link to={`/recipe/${id}`} style={{ width: "100%" }}>
-          <MDBBtn style={{ width: "100%" }}>See Full Recipe</MDBBtn>
-        </Link>
-      </CardActions>
-    </Card>
+    <RecipeCardContainer>
+      <Link to={`/recipe/${id}`}>
+        {" "}
+        <RecipeImage src={image} alt={title} />
+      </Link>
+
+      <InfoContainer>
+        <Title>{title}</Title>
+        <Title>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div>Ingredients you have</div>
+            <IngredientProgress>
+              <CircularProgressbar
+                value={percentage}
+                text={`${percentage}%`}
+                styles={buildStyles({ textSize: "2rem" })}
+              />
+            </IngredientProgress>{" "}
+          </div>
+        </Title>
+        <CloseContainer onClick={() => toggleOpen(!open)} clicked={open}>
+          <MDBIcon icon="angle-up" />
+        </CloseContainer>
+
+        <Collapse isOpened={open}>
+          <IngredientContainer>
+            {ingredients.map((ingredient, index) => (
+              <Row>
+                <Circle missing={fridgeStock.includes(ingredient.name)} />
+                {ingredient.name}
+              </Row>
+            ))}
+          </IngredientContainer>
+        </Collapse>
+      </InfoContainer>
+    </RecipeCardContainer>
   );
 }
-export default withRouter(RecipeCard);
+
+const mapStateToProps = createStructuredSelector({
+  fridgeStock: selectUserFridgeStock,
+});
+export default connect(mapStateToProps)(withRouter(RecipeCard));
