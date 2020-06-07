@@ -7,6 +7,7 @@ export const RecipeCardContainer = styled.div`
   width: 300px;
   border-radius: 10px;
   overflow: hidden;
+  margin: 10px;
 `;
 
 export const RecipeImage = styled.img`
@@ -15,9 +16,9 @@ export const RecipeImage = styled.img`
   height: auto;
   z-index: 0;
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.05);
   }
-  transition: all 12s;
+  transition: all 5s;
 `;
 export const InfoContainer = styled.div`
   position: relative;
@@ -61,49 +62,7 @@ export const IngredientContainer = styled.div`
   width: 300px;
   border-radius: 5px;
 `;
-export const Row = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  padding: 5px 0;
-  &::after {
-    content: "";
-    position: absolute;
-    width: calc(100% - 16px);
-    height: 1px;
-    background: rgba(0, 0, 0, 0.1);
-    bottom: 0;
-    left: 8px;
-  }
-`;
-export const Circle = styled.div`
-  display: flex;
-  align-items: center;
-  height: fit-content;
-  justify-content: center;
-  margin: 0 10px;
-  height: 12px;
-  width: 12px;
-  border-radius: 6px;
-  background-color: ${(props) =>
-    !props.missing ? Theme.lightBlue : Theme.red};
-  cursor: pointer;
-`;
-export const CloseContainer = styled.div`
-  position: relative;
-  top: 2.5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  transform: rotate(${(props) => (!props.clicked ? "180deg" : "0deg")});
-  transition: all 0.5s;
-  cursor: pointer;
-`;
+
 export const IngredientProgress = styled.div`
   position: relative;
 
@@ -118,4 +77,16 @@ export const IngredientProgress = styled.div`
   margin: 0 5px;
 
   background-color: rgb(255, 250, 250, 0.5);
+`;
+export const CloseContainer = styled.div`
+  position: relative;
+  top: 2.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  transform: rotate(${(props) => (!props.clicked ? "180deg" : "0deg")});
+  transition: all 0.5s;
+  cursor: pointer;
 `;

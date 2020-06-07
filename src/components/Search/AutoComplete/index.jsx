@@ -10,6 +10,7 @@ import {
 } from "./styles";
 import { connect } from "react-redux";
 import { addToFridgeStock } from "../../../redux/user/user.actions";
+import Collapse from "react-collapse";
 
 class AutoComplete extends Component {
   state = {
@@ -74,19 +75,19 @@ class AutoComplete extends Component {
             <MDBIcon icon="search" />
           )}
         </SearchBar>
+
         <AutoCompleteDisplay length={this.state.autoComplete.length}>
-          {this.state.autoComplete
-            ? this.state.autoComplete.map((item, index) => (
-                <AutoCompleteItem
-                  className="autocomplete-item"
-                  onClick={() => this.handleAutocompleteSelect(item.name)}
-                  key={index}
-                  exists={!!item}
-                >
-                  {item.name}
-                </AutoCompleteItem>
-              ))
-            : null}
+          {this.state.autoComplete &&
+            this.state.autoComplete.map((item, index) => (
+              <AutoCompleteItem
+                className="autocomplete-item"
+                onClick={() => this.handleAutocompleteSelect(item.name)}
+                key={index}
+                exists={!!item}
+              >
+                {item.name}
+              </AutoCompleteItem>
+            ))}
         </AutoCompleteDisplay>
       </SearchBarForm>
     );

@@ -42,7 +42,7 @@ export const InputTitle = styled.div`
 export const RecipeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   @media (max-width: 768px) {
     flex-direction: column;

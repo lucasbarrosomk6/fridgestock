@@ -4,10 +4,6 @@ const size = {
   mobile: "360px",
   desktop: "600px",
 };
-export const device = {
-  mobile: `(min-width: ${size.mobile})`,
-  desktop: `(min-width: ${size.desktop})`,
-};
 
 export const SearchBarForm = styled.form`
   position: relative;
@@ -21,7 +17,7 @@ export const SearchBarForm = styled.form`
   text-align: right;
   min-width: 180px;
 
-  @media (max-width: 420px) {
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;
@@ -34,7 +30,7 @@ export const AutoCompleteDisplay = styled.div`
   top: 32px;
   display: flex;
   flex-direction: column;
-  width: 174px;
+  width: calc(100% - 21px);
   height: ${(props) => `${props.length * 40}px`};
 
   font-size: 120%;
@@ -43,10 +39,11 @@ export const AutoCompleteDisplay = styled.div`
   z-index: 100;
   background-position: 0 0;
   cursor: pointer;
-  @media ${device.desktop} {
+  @media (min-width: 768px) {
     font-size: 150%;
     height: ${(props) => (!props.fetchedItems ? "0px" : "15vh")};
   }
+  transition: all 0.5s;
 `;
 
 export const AutoCompleteItem = styled.div`

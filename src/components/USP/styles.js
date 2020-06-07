@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   min-width: 100%;
   text-align: center;
-  @media (max-width: 420px) {
+  @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
   }

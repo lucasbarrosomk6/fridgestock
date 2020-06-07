@@ -5,15 +5,13 @@ import { selectUserFridgeStock } from "../../redux/user/user.selector";
 import { withRouter, Link } from "react-router-dom";
 import Collapse from "react-collapse";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-
+import IngredientCard from "./IngredientCard";
 import {
   RecipeCardContainer,
   RecipeImage,
   InfoContainer,
   IngredientContainer,
   Title,
-  Row,
-  Circle,
   CloseContainer,
   IngredientProgress,
 } from "./styles";
@@ -37,7 +35,6 @@ export function RecipeCard({ recipe, match, fridgeStock }) {
   return (
     <RecipeCardContainer>
       <Link to={`/recipe/${id}`}>
-        {" "}
         <RecipeImage src={image} alt={title} />
       </Link>
 
@@ -52,7 +49,7 @@ export function RecipeCard({ recipe, match, fridgeStock }) {
                 text={`${percentage}%`}
                 styles={buildStyles({ textSize: "2rem" })}
               />
-            </IngredientProgress>{" "}
+            </IngredientProgress>
           </div>
         </Title>
         <CloseContainer onClick={() => toggleOpen(!open)} clicked={open}>
@@ -62,10 +59,7 @@ export function RecipeCard({ recipe, match, fridgeStock }) {
         <Collapse isOpened={open}>
           <IngredientContainer>
             {ingredients.map((ingredient, index) => (
-              <Row>
-                <Circle missing={fridgeStock.includes(ingredient.name)} />
-                {ingredient.name}
-              </Row>
+              <IngredientCard ingredient={ingredient} />
             ))}
           </IngredientContainer>
         </Collapse>

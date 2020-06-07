@@ -1,6 +1,6 @@
 import React from "react";
 import AutoComplete from "./AutoComplete";
-import { Ingredients } from "./styles";
+import { Ingredients, Title } from "./styles";
 import ChipDisplay from "components/ChipDisplay";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -13,6 +13,7 @@ const Search = (props) => {
     <>
       <AutoComplete className="autocomplete" />
       <Ingredients className="ingredientDisplay">
+        <Title>Your FridgeStock</Title>
         <ChipDisplay
           data={props.fridgeStock}
           deleteFunction={props.removeFromFridgeStock}

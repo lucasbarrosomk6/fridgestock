@@ -1,13 +1,5 @@
 import styled from "styled-components";
-
-const size = {
-  mobile: "360px",
-  desktop: "600px",
-};
-export const device = {
-  mobile: `(min-width: ${size.mobile})`,
-  desktop: `(min-width: ${size.desktop})`,
-};
+import Theme from "../../styles";
 
 export const SearchBar = styled.div`
   display: flex;
@@ -20,7 +12,8 @@ export const SearchBar = styled.div`
   border-radius: 1vh;
   box-shadow: 1px 1px 4px black;
   margin: 5px 0;
-  @media ${device.desktop} {
+  font-weight: 500;
+  @media (min-width: 768px) {
     align-items: center;
     width: 90%;
     font-size: 100%;
@@ -36,8 +29,10 @@ export const Ingredients = styled.div`
   flex-wrap: wrap;
   flex-grow: 1;
   min-width: 180px;
-  height: fit-content;
-  @media (max-width: 420px) {
+  margin: 10px;
+  border: 3px solid ${Theme.lightBlue};
+  border-radius: 10px;
+  @media (max-width: 768px) {
     justify-content: center;
   }
 `;
@@ -55,4 +50,15 @@ export const RecipeSearchButton = styled.div`
     font-weight: bold;
     border: none;
   }
+`;
+export const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-align: center;
+  color: ${Theme.lightBlue};
+  padding: 10px;
 `;
