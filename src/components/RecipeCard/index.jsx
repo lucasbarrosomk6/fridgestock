@@ -19,6 +19,7 @@ import { MDBIcon } from "mdbreact";
 
 export function RecipeCard({ recipe, match, fridgeStock }) {
   const { image, title, usedIngredients, missedIngredients, id } = recipe;
+  
   const ingredients = usedIngredients.concat(missedIngredients);
   const [open, toggleOpen] = useState(false);
   const percentage =
@@ -59,7 +60,7 @@ export function RecipeCard({ recipe, match, fridgeStock }) {
         <Collapse isOpened={open}>
           <IngredientContainer>
             {ingredients.map((ingredient, index) => (
-              <IngredientCard ingredient={ingredient} />
+              <IngredientCard key={index} ingredient={ingredient} />
             ))}
           </IngredientContainer>
         </Collapse>

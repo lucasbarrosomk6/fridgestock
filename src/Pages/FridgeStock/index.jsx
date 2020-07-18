@@ -34,12 +34,17 @@ class Fridgestock extends Component {
       const data = await api("recipes/random", {
         number: 3,
       });
+      
       const refinedRecipes = [...data.recipes].map((item) => ({
         ...item,
+        usedIngredients:[],
         missedIngredients: [...item.extendedIngredients].map(
-          (ingredient) => ingredient.name
+          (ingredient) =>({name: ingredient.name})
         ),
       }));
+      
+
+      console.log("missed Ingredients",refinedRecipes[0].missedIngredients)
 
       this.setState({
         recipes: refinedRecipes,

@@ -10,7 +10,7 @@ export function IngredientCard({ ingredient, fridgeStock, addToFridgeStock }) {
   const [clicked, toggleClicked] = useState(false);
   const missing = !fridgeStock.includes(ingredient.name);
   const handleToggleClicked = () => missing && toggleClicked(!clicked);
-
+console.log(ingredient)
   return (
     <Row clicked={clicked} onClick={() => handleToggleClicked()}>
       <Main>
